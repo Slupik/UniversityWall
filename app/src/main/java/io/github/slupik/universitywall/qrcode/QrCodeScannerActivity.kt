@@ -79,7 +79,11 @@ class QrCodeScannerActivity : AppCompatActivity(), BarcodeGraphicTracker.Barcode
         }
 
 
-        gestureDetector = GestureDetector(this, CaptureGestureListener(mGraphicOverlay!!))
+        val captureGestureListener = CaptureGestureListener(mGraphicOverlay!!)
+        captureGestureListener.selected.subscribe {
+            Log.d("BARCODE", it.rawValue)
+        }
+        gestureDetector = GestureDetector(this, captureGestureListener)
         scaleGestureDetector = ScaleGestureDetector(this, ScaleListener {
             mCameraSource!!
         })

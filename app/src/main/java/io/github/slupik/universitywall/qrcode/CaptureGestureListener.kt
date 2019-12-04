@@ -10,6 +10,8 @@ import android.view.MotionEvent
 import com.google.android.gms.vision.barcode.Barcode
 import io.github.slupik.universitywall.google.BarcodeGraphic
 import io.github.slupik.universitywall.google.camera.GraphicOverlay
+import io.reactivex.rxjava3.core.Observable
+import io.reactivex.rxjava3.subjects.PublishSubject
 
 /**
  * Created by Sebastian Witasik on 03.12.2019.
@@ -18,11 +20,13 @@ import io.github.slupik.universitywall.google.camera.GraphicOverlay
  */
 class CaptureGestureListener(
     private val graphicOverlay: GraphicOverlay<BarcodeGraphic>
-): GestureDetector.SimpleOnGestureListener() {
+): GestureDetector.SimpleOnGestureListener(), BarcodeEmitter {
 
-    override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
-        return onTap(e.rawX, e.rawY) == null || super.onSingleTapConfirmed(e)
-    }
+    private val selectedBarcodePublisher: PublishSubject<Barcode> = PublishSubject.create()
+    override val selected: Observable<Barcode> = selectedBarcodePublisher
+
+    override fun onSingleTapConfirmed(e: MotionEvent): Boolean =
+        onTap(e.rawX, e.rawY) || super.onSingleTapConfirmed(e)
 
     /**
      * onTap returns the tapped barcode result to the calling Activity.
@@ -34,12 +38,12 @@ class CaptureGestureListener(
     private fun onTap(
         rawX: Float,
         rawY: Float
-    ): Barcode? {
+    ): Boolean {
         // Find tap point in preview frame coordinates.
         val location = IntArray(2)
         graphicOverlay.getLocationOnScreen(location)
-        val x: Float = (rawX - location[0]) / graphicOverlay.getWidthScaleFactor()
-        val y: Float = (rawY - location[1]) / graphicOverlay.getHeightScaleFactor()
+        val x: Float = (rawX - location[0]) / graphicOverlay.widthScaleFactor
+        val y: Float = (rawY - location[1]) / graphicOverlay.heightScaleFactor
         // Find the barcode whose center is closest to the tapped point.
         var best: Barcode? = null
         var bestDistance = Float.MAX_VALUE
@@ -57,15 +61,10 @@ class CaptureGestureListener(
                 bestDistance = distance
             }
         }
-//        if (best != null) {
-//            val data = Intent()
-//            data.putExtra(BarcodeCaptureActivity.BarcodeObject, best)
-//            setResult(CommonStatusCodes.SUCCESS, data)
-//            finish()
-//            return true
-//        }
-//        return false
-        return best
+        if (best != null) {
+            selectedBarcodePublisher.onNext(best)
+        }
+        return best==null
     }
 
 }
