@@ -4,33 +4,33 @@
   ~ All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
   -->
 
-<!--<FrameLayout-->
-<!--xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--xmlns:tools="http://schemas.android.com/tools"-->
-<!--android:id="@+id/container"-->
-<!--android:layout_width="match_parent"-->
-<!--android:layout_height="match_parent"-->
-<!--tools:context=".qrcode.QrCodeScannerActivity"/>-->
-<LinearLayout
+<FrameLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
-        android:id="@+id/topLayout"
-        android:orientation="vertical"
+        android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:keepScreenOn="true"
-        tools:context=".qrcode.QrCodeScannerActivity">
+        tools:context=".qrcode.QrCodeScannerActivity"/>
+<!--<LinearLayout-->
+        <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
+        <!--xmlns:tools="http://schemas.android.com/tools"-->
+        <!--android:id="@+id/topLayout"-->
+        <!--android:orientation="vertical"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:keepScreenOn="true"-->
+        <!--tools:context=".qrcode.QrCodeScannerActivity">-->
 
-    <io.github.slupik.universitywall.google.camera.CameraSourcePreview
-            android:id="@+id/preview"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+    <!--<io.github.slupik.universitywall.google.camera.CameraSourcePreview-->
+            <!--android:id="@+id/preview"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="match_parent">-->
 
-        <io.github.slupik.universitywall.google.camera.GraphicOverlay
-                android:id="@+id/graphicOverlay"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+        <!--<io.github.slupik.universitywall.google.camera.GraphicOverlay-->
+                <!--android:id="@+id/graphicOverlay"-->
+                <!--android:layout_width="match_parent"-->
+                <!--android:layout_height="match_parent"/>-->
 
-    </io.github.slupik.universitywall.google.camera.CameraSourcePreview>
+    <!--</io.github.slupik.universitywall.google.camera.CameraSourcePreview>-->
 
-</LinearLayout>
+<!--</LinearLayout>-->

@@ -21,13 +21,15 @@ import kotlin.reflect.KClass
  */
 abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
 
-    private lateinit var viewModel: ViewModelType
+    protected lateinit var internalViewModel: ViewModelType
+    protected lateinit var userInterface: View
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        return inflater.inflate(getLayoutId(), container, false)
+        userInterface = inflater.inflate(getLayoutId(), container, false)
+        return userInterface
     }
 
     @LayoutRes
@@ -35,11 +37,11 @@ abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProviders.of(this).get(getFragmentClass().java)
-        onViewModelCreated(viewModel)
+        internalViewModel = ViewModelProviders.of(this).get(getFragmentClass().java)
+        onViewModelCreated(internalViewModel)
     }
 
-    private fun onViewModelCreated(viewModel: ViewModelType) {}
+    protected open fun onViewModelCreated(viewModel: ViewModelType) {}
 
     abstract fun getFragmentClass(): KClass<ViewModelType>
 
