@@ -6,12 +6,8 @@
 package io.github.slupik.model
 
 /**
- * Created by Sebastian Witasik on 02.12.2019.
+ * Created by Sebastian Witasik on 06.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-data class Invitation(
-    val link: String,
-    val description: String,
-    val type: InvitationType
-)
+class DataNotMatchException: Exception()

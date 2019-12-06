@@ -5,13 +5,15 @@
 
 package io.github.slupik.model
 
+import io.reactivex.rxjava3.core.Single
+
 /**
- * Created by Sebastian Witasik on 02.12.2019.
+ * Created by Sebastian Witasik on 05.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-data class Invitation(
-    val link: String,
-    val description: String,
-    val type: InvitationType
-)
+interface InvitationFactory {
+
+    fun create(raw: String): Single<Invitation>
+
+}

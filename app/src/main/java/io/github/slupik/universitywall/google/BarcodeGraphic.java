@@ -4,13 +4,13 @@
  */
 package io.github.slupik.universitywall.google;
 
-import android.graphics.Canvas;
-import android.graphics.Color;
-import android.graphics.Paint;
-import android.graphics.RectF;
-
+import android.graphics.*;
 import com.google.android.gms.vision.barcode.Barcode;
+import io.github.slupik.model.InvitationFactory;
+import io.github.slupik.universitywall.dagger.DaggerBarcodeGraphicComponent;
 import io.github.slupik.universitywall.google.camera.GraphicOverlay;
+
+import javax.inject.Inject;
 
 /**
  * Graphic instance for rendering barcode position, size, and ID within an associated graphic
@@ -32,8 +32,14 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
     private Paint mTextPaint;
     private volatile Barcode mBarcode;
 
+    @Inject
+    InvitationFactory factory;
+
+    @Inject
     BarcodeGraphic(GraphicOverlay overlay) {
         super(overlay);
+
+        DaggerBarcodeGraphicComponent.create().inject(this);
 
         mCurrentColorIndex = (mCurrentColorIndex + 1) % COLOR_CHOICES.length;
         final int selectedColor = COLOR_CHOICES[mCurrentColorIndex];
@@ -85,9 +91,15 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
         rect.top = translateY(rect.top);
         rect.right = translateX(rect.right);
         rect.bottom = translateY(rect.bottom);
-        canvas.drawRect(rect, mRectPaint);
 
-        // Draws a label at the bottom of the barcode indicate the barcode value that was detected.
-        canvas.drawText(barcode.rawValue, rect.left, rect.bottom, mTextPaint);
+        factory.create(barcode.rawValue).subscribe(invitation -> {
+                    canvas.drawRect(rect, mRectPaint);
+                    canvas.drawText(invitation.getDescription(), rect.left, rect.bottom, mTextPaint);
+                },
+                error -> {
+                    mRectPaint.setColor(Color.RED);
+                    canvas.drawRect(rect, mRectPaint);
+                }).dispose();
     }
+
 }

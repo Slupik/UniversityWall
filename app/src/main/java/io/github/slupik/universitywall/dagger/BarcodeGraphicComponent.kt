@@ -3,15 +3,23 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.model
+package io.github.slupik.universitywall.dagger
+
+import dagger.Component
+import io.github.slupik.universitywall.google.BarcodeGraphic
 
 /**
- * Created by Sebastian Witasik on 02.12.2019.
+ * Created by Sebastian Witasik on 06.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-data class Invitation(
-    val link: String,
-    val description: String,
-    val type: InvitationType
+@Component(
+    modules = [
+        InvitationModule::class
+    ]
 )
+interface BarcodeGraphicComponent {
+
+    fun inject(clazz: BarcodeGraphic)
+
+}
