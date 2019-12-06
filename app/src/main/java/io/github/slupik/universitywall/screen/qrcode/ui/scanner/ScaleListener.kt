@@ -3,10 +3,10 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.universitywall.qrcode
+package io.github.slupik.universitywall.screen.qrcode.ui.scanner
 
 import android.view.ScaleGestureDetector
-import io.github.slupik.universitywall.google.camera.CameraSource
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSource
 
 /**
  * Created by Sebastian Witasik on 03.12.2019.

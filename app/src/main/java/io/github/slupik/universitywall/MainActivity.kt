@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
-import io.github.slupik.universitywall.qrcode.QrCodeScannerActivity
+import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 
 
 class MainActivity : AppCompatActivity() {

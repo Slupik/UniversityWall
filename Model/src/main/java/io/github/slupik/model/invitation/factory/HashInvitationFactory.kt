@@ -3,8 +3,10 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.model
+package io.github.slupik.model.invitation.factory
 
+import io.github.slupik.model.invitation.model.Invitation
+import io.github.slupik.model.invitation.model.InvitationType
 import io.reactivex.rxjava3.core.Single
 import javax.inject.Inject
 
@@ -17,7 +19,8 @@ private val PATTERN = Regex("universitywall_invite_[0-1].{0,163}([A-Z]|[0-9]){64
 private const val HASH_LENGTH = 64
 private const val DOMAIN = "https://coolapp.com/join/"
 
-class HashInvitationFactory @Inject constructor() : InvitationFactory {
+class HashInvitationFactory @Inject constructor() :
+    InvitationFactory {
 
     override fun create(raw: String): Single<Invitation> =
         if(PATTERN.matches(raw)) {
@@ -39,12 +42,12 @@ class HashInvitationFactory @Inject constructor() : InvitationFactory {
 
     private fun getDescription(raw: String): String {
         val start = "universitywall_invite_".length+1
-        return raw.substring(start, raw.length-HASH_LENGTH)
+        return raw.substring(start, raw.length- HASH_LENGTH)
     }
 
     private fun getLink(raw: String): String {
-        val hash = raw.substring(raw.length-HASH_LENGTH, raw.length)
-        return DOMAIN+hash
+        val hash = raw.substring(raw.length- HASH_LENGTH, raw.length)
+        return DOMAIN +hash
     }
 
     private fun getInvitationType(raw: String): InvitationType? {

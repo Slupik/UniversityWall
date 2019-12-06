@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.universitywall.qrcode
+package io.github.slupik.universitywall.screen.qrcode.activity
 
 import android.Manifest
 import android.app.AlertDialog
@@ -22,8 +22,9 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.vision.barcode.Barcode
 import io.github.slupik.universitywall.R
-import io.github.slupik.universitywall.google.BarcodeGraphicTracker
-import io.github.slupik.universitywall.qrcode.ui.qrcodescanner.QrCodeScannerFragment
+import io.github.slupik.universitywall.screen.qrcode.SharedViewModel
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphicTracker
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.QrCodeScannerFragment
 
 private const val RC_HANDLE_CAMERA_PERM = 2
 
@@ -68,7 +69,9 @@ class QrCodeScannerActivity : AppCompatActivity(), BarcodeGraphicTracker.Barcode
                 Manifest.permission.CAMERA
             )
         ) {
-            ActivityCompat.requestPermissions(this, permissions, RC_HANDLE_CAMERA_PERM)
+            ActivityCompat.requestPermissions(this, permissions,
+                RC_HANDLE_CAMERA_PERM
+            )
             return
         }
         val listener = View.OnClickListener {

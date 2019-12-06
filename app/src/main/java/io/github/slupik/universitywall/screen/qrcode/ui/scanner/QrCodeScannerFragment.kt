@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.universitywall.qrcode.ui.qrcodescanner
+package io.github.slupik.universitywall.screen.qrcode.ui.scanner
 
 import android.hardware.Camera
 import android.os.Bundle
@@ -19,14 +19,12 @@ import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.snackbar.Snackbar
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
-import io.github.slupik.universitywall.google.BarcodeGraphic
-import io.github.slupik.universitywall.google.BarcodeTrackerFactory
-import io.github.slupik.universitywall.google.camera.CameraSource
-import io.github.slupik.universitywall.google.camera.CameraSourcePreview
-import io.github.slupik.universitywall.google.camera.GraphicOverlay
-import io.github.slupik.universitywall.qrcode.CaptureGestureListener
-import io.github.slupik.universitywall.qrcode.ScaleListener
-import io.github.slupik.universitywall.qrcode.SharedViewModel
+import io.github.slupik.universitywall.screen.qrcode.SharedViewModel
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeTrackerFactory
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSource
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSourcePreview
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay
 import java.io.IOException
 import kotlin.reflect.KClass
 
@@ -58,14 +56,18 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         mGraphicOverlay = activity?.findViewById<GraphicOverlay<BarcodeGraphic>?>(R.id.graphicOverlay)
 
 
-        val captureGestureListener = CaptureGestureListener(mGraphicOverlay!!)
+        val captureGestureListener =
+            CaptureGestureListener(
+                mGraphicOverlay!!
+            )
         captureGestureListener.selected.subscribe {
             Log.d("BARCODE", it.rawValue)
         }
         gestureDetector = GestureDetector(context, captureGestureListener)
-        scaleGestureDetector = ScaleGestureDetector(context, ScaleListener {
-            mCameraSource!!
-        })
+        scaleGestureDetector = ScaleGestureDetector(context,
+            ScaleListener {
+                mCameraSource!!
+            })
 
         Snackbar.make(
             mGraphicOverlay!!,
@@ -76,7 +78,11 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
 
     private fun createCameraSource(autoFocus: Boolean, useFlash: Boolean) {
         val barcodeDetector = BarcodeDetector.Builder(context).build()
-        val barcodeFactory = BarcodeTrackerFactory(mGraphicOverlay, context)
+        val barcodeFactory =
+            BarcodeTrackerFactory(
+                mGraphicOverlay,
+                context
+            )
         barcodeDetector.setProcessor(
             MultiProcessor.Builder(barcodeFactory).build()
         )
@@ -138,7 +144,9 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         )
         if (code != ConnectionResult.SUCCESS) {
             val dlg =
-                GoogleApiAvailability.getInstance().getErrorDialog(activity, code, RC_HANDLE_GMS)
+                GoogleApiAvailability.getInstance().getErrorDialog(activity, code,
+                    RC_HANDLE_GMS
+                )
             dlg.show()
         }
         if (mCameraSource != null) {

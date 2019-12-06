@@ -10,7 +10,7 @@
         android:id="@+id/container"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".qrcode.QrCodeScannerActivity"/>
+        tools:context=".screen.qrcode.activity.QrCodeScannerActivity"/>
 <!--<LinearLayout-->
         <!--xmlns:android="http://schemas.android.com/apk/res/android"-->
         <!--xmlns:tools="http://schemas.android.com/tools"-->
@@ -21,16 +21,16 @@
         <!--android:keepScreenOn="true"-->
         <!--tools:context=".qrcode.QrCodeScannerActivity">-->
 
-    <!--<io.github.slupik.universitywall.google.camera.CameraSourcePreview-->
+    <!--<CameraSourcePreview-->
             <!--android:id="@+id/preview"-->
             <!--android:layout_width="match_parent"-->
             <!--android:layout_height="match_parent">-->
 
-        <!--<io.github.slupik.universitywall.google.camera.GraphicOverlay-->
+        <!--<GraphicOverlay-->
                 <!--android:id="@+id/graphicOverlay"-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="match_parent"/>-->
 
-    <!--</io.github.slupik.universitywall.google.camera.CameraSourcePreview>-->
+    <!--</CameraSourcePreview>-->
 
 <!--</LinearLayout>-->

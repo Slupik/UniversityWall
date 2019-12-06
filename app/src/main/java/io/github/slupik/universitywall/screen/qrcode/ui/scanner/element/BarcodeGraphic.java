@@ -2,13 +2,13 @@
  * Copyright (c) 2019. by Sebastian Witasik
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
-package io.github.slupik.universitywall.google;
+package io.github.slupik.universitywall.screen.qrcode.ui.scanner.element;
 
 import android.graphics.*;
 import com.google.android.gms.vision.barcode.Barcode;
-import io.github.slupik.model.InvitationFactory;
+import io.github.slupik.model.invitation.factory.InvitationFactory;
 import io.github.slupik.universitywall.dagger.DaggerBarcodeGraphicComponent;
-import io.github.slupik.universitywall.google.camera.GraphicOverlay;
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 import javax.inject.Inject;
 

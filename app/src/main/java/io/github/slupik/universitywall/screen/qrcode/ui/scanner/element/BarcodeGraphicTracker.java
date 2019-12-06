@@ -2,14 +2,14 @@
  * Copyright (c) 2019. by Sebastian Witasik
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
-package io.github.slupik.universitywall.google;
+package io.github.slupik.universitywall.screen.qrcode.ui.scanner.element;
 
 import android.content.Context;
 import androidx.annotation.UiThread;
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
-import io.github.slupik.universitywall.google.camera.GraphicOverlay;
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 /**
  * Generic tracker which is used for tracking or reading a barcode (and can really be used for

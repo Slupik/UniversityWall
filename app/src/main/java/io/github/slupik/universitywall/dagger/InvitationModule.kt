@@ -7,8 +7,8 @@ package io.github.slupik.universitywall.dagger
 
 import dagger.Binds
 import dagger.Module
-import io.github.slupik.model.HashInvitationFactory
-import io.github.slupik.model.InvitationFactory
+import io.github.slupik.model.invitation.factory.HashInvitationFactory
+import io.github.slupik.model.invitation.factory.InvitationFactory
 
 /**
  * Created by Sebastian Witasik on 05.12.2019.

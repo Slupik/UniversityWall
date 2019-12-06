@@ -3,13 +3,14 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.universitywall.qrcode
+package io.github.slupik.universitywall.screen.qrcode.ui.scanner
 
 import android.view.GestureDetector
 import android.view.MotionEvent
 import com.google.android.gms.vision.barcode.Barcode
-import io.github.slupik.universitywall.google.BarcodeGraphic
-import io.github.slupik.universitywall.google.camera.GraphicOverlay
+import io.github.slupik.universitywall.screen.qrcode.BarcodeEmitter
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay
 import io.reactivex.rxjava3.core.Observable
 import io.reactivex.rxjava3.subjects.PublishSubject
 
@@ -20,7 +21,8 @@ import io.reactivex.rxjava3.subjects.PublishSubject
  */
 class CaptureGestureListener(
     private val graphicOverlay: GraphicOverlay<BarcodeGraphic>
-): GestureDetector.SimpleOnGestureListener(), BarcodeEmitter {
+) : GestureDetector.SimpleOnGestureListener(),
+    BarcodeEmitter {
 
     private val selectedBarcodePublisher: PublishSubject<Barcode> = PublishSubject.create()
     override val selected: Observable<Barcode> = selectedBarcodePublisher
@@ -49,7 +51,11 @@ class CaptureGestureListener(
         var bestDistance = Float.MAX_VALUE
         for (graphic in graphicOverlay.graphics) {
             val barcode = graphic.barcode
-            if (barcode.boundingBox.contains(x.toInt(), y.toInt())) { // Exact hit, no need to keep looking.
+            if (barcode.boundingBox.contains(
+                    x.toInt(),
+                    y.toInt()
+                )
+            ) { // Exact hit, no need to keep looking.
                 best = barcode
                 break
             }
@@ -64,7 +70,7 @@ class CaptureGestureListener(
         if (best != null) {
             selectedBarcodePublisher.onNext(best)
         }
-        return best==null
+        return best == null
     }
 
 }

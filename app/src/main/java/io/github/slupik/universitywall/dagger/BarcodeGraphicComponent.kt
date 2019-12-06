@@ -6,7 +6,7 @@
 package io.github.slupik.universitywall.dagger
 
 import dagger.Component
-import io.github.slupik.universitywall.google.BarcodeGraphic
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
 
 /**
  * Created by Sebastian Witasik on 06.12.2019.

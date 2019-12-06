@@ -12,18 +12,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:keepScreenOn="true"
-        tools:context=".qrcode.ui.qrcodescanner.QrCodeScannerFragment">
+        tools:context=".screen.qrcode.ui.scanner.QrCodeScannerFragment">
 
-    <io.github.slupik.universitywall.google.camera.CameraSourcePreview
+    <io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSourcePreview
             android:id="@+id/preview"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-        <io.github.slupik.universitywall.google.camera.GraphicOverlay
+        <io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay
                 android:id="@+id/graphicOverlay"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
-    </io.github.slupik.universitywall.google.camera.CameraSourcePreview>
+    </io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSourcePreview>
 
 </LinearLayout>
