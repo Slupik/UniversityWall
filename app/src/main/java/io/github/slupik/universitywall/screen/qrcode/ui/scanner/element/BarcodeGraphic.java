@@ -4,13 +4,18 @@
  */
 package io.github.slupik.universitywall.screen.qrcode.ui.scanner.element;
 
-import android.graphics.*;
+import android.graphics.Canvas;
+import android.graphics.Color;
+import android.graphics.Paint;
+import android.graphics.RectF;
+
 import com.google.android.gms.vision.barcode.Barcode;
-import io.github.slupik.model.invitation.factory.InvitationFactory;
-import io.github.slupik.universitywall.dagger.DaggerBarcodeGraphicComponent;
-import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 import javax.inject.Inject;
+
+import io.github.slupik.model.invitation.factory.InvitationFactory;
+import io.github.slupik.universitywall.dagger.DaggerApplicationComponent;
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 /**
  * Graphic instance for rendering barcode position, size, and ID within an associated graphic
@@ -39,7 +44,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
     BarcodeGraphic(GraphicOverlay overlay) {
         super(overlay);
 
-        DaggerBarcodeGraphicComponent.create().inject(this);
+        DaggerApplicationComponent.create().inject(this);
 
         mCurrentColorIndex = (mCurrentColorIndex + 1) % COLOR_CHOICES.length;
         final int selectedColor = COLOR_CHOICES[mCurrentColorIndex];

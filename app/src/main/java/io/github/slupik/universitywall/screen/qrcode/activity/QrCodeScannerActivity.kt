@@ -16,25 +16,32 @@ import android.util.Log
 import android.view.MotionEvent
 import android.view.View
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.vision.barcode.Barcode
+import io.github.slupik.model.invitation.providing.InvitationEmitter
 import io.github.slupik.universitywall.R
+import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.screen.qrcode.SharedViewModel
-import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphicTracker
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.QrCodeScannerFragment
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphicTracker
+import javax.inject.Inject
 
 private const val RC_HANDLE_CAMERA_PERM = 2
 
-class QrCodeScannerActivity : AppCompatActivity(), BarcodeGraphicTracker.BarcodeUpdateListener  {
+class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateListener  {
 
     private lateinit var sharedViewModel: SharedViewModel
 
+    @Inject
+    lateinit var invitationEmitter: InvitationEmitter
+
     override fun onCreate(savedInstanceState: Bundle?) {
+        dependencyInjectionComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_code_scanner_activity)
+
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, QrCodeScannerFragment.newInstance())
@@ -59,6 +66,9 @@ class QrCodeScannerActivity : AppCompatActivity(), BarcodeGraphicTracker.Barcode
             sharedViewModel.cameraPermissionGranted.postValue(true)
         } else {
             requestCameraPermission()
+        }
+        invitationEmitter.invitations.subscribe {
+            Log.d("BARCODE", it.description)
         }
     }
 

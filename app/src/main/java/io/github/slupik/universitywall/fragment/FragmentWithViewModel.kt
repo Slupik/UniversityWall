@@ -11,6 +11,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModelProviders
+import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.viewmodel.ViewModel
 import kotlin.reflect.KClass
 

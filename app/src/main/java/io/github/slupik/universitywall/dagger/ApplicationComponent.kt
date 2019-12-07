@@ -6,7 +6,10 @@
 package io.github.slupik.universitywall.dagger
 
 import dagger.Component
+import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
+import io.github.slupik.universitywall.screen.qrcode.ui.scanner.QrCodeScannerFragment
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
+import javax.inject.Singleton
 
 /**
  * Created by Sebastian Witasik on 06.12.2019.
@@ -18,8 +21,11 @@ import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeG
         InvitationModule::class
     ]
 )
-interface BarcodeGraphicComponent {
+@Singleton
+interface ApplicationComponent {
 
     fun inject(clazz: BarcodeGraphic)
+    fun inject(clazz: QrCodeScannerFragment)
+    fun inject(clazz: QrCodeScannerActivity)
 
 }

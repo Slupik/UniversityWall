@@ -17,15 +17,19 @@ import com.google.android.gms.common.GoogleApiAvailability
 import com.google.android.gms.vision.MultiProcessor
 import com.google.android.gms.vision.barcode.BarcodeDetector
 import com.google.android.material.snackbar.Snackbar
+import io.github.slupik.model.invitation.factory.InvitationFactory
+import io.github.slupik.model.invitation.providing.InvitationBroadcaster
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
 import io.github.slupik.universitywall.screen.qrcode.SharedViewModel
+import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeTrackerFactory
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSource
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.CameraSourcePreview
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay
 import java.io.IOException
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
 // intent request code to handle updating play services if needed.
@@ -44,6 +48,11 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
     private lateinit var scaleGestureDetector: ScaleGestureDetector
     private lateinit var gestureDetector: GestureDetector
 
+    @Inject
+    lateinit var invitationBroadcaster: InvitationBroadcaster
+    @Inject
+    lateinit var invitationFactory: InvitationFactory
+
     override fun getLayoutId(): Int =
         R.layout.qr_code_scanner_fragment
 
@@ -51,7 +60,9 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         QrCodeScannerViewModel::class
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
+        (activity as QrCodeScannerActivity).dependencyInjectionComponent.inject(this)
         super.onActivityCreated(savedInstanceState)
+
         mPreview = activity?.findViewById(R.id.preview)
         mGraphicOverlay = activity?.findViewById<GraphicOverlay<BarcodeGraphic>?>(R.id.graphicOverlay)
 
@@ -60,9 +71,15 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
             CaptureGestureListener(
                 mGraphicOverlay!!
             )
-        captureGestureListener.selected.subscribe {
-            Log.d("BARCODE", it.rawValue)
+        captureGestureListener.selected.subscribe {barcode ->
+            invitationFactory
+                .create(barcode.rawValue)
+                .doOnSuccess {invitation ->
+                    invitationBroadcaster.broadcast(invitation)
+                }
+                .subscribe()
         }
+
         gestureDetector = GestureDetector(context, captureGestureListener)
         scaleGestureDetector = ScaleGestureDetector(context,
             ScaleListener {

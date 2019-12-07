@@ -9,6 +9,9 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.invitation.factory.HashInvitationFactory
 import io.github.slupik.model.invitation.factory.InvitationFactory
+import io.github.slupik.model.invitation.providing.InvitationBroadcaster
+import io.github.slupik.model.invitation.providing.InvitationEmitter
+import io.github.slupik.model.invitation.providing.InvitationPublisher
 
 /**
  * Created by Sebastian Witasik on 05.12.2019.
@@ -20,5 +23,11 @@ abstract class InvitationModule {
 
     @Binds
     abstract fun invitationFactory(factory: HashInvitationFactory): InvitationFactory
+
+    @Binds
+    abstract fun invitationBroadcaster(publisher: InvitationPublisher): InvitationBroadcaster
+
+    @Binds
+    abstract fun invitationEmitter(publisher: InvitationPublisher): InvitationEmitter
 
 }
