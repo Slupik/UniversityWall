@@ -1,7 +1,11 @@
 package io.github.slupik.universitywall
 
-import androidx.appcompat.app.AppCompatActivity
+import android.content.Intent
 import android.os.Bundle
+import android.view.View
+import androidx.appcompat.app.AppCompatActivity
+import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -9,4 +13,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
+
+    fun startQrActivity(view: View) {
+//        val intent = Intent(this, GoogleMainActivity::class.java)
+        val intent = Intent(this, QrCodeScannerActivity::class.java)
+        startActivity(
+            intent,
+            null
+        )
+    }
+
 }
