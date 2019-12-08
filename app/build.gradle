@@ -53,9 +53,15 @@ dependencies {
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
     implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.0.1'
     // https://mvnrepository.com/artifact/com.google.dagger/dagger
-    implementation group: 'com.google.dagger', name: 'dagger', version: '2.25.2'
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    api 'com.google.dagger:dagger-android:2.25.2'
+    api 'com.google.dagger:dagger-android-support:2.25.2' // if you use the support libraries
+    api 'com.google.dagger:dagger:2.25.2'
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.25.2'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
+
+
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.core:core-ktx:1.1.0'
