@@ -11,7 +11,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModelProviders
-import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.viewmodel.ViewModel
 import kotlin.reflect.KClass
 
@@ -39,7 +38,14 @@ abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         internalViewModel = ViewModelProviders.of(this).get(getFragmentClass().java)
+        bindModelToView()
         onViewModelCreated(internalViewModel)
+    }
+
+    open protected fun bindModelToView() {
+//        val binding: ...Binding =
+//            DataBindingUtil.setContentView(activity!!, getLayoutId())
+//        binding.viewmodel = internalViewModel
     }
 
     protected open fun onViewModelCreated(viewModel: ViewModelType) {}

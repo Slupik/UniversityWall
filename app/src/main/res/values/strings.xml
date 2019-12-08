@@ -15,4 +15,13 @@
     <string name="barcode_success">Barcode read successfully</string>
     <string name="barcode_failure">No barcode captured</string>
     <string name="barcode_error">"Error reading barcode: %1$s"</string>
+
+    <!--    login fragment    -->
+    <string name="wrong_login">Wrong login</string>
+    <string name="wrong_password">Wrong password</string>
+    <string name="login_form_password">Password</string>
+    <string name="login_form_login">Login</string>
+    <string name="login_form_button">Log In</string>
+
+<!--    -->
 </resources>
