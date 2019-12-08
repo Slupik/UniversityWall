@@ -7,13 +7,14 @@ package io.github.slupik.network.authorization.retrofit
 
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.network.ResponseConverter
+import javax.inject.Inject
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class AuthorizationResponseConverter: ResponseConverter<AuthorizationResponse, AuthorizationResult>() {
+class AuthorizationResponseConverter @Inject constructor(): ResponseConverter<AuthorizationResponse, AuthorizationResult>() {
 
     override fun convert(response: AuthorizationResponse): AuthorizationResult {
         if(!response.validLogin) {
