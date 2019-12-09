@@ -10,25 +10,17 @@ class LoginViewLogic @Inject constructor(
     private val authorizer: Authorizer
 ) {
 
-//    private lateinit var stateChanger: (LoginViewState) -> Unit
     private lateinit var viewModel: LoginViewModel
-//
+
     fun inject(viewModel: LoginViewModel) {
         this.viewModel = viewModel
     }
-//
-//    fun inject(stateChanger: (LoginViewState)->Unit) {
-//        this.stateChanger = stateChanger
-//    }
 
     fun onLogIn() {
-//        Log.d("BARCODE_T", "onLogIn")
         if(viewModel.login.value.isNullOrBlank()) {
-//            Log.d("BARCODE_T", "isNullOrBlank 0")
             viewModel.viewState.postValue(
                 WrongLoginViewState()
             )
-//            Log.d("BARCODE_T", "isNullOrBlank 1")
             return
         }
         if(viewModel.password.value.isNullOrBlank()) {
@@ -63,7 +55,7 @@ class LoginViewLogic @Inject constructor(
                     )
                 }
                 AuthorizationResult.SUCCESS -> {
-
+                    //TODO move to main screen
                 }
             }
         }

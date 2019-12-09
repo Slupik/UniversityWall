@@ -26,16 +26,21 @@ class ServerAuthorizer @Inject constructor(
 ): Authorizer {
 
     override fun logIn(login: String, password: String): Single<AuthorizationResult> =
-        service.authorize(login, password)
-            .doOnSuccess { response ->
-                if(response.token.isNotEmpty()) {
-                    saver.save(login, password)
+        try {
+            service.authorize(login, password)
+                .doOnSuccess { response ->
+                    if(response.token.isNotEmpty()) {
+                        saver.save(login, password)
+                    }
                 }
-            }
-            .map(converter::convert)
-            .onErrorReturn {
-                it.printStackTrace()
-                AuthorizationResult.CONNECTION_ERROR
-            }
+                .map(converter::convert)
+                .onErrorReturn {
+                    it.printStackTrace()
+                    AuthorizationResult.CONNECTION_ERROR
+                }
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Single.just(AuthorizationResult.CONNECTION_ERROR)
+        }
 
 }

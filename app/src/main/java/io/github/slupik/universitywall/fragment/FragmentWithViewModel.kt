@@ -54,6 +54,9 @@ abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
 //        val binding: ...Binding =
 //            DataBindingUtil.setContentView(activity!!, getLayoutId())
 //        binding.viewmodel = internalViewModel
+//        binding.setLifecycleOwner {
+//            viewLifecycleOwner.lifecycle
+//        }
     }
 
     protected open fun onViewModelCreated(viewModel: ViewModelType) {}

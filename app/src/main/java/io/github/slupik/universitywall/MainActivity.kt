@@ -15,18 +15,13 @@ class MainActivity : Activity() {
         setContentView(R.layout.activity_main)
 
         if (savedInstanceState == null) {
-            val fragment = LoginFragment.newInstance()
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
+                .replace(R.id.container, LoginFragment.newInstance())
                 .commitNow()
-            fragment.injectLogic(
-                dependencyInjectionComponent.provideLoginViewLogic()
-            )
         }
     }
 
     fun startQrActivity(view: View) {
-//        val intent = Intent(this, GoogleMainActivity::class.java)
         val intent = Intent(this, QrCodeScannerActivity::class.java)
         startActivity(
             intent,

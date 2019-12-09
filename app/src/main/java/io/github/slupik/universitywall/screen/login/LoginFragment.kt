@@ -9,11 +9,13 @@ import androidx.databinding.DataBindingUtil
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.LoginFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
 class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
 
-    private lateinit var viewLogic: LoginViewLogic
+    @Inject
+    lateinit var viewLogic: LoginViewLogic
 
     companion object {
         fun newInstance() = LoginFragment()
@@ -25,17 +27,9 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
     override fun getFragmentClass(): KClass<LoginViewModel> =
         LoginViewModel::class
 
-    fun injectLogic(logic: LoginViewLogic) {
-        viewLogic = logic
-    }
-
     override fun onViewModelCreated(viewModel: LoginViewModel) {
         super.onViewModelCreated(viewModel)
-//        viewLogic.inject {
-//            Log.d("BARCODE_T", "injected "+internalViewModel.hashCode())
-//            internalViewModel.viewState.postValue(it)
-//            internalViewModel.login.postValue("test 2")
-//        }
+        dependencyInjectionComponent.inject(this)
         viewLogic.inject(internalViewModel)
         internalViewModel.setLogic(viewLogic)
         setupView()
@@ -43,9 +37,7 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
 
     private fun setupView() {
         internalViewModel.viewState.postValue(StartViewState())
-//        internalViewModel.login.postValue("")
-        internalViewModel.login.postValue("test raw")
-        internalViewModel.login.postValue("test raw 2")
+        internalViewModel.login.postValue("")
         internalViewModel.password.postValue("")
     }
 
@@ -53,9 +45,8 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
         val binding: LoginFragmentBinding =
             DataBindingUtil.setContentView(activity!!, getLayoutId())
         binding.viewmodel = internalViewModel
-        binding.invalidateAll()
-        internalViewModel.setupInvalidator {
-            binding.invalidateAll()
+        binding.setLifecycleOwner {
+            viewLifecycleOwner.lifecycle
         }
     }
 
