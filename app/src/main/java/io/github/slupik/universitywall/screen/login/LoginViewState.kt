@@ -16,22 +16,28 @@ import android.view.View.VISIBLE
 sealed class LoginViewState(
     val loading: Int = GONE,
     val wrongLogin: Int = GONE,
-    val wrongPassword: Int = GONE
+    val wrongPassword: Int = GONE,
+    val connectionError: Int = GONE
 )
 
-class StartViewState(): LoginViewState()
+class StartViewState : LoginViewState()
 
-class WrongLoginViewState():
+class WrongLoginViewState :
     LoginViewState(
         wrongLogin = VISIBLE
     )
 
-class WrongPasswordViewState():
+class WrongPasswordViewState :
     LoginViewState(
         wrongPassword = VISIBLE
     )
 
-class LoadingDataViewState():
+class LoadingDataViewState :
     LoginViewState(
         loading = VISIBLE
+    )
+
+class ConnectionErrorViewState :
+    LoginViewState(
+        connectionError = VISIBLE
     )

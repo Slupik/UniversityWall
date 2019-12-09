@@ -16,7 +16,7 @@ import retrofit2.http.Header
  */
 interface AuthorizationService {
 
-    @GET("")
+    @GET("temp")
     fun authorize(@Header("login") login: String, @Header("password") password: String): Single<AuthorizationResponse>
 
 }

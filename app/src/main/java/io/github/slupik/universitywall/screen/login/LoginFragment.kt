@@ -13,6 +13,8 @@ import kotlin.reflect.KClass
 
 class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
 
+    private lateinit var viewLogic: LoginViewLogic
+
     companion object {
         fun newInstance() = LoginFragment()
     }
@@ -23,15 +25,38 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
     override fun getFragmentClass(): KClass<LoginViewModel> =
         LoginViewModel::class
 
+    fun injectLogic(logic: LoginViewLogic) {
+        viewLogic = logic
+    }
+
     override fun onViewModelCreated(viewModel: LoginViewModel) {
         super.onViewModelCreated(viewModel)
+//        viewLogic.inject {
+//            Log.d("BARCODE_T", "injected "+internalViewModel.hashCode())
+//            internalViewModel.viewState.postValue(it)
+//            internalViewModel.login.postValue("test 2")
+//        }
+        viewLogic.inject(internalViewModel)
+        internalViewModel.setLogic(viewLogic)
+        setupView()
+    }
+
+    private fun setupView() {
         internalViewModel.viewState.postValue(StartViewState())
+//        internalViewModel.login.postValue("")
+        internalViewModel.login.postValue("test raw")
+        internalViewModel.login.postValue("test raw 2")
+        internalViewModel.password.postValue("")
     }
 
     override fun bindModelToView() {
         val binding: LoginFragmentBinding =
             DataBindingUtil.setContentView(activity!!, getLayoutId())
         binding.viewmodel = internalViewModel
+        binding.invalidateAll()
+        internalViewModel.setupInvalidator {
+            binding.invalidateAll()
+        }
     }
 
 }

@@ -14,7 +14,6 @@ import com.google.android.gms.vision.barcode.Barcode;
 import javax.inject.Inject;
 
 import io.github.slupik.model.invitation.factory.InvitationFactory;
-import io.github.slupik.universitywall.dagger.DaggerApplicationComponent;
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 /**
@@ -36,15 +35,13 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
     private Paint mRectPaint;
     private Paint mTextPaint;
     private volatile Barcode mBarcode;
+    private InvitationFactory mInvitationFactory;
 
     @Inject
-    InvitationFactory factory;
-
-    @Inject
-    BarcodeGraphic(GraphicOverlay overlay) {
+    BarcodeGraphic(GraphicOverlay overlay, InvitationFactory factory) {
         super(overlay);
 
-        DaggerApplicationComponent.create().inject(this);
+        this.mInvitationFactory = factory;
 
         mCurrentColorIndex = (mCurrentColorIndex + 1) % COLOR_CHOICES.length;
         final int selectedColor = COLOR_CHOICES[mCurrentColorIndex];
@@ -97,7 +94,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
         rect.right = translateX(rect.right);
         rect.bottom = translateY(rect.bottom);
 
-        factory.create(barcode.rawValue).subscribe(invitation -> {
+        mInvitationFactory.create(barcode.rawValue).subscribe(invitation -> {
                     canvas.drawRect(rect, mRectPaint);
                     canvas.drawText(invitation.getDescription(), rect.left, rect.bottom, mTextPaint);
                 },

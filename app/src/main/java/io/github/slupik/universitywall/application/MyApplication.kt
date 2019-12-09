@@ -7,6 +7,7 @@ package io.github.slupik.universitywall.application
 
 import android.app.Application
 import io.github.slupik.universitywall.dagger.ApplicationComponent
+import io.github.slupik.universitywall.dagger.ContextModule
 import io.github.slupik.universitywall.dagger.DaggerApplicationComponent
 
 /**
@@ -19,7 +20,12 @@ class MyApplication: Application() {
     lateinit var mainComponent: ApplicationComponent
 
     override fun onCreate() {
-        mainComponent = DaggerApplicationComponent.create()
+        mainComponent = DaggerApplicationComponent
+            .builder()
+            .contextModule(
+                ContextModule(this)
+            )
+            .build()
         super.onCreate()
     }
 

@@ -31,6 +31,11 @@ class ServerAuthorizer @Inject constructor(
                 if(response.token.isNotEmpty()) {
                     saver.save(login, password)
                 }
-            }.map(converter::convert)
+            }
+            .map(converter::convert)
+            .onErrorReturn {
+                it.printStackTrace()
+                AuthorizationResult.CONNECTION_ERROR
+            }
 
 }

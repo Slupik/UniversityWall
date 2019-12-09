@@ -98,7 +98,8 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         val barcodeFactory =
             BarcodeTrackerFactory(
                 mGraphicOverlay,
-                context
+                context,
+                invitationFactory
             )
         barcodeDetector.setProcessor(
             MultiProcessor.Builder(barcodeFactory).build()

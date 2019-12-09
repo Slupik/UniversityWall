@@ -9,6 +9,8 @@ import android.content.Context;
 import com.google.android.gms.vision.MultiProcessor;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
+
+import io.github.slupik.model.invitation.factory.InvitationFactory;
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 /**
@@ -18,16 +20,19 @@ import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.G
 public class BarcodeTrackerFactory implements MultiProcessor.Factory<Barcode> {
     private GraphicOverlay<BarcodeGraphic> mGraphicOverlay;
     private Context mContext;
+    private InvitationFactory mFactory;
 
     public BarcodeTrackerFactory(GraphicOverlay<BarcodeGraphic> mGraphicOverlay,
-                                 Context mContext) {
+                                 Context mContext,
+                                 InvitationFactory factory) {
         this.mGraphicOverlay = mGraphicOverlay;
         this.mContext = mContext;
+        mFactory = factory;
     }
 
     @Override
     public Tracker<Barcode> create(Barcode barcode) {
-        BarcodeGraphic graphic = new BarcodeGraphic(mGraphicOverlay);
+        BarcodeGraphic graphic = new BarcodeGraphic(mGraphicOverlay, mFactory);
         return new BarcodeGraphicTracker(mGraphicOverlay, graphic, mContext);
     }
 
