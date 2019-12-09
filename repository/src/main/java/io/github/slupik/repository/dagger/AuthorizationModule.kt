@@ -9,7 +9,7 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.model.authorization.credentials.CredentialsProvider
-import io.github.slupik.repository.sharedpreferences.SharedPreferencesRepository
+import io.github.slupik.repository.credential.SharedPreferencesCredentialRepository
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.
@@ -20,9 +20,9 @@ import io.github.slupik.repository.sharedpreferences.SharedPreferencesRepository
 abstract class AuthorizationModule {
 
     @Binds
-    abstract fun credentialSaver(repository: SharedPreferencesRepository): CredentialSaver
+    abstract fun credentialSaver(repository: SharedPreferencesCredentialRepository): CredentialSaver
 
     @Binds
-    abstract fun credentialProvider(repository: SharedPreferencesRepository): CredentialsProvider
+    abstract fun credentialProvider(repository: SharedPreferencesCredentialRepository): CredentialsProvider
 
 }

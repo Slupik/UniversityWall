@@ -6,7 +6,6 @@
 package io.github.slupik.network.dagger
 
 import dagger.Module
-import io.github.slupik.network.authorization.retrofit.AuthorizationService
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.
@@ -16,7 +15,7 @@ import io.github.slupik.network.authorization.retrofit.AuthorizationService
 @Module(
     includes = [
         RetrofitServices::class,
-        AuthorizationService::class
+        AuthorizationModule::class
     ]
 )
 class NetworkModule

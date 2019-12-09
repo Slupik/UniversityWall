@@ -37,7 +37,9 @@ dependencies {
 
     implementation project(':Model')
 
-    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+
+    api 'com.squareup.retrofit2:retrofit:2.6.2'
     implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
     implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
     // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava

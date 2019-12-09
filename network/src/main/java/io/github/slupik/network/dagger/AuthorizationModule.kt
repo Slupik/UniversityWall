@@ -15,6 +15,8 @@ import io.github.slupik.network.authorization.ServerAuthorizationStateProvider
 import io.github.slupik.network.authorization.authorizer.ServerAuthorizer
 import io.github.slupik.network.authorization.retrofit.AuthorizationResponse
 import io.github.slupik.network.authorization.retrofit.AuthorizationResponseConverter
+import io.github.slupik.network.authorization.token.ServerTokenHolder
+import io.github.slupik.network.authorization.token.TokenHolder
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.
@@ -35,5 +37,9 @@ abstract class AuthorizationModule {
     @Binds
     abstract fun authorizationStateProvider(stateProvider: ServerAuthorizationStateProvider):
             AuthorizationStateProvider
+
+    @Binds
+    abstract fun tokenHolder(holder: ServerTokenHolder):
+            TokenHolder
 
 }
