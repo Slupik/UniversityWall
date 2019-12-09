@@ -24,5 +24,6 @@
     <string name="login_form_button">Log In</string>
     <string name="connection_error_login">Connection error. Try again later.</string>
 
-    <!--    -->
+    <!--    messages list fragment    -->
+    <string name="messages_list_refresh">Refresh</string>
 </resources>
