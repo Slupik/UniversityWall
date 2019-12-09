@@ -1,1 +1,1 @@
-include ':app', ':Model', ':network', ':qrcode'
+include ':app', ':Model', ':network', ':repository'
