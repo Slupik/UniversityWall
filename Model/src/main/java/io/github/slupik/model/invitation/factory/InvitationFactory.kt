@@ -6,7 +6,7 @@
 package io.github.slupik.model.invitation.factory
 
 import io.github.slupik.model.invitation.model.Invitation
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 /**
  * Created by Sebastian Witasik on 05.12.2019.

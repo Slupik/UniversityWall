@@ -7,7 +7,7 @@ package io.github.slupik.model.invitation.factory
 
 import io.github.slupik.model.invitation.model.Invitation
 import io.github.slupik.model.invitation.model.InvitationType
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**

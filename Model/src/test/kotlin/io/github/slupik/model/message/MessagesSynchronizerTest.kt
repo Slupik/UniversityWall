@@ -7,8 +7,8 @@ package io.github.slupik.model.message
 
 import com.nhaarman.mockitokotlin2.any
 import com.nhaarman.mockitokotlin2.whenever
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Completable
+import io.reactivex.Single
 import io.reactivex.rxjava3.subscribers.TestSubscriber
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test

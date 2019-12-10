@@ -9,9 +9,9 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.reactivex.rxjava3.core.Completable
-import io.reactivex.rxjava3.core.Flowable
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Flowable
+import io.reactivex.Completable
+import io.reactivex.Single
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.

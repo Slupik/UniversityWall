@@ -9,6 +9,8 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
+import io.github.slupik.repository.message.converter.DateTimeConverter
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -16,6 +18,7 @@ import androidx.room.RoomDatabase
  * All rights reserved & copyright ©
  */
 @Database(entities = arrayOf(MessageEntity::class), version = 1)
+@TypeConverters(DateTimeConverter::class)
 abstract class MessagesDatabase : RoomDatabase() {
 
     abstract fun messageDao(): MessageDao

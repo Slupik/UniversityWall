@@ -11,10 +11,10 @@ dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
 
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava3/rxjava
-    implementation group: 'io.reactivex.rxjava3', name: 'rxjava', version: '3.0.0-RC5'
+    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
+    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.15'
     // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxkotlin
-    implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.0.0'
+    implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.4.0'
     // https://mvnrepository.com/artifact/com.google.dagger/dagger
     api 'com.google.dagger:dagger:2.25.2'
     kapt 'com.google.dagger:dagger-compiler:2.25.2'

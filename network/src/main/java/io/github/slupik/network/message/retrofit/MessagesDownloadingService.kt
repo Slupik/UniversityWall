@@ -6,7 +6,7 @@
 package io.github.slupik.network.message.retrofit
 
 import io.github.slupik.network.message.model.MessageListResponse
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header
 

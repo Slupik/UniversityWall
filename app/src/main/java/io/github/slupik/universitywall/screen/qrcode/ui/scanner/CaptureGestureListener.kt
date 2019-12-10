@@ -11,8 +11,8 @@ import com.google.android.gms.vision.barcode.Barcode
 import io.github.slupik.universitywall.screen.qrcode.BarcodeEmitter
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 
 /**
  * Created by Sebastian Witasik on 03.12.2019.

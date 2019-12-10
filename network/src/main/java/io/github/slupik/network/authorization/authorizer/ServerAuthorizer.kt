@@ -11,7 +11,7 @@ import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.retrofit.AuthorizationResponse
 import io.github.slupik.network.authorization.retrofit.AuthorizationService
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**

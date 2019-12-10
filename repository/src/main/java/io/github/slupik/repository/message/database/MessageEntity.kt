@@ -8,7 +8,7 @@ package io.github.slupik.repository.message.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.time.OffsetDateTime
+import org.threeten.bp.OffsetDateTime
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.

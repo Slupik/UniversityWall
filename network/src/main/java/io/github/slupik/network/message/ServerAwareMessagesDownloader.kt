@@ -11,7 +11,7 @@ import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.token.TokenHolder
 import io.github.slupik.network.message.model.MessageListResponse
 import io.github.slupik.network.message.retrofit.MessagesDownloadingService
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import javax.inject.Inject
 
 /**

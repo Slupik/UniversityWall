@@ -6,8 +6,8 @@
 package io.github.slupik.model.invitation.providing
 
 import io.github.slupik.model.invitation.model.Invitation
-import io.reactivex.rxjava3.core.Observable
-import io.reactivex.rxjava3.subjects.PublishSubject
+import io.reactivex.Observable
+import io.reactivex.subjects.PublishSubject
 import javax.inject.Inject
 import javax.inject.Singleton
 
