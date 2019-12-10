@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.repository.message
+package io.github.slupik.repository.message.database
 
 import android.content.Context
 import androidx.room.Database
@@ -25,8 +25,12 @@ abstract class MessagesDatabase : RoomDatabase() {
         @Volatile private var INSTANCE: MessagesDatabase? = null
 
         fun getInstance(context: Context): MessagesDatabase =
-            INSTANCE ?: synchronized(this) {
-                INSTANCE ?: buildDatabase(context).also { INSTANCE = it }
+            INSTANCE
+                ?: synchronized(this) {
+                INSTANCE
+                    ?: buildDatabase(
+                        context
+                    ).also { INSTANCE = it }
             }
 
         private fun buildDatabase(context: Context): MessagesDatabase =
