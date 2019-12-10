@@ -7,12 +7,11 @@ package io.github.slupik.universitywall.screen.messages
 
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
-import io.github.slupik.model.message.Message
-import io.github.slupik.model.message.MessageAttachment
 import io.github.slupik.model.message.MessageType
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
+import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
 import java.util.*
 import kotlin.reflect.KClass
 
@@ -53,18 +52,17 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
 
         adapter.submitList(
             mutableListOf(
-                Message(
-                    MessageType.INFO,
-                    "Lorem Ipsum",
-                    "Name Surname",
-                    "Programming",
-                    "Maecenas feugiat eros pellentesque, molestie nisi ut, semper nulla. Etiam condimentum augue ac tincidunt sollicitudin.",
-                    Calendar.getInstance().time,
-                    Calendar.getInstance().time,
-                    MessageAttachment(
-                        "file name",
-                        "https://url.to.file.com/path/to/file"
-                    )
+                DisplayableMessage(
+                    id = 0,
+                    type = MessageType.INFO,
+                    header = "Lorem Ipsum",
+                    content = "Maecenas feugiat eros pellentesque, molestie nisi ut, semper nulla. Etiam condimentum augue ac tincidunt sollicitudin.",
+                    group = "Programming",
+                    author = "Name Surname",
+                    creationTime = Calendar.getInstance().time.toString(),
+                    eventTime = Calendar.getInstance().time.toString(),
+                    attachmentName = "file name",
+                    attachmentUrl = "https://url.to.file.com/path/to/file"
                 )
             )
         )

@@ -11,30 +11,45 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
-import io.github.slupik.model.message.Message
+import io.github.slupik.model.message.MessageType
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.adapter.DataBoundListAdapter
 import io.github.slupik.universitywall.databinding.MessageViewBinding
+import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
+
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
+
+private const val MESSAGE_TYPE_TEST = 0
+private const val MESSAGE_TYPE_CANCELED_CLASSES = 1
+private const val MESSAGE_TYPE_INFO = 2
+
 class MessagesAdapter constructor(
     private val viewModel: MessagesViewModel
-): DataBoundListAdapter<Message>(
+): DataBoundListAdapter<DisplayableMessage>(
 
-    diffCallback = object: DiffUtil.ItemCallback<Message>() {
-        override fun areItemsTheSame(oldItem: Message, newItem: Message): Boolean {
+    diffCallback = object: DiffUtil.ItemCallback<DisplayableMessage>() {
+        override fun areItemsTheSame(oldItem: DisplayableMessage, newItem: DisplayableMessage): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: Message, newItem: Message): Boolean {
+        override fun areContentsTheSame(oldItem: DisplayableMessage, newItem: DisplayableMessage): Boolean {
             return oldItem == newItem
         }
     }
 ) {
+
+    override fun getItemViewType(position: Int): Int =
+        when(getItem(position).type) {
+            MessageType.TEST -> MESSAGE_TYPE_TEST
+            MessageType.CANCELED_CLASSES -> MESSAGE_TYPE_CANCELED_CLASSES
+            MessageType.INFO -> MESSAGE_TYPE_INFO
+        }
+
     override fun createBinding(parent: ViewGroup, viewType: Int): ViewDataBinding {
         return DataBindingUtil.inflate(
             LayoutInflater.from(parent.context),
@@ -44,19 +59,19 @@ class MessagesAdapter constructor(
         )
     }
 
-    override fun bind(binding: ViewDataBinding, item: Message) {
+    override fun bind(binding: ViewDataBinding, item: DisplayableMessage) {
         when (binding) {
             is MessageViewBinding -> {
-                binding.messageTitle.text = item.title
-                binding.messageCreatorName.text = item.creatorName
-                binding.messageCreationTime.text = item.postTime.toString()
+                binding.messageTitle.text = item.header
+                binding.messageCreatorName.text = item.author
+                binding.messageCreationTime.text = item.creationTime
                 binding.messageContent.text = item.content
-                if(!item.attachment.name.isBlank()) {
+                binding.messageGroupName.text = item.group
+                if(!item.attachmentName.isBlank()) {
                     binding.messageFileInfo.visibility = View.GONE
                 } else {
-                    binding.messageFileInfo.text = item.attachment.name
+                    binding.messageFileInfo.text = item.attachmentName
                 }
-                binding.messageGroupName.text = item.groupName
             }
         }
     }
