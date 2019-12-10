@@ -7,18 +7,28 @@ package io.github.slupik.universitywall.screen.messages
 
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DividerItemDecoration
+import io.github.slupik.model.Converter
+import io.github.slupik.model.message.Message
 import io.github.slupik.model.message.MessageType
+import io.github.slupik.model.message.MessagesProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
 import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
 import java.util.*
+import javax.inject.Inject
 import kotlin.reflect.KClass
 
 class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
 
     private lateinit var binding: MessagesFragmentBinding
     private lateinit var adapter: MessagesAdapter
+
+    @Inject
+    lateinit var messagesProvider: MessagesProvider
+
+    @Inject
+    lateinit var messagesConverter: Converter<Message, DisplayableMessage>
 
     companion object {
         fun newInstance() = MessagesFragment()
@@ -40,6 +50,7 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
 
     override fun onViewModelCreated(viewModel: MessagesViewModel) {
         super.onViewModelCreated(viewModel)
+        dependencyInjectionComponent.inject(this)
 
         adapter = MessagesAdapter(
             viewModel = viewModel
@@ -50,6 +61,21 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
+        messagesProvider.messagesEmitter.subscribe {
+            adapter.submitList(
+                it.map(messagesConverter::convert)
+            )
+        }
+        messagesProvider.messages.subscribe(
+            {
+                adapter.submitList(
+                    it.map(messagesConverter::convert)
+                )
+            },
+            {
+                it.printStackTrace()
+            }
+        )
         adapter.submitList(
             mutableListOf(
                 DisplayableMessage(
@@ -66,6 +92,10 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
                 )
             )
         )
+
+        binding.btnRefreshMessages.setOnClickListener {
+            messagesProvider.refresh()
+        }
     }
 
 }

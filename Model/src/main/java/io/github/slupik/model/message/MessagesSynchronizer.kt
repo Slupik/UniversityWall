@@ -10,6 +10,7 @@ import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
 import io.reactivex.rxjava3.core.Single
 import io.reactivex.rxjava3.subjects.PublishSubject
+import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
@@ -18,7 +19,7 @@ import javax.inject.Singleton
  * All rights reserved & copyright ©
  */
 @Singleton
-class MessagesSynchronizer(
+class MessagesSynchronizer @Inject constructor(
     private val downloader: MessagesDownloader,
     private val repository: MessagesRepository
 ) : MessagesProvider {

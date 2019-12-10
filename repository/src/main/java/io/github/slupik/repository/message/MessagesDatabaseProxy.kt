@@ -7,7 +7,7 @@ package io.github.slupik.repository.message
 
 import io.github.slupik.model.message.Message
 import io.github.slupik.model.message.MessagesRepository
-import io.github.slupik.repository.Converter
+import io.github.slupik.model.Converter
 import io.github.slupik.repository.message.database.MessageDao
 import io.github.slupik.repository.message.database.MessageEntity
 import io.reactivex.rxjava3.core.Completable

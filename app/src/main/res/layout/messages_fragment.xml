@@ -21,7 +21,7 @@
             tools:context=".screen.messages.MessagesFragment">
 
         <Button
-                android:id="@+id/button4"
+                android:id="@+id/btnRefreshMessages"
                 android:layout_width="match_parent"
                 android:layout_height="128dp"
                 android:layout_weight="1"
