@@ -15,9 +15,9 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class MessageResponseConverter @Inject constructor() :
-    ResponseConverter<MessageResponseConverter, Message>() {
+    ResponseConverter<MessageResponse, Message>() {
 
-    override fun convert(response: MessageResponseConverter): Message {
+    override fun convert(response: MessageResponse): Message {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

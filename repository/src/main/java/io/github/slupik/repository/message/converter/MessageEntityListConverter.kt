@@ -17,7 +17,7 @@ import javax.inject.Inject
  */
 class MessageEntityListConverter @Inject constructor(
     private val converter: Converter<MessageEntity, Message>
-) : Converter<List<MessageEntity>, List<Message>>() {
+) : Converter<List<@JvmSuppressWildcards MessageEntity>, List<@JvmSuppressWildcards Message>>() {
 
     override fun convert(input: List<MessageEntity>): List<Message> =
         input.map(converter::convert)

@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 class MessageListResponseConverter @Inject constructor(
     private val messageConverter: ResponseConverter<MessageResponse, Message>
-) : ResponseConverter<MessageListResponse, List<Message>>() {
+) : ResponseConverter<MessageListResponse, List<@JvmSuppressWildcards Message>>() {
 
     override fun convert(response: MessageListResponse): List<Message> {
         if (response.errorCode != 0) {
