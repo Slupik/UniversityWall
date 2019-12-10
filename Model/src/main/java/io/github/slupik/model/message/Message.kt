@@ -13,7 +13,7 @@ import java.time.OffsetDateTime
  * All rights reserved & copyright ©
  */
 data class Message(
-    val localId: Int,
+    val localId: Int?,
     val remoteId: Int,
     val type: MessageType,
     val title: String,
