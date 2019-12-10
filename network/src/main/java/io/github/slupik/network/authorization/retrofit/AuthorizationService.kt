@@ -5,7 +5,7 @@
 
 package io.github.slupik.network.authorization.retrofit
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header
 

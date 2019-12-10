@@ -4,7 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import io.github.slupik.universitywall.activity.Activity
-import io.github.slupik.universitywall.screen.login.LoginFragment
+import io.github.slupik.universitywall.screen.messages.MessagesFragment
 import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 
 
@@ -16,7 +16,7 @@ class MainActivity : Activity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, LoginFragment.newInstance())
+                .replace(R.id.container, MessagesFragment.newInstance())
                 .commitNow()
         }
     }

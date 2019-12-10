@@ -14,7 +14,9 @@ import dagger.Module
  */
 @Module(
     includes = [
-        AuthorizationModule::class
+        AuthorizationModule::class,
+        MessageDatabaseModule::class,
+        MessagesModule::class
     ]
 )
 class RepositoryModule

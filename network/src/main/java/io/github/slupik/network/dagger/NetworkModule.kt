@@ -15,7 +15,8 @@ import dagger.Module
 @Module(
     includes = [
         RetrofitServices::class,
-        AuthorizationModule::class
+        AuthorizationModule::class,
+        MessagesDownloaderModule::class
     ]
 )
 class NetworkModule

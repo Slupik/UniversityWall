@@ -6,7 +6,7 @@
 package io.github.slupik.model.invitation.providing
 
 import io.github.slupik.model.invitation.model.Invitation
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Observable
 
 /**
  * Created by Sebastian Witasik on 06.12.2019.

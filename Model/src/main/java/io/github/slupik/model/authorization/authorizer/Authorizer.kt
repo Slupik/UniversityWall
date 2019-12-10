@@ -5,7 +5,7 @@
 
 package io.github.slupik.model.authorization.authorizer
 
-import io.reactivex.rxjava3.core.Single
+import io.reactivex.Single
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.

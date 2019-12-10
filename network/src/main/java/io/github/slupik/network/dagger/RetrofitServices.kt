@@ -5,10 +5,12 @@
 
 package io.github.slupik.network.dagger
 
+import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import io.github.slupik.network.DOMAIN_URL
 import io.github.slupik.network.authorization.retrofit.AuthorizationService
+import io.github.slupik.network.message.retrofit.MessagesDownloadingService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -27,11 +29,15 @@ class RetrofitServices {
         Retrofit.Builder()
             .baseUrl(DOMAIN_URL)
             .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .addConverterFactory(GsonConverterFactory.create())
+            .addConverterFactory(GsonConverterFactory.create(Gson()))
             .build()
 
     @Provides
     fun provideAuthorizationService(retrofit: Retrofit): AuthorizationService =
         retrofit.create(AuthorizationService::class.java)
+
+    @Provides
+    fun provideMessagesDownloadingService(retrofit: Retrofit): MessagesDownloadingService =
+        retrofit.create(MessagesDownloadingService::class.java)
 
 }

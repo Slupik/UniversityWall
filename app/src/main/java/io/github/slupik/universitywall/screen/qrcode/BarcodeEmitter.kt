@@ -6,7 +6,7 @@
 package io.github.slupik.universitywall.screen.qrcode
 
 import com.google.android.gms.vision.barcode.Barcode
-import io.reactivex.rxjava3.core.Observable
+import io.reactivex.Observable
 
 /**
  * Created by Sebastian Witasik on 04.12.2019.
