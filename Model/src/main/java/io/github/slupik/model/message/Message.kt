@@ -14,6 +14,7 @@ import java.util.*
  */
 data class Message(
     val type: MessageType,
+    val title: String,
     val creatorName: String,
     val groupName: String,
     val content: String,
