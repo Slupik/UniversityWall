@@ -44,5 +44,5 @@ data class MessageEntity(
 ) {
     @PrimaryKey(autoGenerate = true)
     @ColumnInfo(name = "localId")
-    var id: Int = -1
+    var localId: Int = -1
 }

@@ -11,6 +11,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import io.reactivex.rxjava3.core.Completable
 import io.reactivex.rxjava3.core.Flowable
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -20,11 +21,14 @@ import io.reactivex.rxjava3.core.Flowable
 @Dao
 interface MessageDao {
 
-    @Query("SELECT * FROM $MESSAGES_TABLE_NAME WHERE localId = :id")
-    fun getMessageByLocalId(id: String): Flowable<MessageEntity>
+    @Query("SELECT * FROM $MESSAGES_TABLE_NAME")
+    fun fetchAllMessages(id: String): Flowable<MessageEntity>
 
     @Query("SELECT * FROM $MESSAGES_TABLE_NAME")
-    fun getAllMessages(id: String): Flowable<MessageEntity>
+    fun getAllMessages(id: String): Single<MessageEntity>
+
+    @Query("SELECT * FROM $MESSAGES_TABLE_NAME WHERE localId = :id")
+    fun getMessageByLocalId(id: String): Single<MessageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insertMessage(message: MessageEntity): Completable

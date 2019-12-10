@@ -20,7 +20,9 @@ dependencies {
     kapt 'com.google.dagger:dagger-compiler:2.25.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
 
-    testCompile group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
+    testImplementation group: 'org.junit.jupiter', name: 'junit-jupiter-api', version: '5.5.2'
+    testImplementation 'org.mockito:mockito-core:2.2.0'
+    testImplementation "com.nhaarman.mockitokotlin2:mockito-kotlin:2.2.0"
 }
 
 sourceCompatibility = "7"
@@ -32,6 +34,7 @@ buildscript {
     }
     dependencies {
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+        classpath "org.jetbrains.kotlin:kotlin-allopen:$kotlin_version"
     }
 }
 repositories {
@@ -47,3 +50,5 @@ compileTestKotlin {
         jvmTarget = "1.8"
     }
 }
+
+apply plugin: "kotlin-allopen"

@@ -5,25 +5,15 @@
 
 package io.github.slupik.model.message
 
-import java.time.OffsetDateTime
+import io.reactivex.rxjava3.core.Single
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-data class Message(
-    val localId: Int,
-    val remoteId: Int,
-    val type: MessageType,
-    val title: String,
-    val content: String,
-    val author: String,
-    val group: String,
-    val postedTime: OffsetDateTime,
-    val expirationTime: OffsetDateTime,
-    val beginningTime: OffsetDateTime,
-    val endingTime: OffsetDateTime,
-    val attachmentName: String,
-    val attachmentUrl: String
-)
+interface MessagesDownloader {
+
+    fun downloadMessages(): Single<List<Message>>
+
+}
