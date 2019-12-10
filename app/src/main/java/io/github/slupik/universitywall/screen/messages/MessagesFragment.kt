@@ -15,6 +15,8 @@ import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
 import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 import kotlin.reflect.KClass
@@ -65,17 +67,21 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
             adapter.submitList(
                 it.map(messagesConverter::convert)
             )
-        }
-        messagesProvider.messages.subscribe(
-            {
-                adapter.submitList(
-                    it.map(messagesConverter::convert)
-                )
-            },
-            {
-                it.printStackTrace()
-            }
-        )
+        }.remember()
+        messagesProvider
+            .messages
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                {
+                    adapter.submitList(
+                        it.map(messagesConverter::convert)
+                    )
+                },
+                {
+                    it.printStackTrace()
+                }
+            ).remember()
         adapter.submitList(
             mutableListOf(
                 DisplayableMessage(
