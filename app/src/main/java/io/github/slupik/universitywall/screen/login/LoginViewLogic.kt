@@ -40,6 +40,7 @@ class LoginViewLogic @Inject constructor(
             viewModel.login.value ?: INVALID_LOGIN,
             viewModel.password.value ?: INVALID_PASSWORD
         ).subscribe { result ->
+            viewModel.viewState.postValue(StartViewState())
             when (result!!) {
                 AuthorizationResult.CONNECTION_ERROR -> {
                     viewModel.viewState.postValue(
@@ -60,7 +61,6 @@ class LoginViewLogic @Inject constructor(
                     //TODO move to main screen
                 }
             }
-            viewModel.viewState.postValue(StartViewState())
         }.remember()
     }
 
