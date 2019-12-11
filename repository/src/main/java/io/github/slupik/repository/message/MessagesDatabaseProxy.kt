@@ -8,8 +8,8 @@ package io.github.slupik.repository.message
 import io.github.slupik.model.message.Message
 import io.github.slupik.model.message.MessagesRepository
 import io.github.slupik.model.Converter
-import io.github.slupik.repository.message.database.MessageDao
-import io.github.slupik.repository.message.database.MessageEntity
+import io.github.slupik.repository.database.MainDao
+import io.github.slupik.repository.database.MessageEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
 import io.reactivex.Single
@@ -21,7 +21,7 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 class MessagesDatabaseProxy @Inject constructor(
-    private val database: MessageDao,
+    private val database: MainDao,
     private val converterToEntity: Converter<Message, MessageEntity>,
     private val converterFromEntity: Converter<List<MessageEntity>, List<Message>>
 ): MessagesRepository {

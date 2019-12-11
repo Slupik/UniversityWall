@@ -3,14 +3,14 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.repository.message.database
+package io.github.slupik.repository.database
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import io.reactivex.Flowable
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import io.reactivex.Single
 
 /**
@@ -19,7 +19,7 @@ import io.reactivex.Single
  * All rights reserved & copyright ©
  */
 @Dao
-interface MessageDao {
+interface MainDao {
 
     @Query("SELECT * FROM $MESSAGES_TABLE_NAME")
     fun fetchAllMessages(): Flowable<List<MessageEntity>>

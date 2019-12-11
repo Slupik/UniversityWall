@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.repository.message.database
+package io.github.slupik.repository.database
 
 import android.content.Context
 import androidx.room.Database
@@ -19,15 +19,15 @@ import io.github.slupik.repository.message.converter.DateTimeConverter
  */
 @Database(entities = arrayOf(MessageEntity::class), version = 1)
 @TypeConverters(DateTimeConverter::class)
-abstract class MessagesDatabase : RoomDatabase() {
+abstract class MainDatabase : RoomDatabase() {
 
-    abstract fun messageDao(): MessageDao
+    abstract fun messageDao(): MainDao
 
     companion object {
 
-        @Volatile private var INSTANCE: MessagesDatabase? = null
+        @Volatile private var INSTANCE: MainDatabase? = null
 
-        fun getInstance(context: Context): MessagesDatabase =
+        fun getInstance(context: Context): MainDatabase =
             INSTANCE
                 ?: synchronized(this) {
                 INSTANCE
@@ -36,9 +36,9 @@ abstract class MessagesDatabase : RoomDatabase() {
                     ).also { INSTANCE = it }
             }
 
-        private fun buildDatabase(context: Context): MessagesDatabase =
+        private fun buildDatabase(context: Context): MainDatabase =
             Room.databaseBuilder(context.applicationContext,
-                MessagesDatabase::class.java, "$MESSAGES_DATABASE_NAME.db")
+                MainDatabase::class.java, "$DATABASE_NAME.db")
                 .build()
     }
 

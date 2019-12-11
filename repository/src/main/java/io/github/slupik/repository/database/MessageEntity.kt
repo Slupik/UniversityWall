@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.repository.message.database
+package io.github.slupik.repository.database
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
