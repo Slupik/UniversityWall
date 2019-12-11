@@ -3,20 +3,14 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.network.authorization.retrofit
-
-import io.reactivex.Single
-import retrofit2.http.GET
-import retrofit2.http.Header
+package io.github.slupik.network.authorization.retrofit.registration
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-interface AuthorizationService {
-
-    @GET("temp")
-    fun authorize(@Header("login") login: String, @Header("password") password: String): Single<AuthorizationResponse>
-
-}
+data class RegistrationResponse(
+    val validLogin: Boolean,
+    val token: String
+)

@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.network.authorization.retrofit
+package io.github.slupik.network.authorization.retrofit.authorization
 
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.network.ResponseConverter

@@ -9,7 +9,8 @@ import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import io.github.slupik.network.DOMAIN_URL
-import io.github.slupik.network.authorization.retrofit.AuthorizationService
+import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationService
+import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
 import io.github.slupik.network.message.retrofit.MessagesDownloadingService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -35,6 +36,10 @@ class RetrofitServices {
     @Provides
     fun provideAuthorizationService(retrofit: Retrofit): AuthorizationService =
         retrofit.create(AuthorizationService::class.java)
+
+    @Provides
+    fun provideRegistrationService(retrofit: Retrofit): RegistrationService =
+        retrofit.create(RegistrationService::class.java)
 
     @Provides
     fun provideMessagesDownloadingService(retrofit: Retrofit): MessagesDownloadingService =
