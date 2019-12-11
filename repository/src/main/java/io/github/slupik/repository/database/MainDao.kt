@@ -39,4 +39,21 @@ interface MainDao {
     @Query("DELETE FROM $MESSAGES_TABLE_NAME")
     fun deleteAllMessages()
 
+
+
+    @Query("SELECT * FROM $GROUPS_TABLE_NAME")
+    fun fetchAllGroups(): Flowable<List<GroupEntity>>
+
+    @Query("SELECT * FROM $GROUPS_TABLE_NAME")
+    fun getAllGroups(): Single<List<GroupEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertGroup(message: GroupEntity): Completable
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    fun insertGroups(groups: List<GroupEntity>): Completable
+
+    @Query("DELETE FROM $GROUPS_TABLE_NAME")
+    fun deleteAllGroups()
+
 }

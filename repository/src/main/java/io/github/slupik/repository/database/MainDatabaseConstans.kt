@@ -12,4 +12,4 @@ package io.github.slupik.repository.database
  */
 const val DATABASE_NAME = "Main"
 const val MESSAGES_TABLE_NAME = "messages"
-const val GROUPS_TABLE_NAME = "messages"
+const val GROUPS_TABLE_NAME = "groups"

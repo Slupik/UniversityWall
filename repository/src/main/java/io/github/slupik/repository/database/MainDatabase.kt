@@ -17,7 +17,7 @@ import io.github.slupik.repository.message.converter.DateTimeConverter
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-@Database(entities = arrayOf(MessageEntity::class), version = 1)
+@Database(entities = [MessageEntity::class, GroupEntity::class], version = 1)
 @TypeConverters(DateTimeConverter::class)
 abstract class MainDatabase : RoomDatabase() {
 
@@ -25,20 +25,23 @@ abstract class MainDatabase : RoomDatabase() {
 
     companion object {
 
-        @Volatile private var INSTANCE: MainDatabase? = null
+        @Volatile
+        private var INSTANCE: MainDatabase? = null
 
         fun getInstance(context: Context): MainDatabase =
             INSTANCE
                 ?: synchronized(this) {
-                INSTANCE
-                    ?: buildDatabase(
-                        context
-                    ).also { INSTANCE = it }
-            }
+                    INSTANCE
+                        ?: buildDatabase(
+                            context
+                        ).also { INSTANCE = it }
+                }
 
         private fun buildDatabase(context: Context): MainDatabase =
-            Room.databaseBuilder(context.applicationContext,
-                MainDatabase::class.java, "$DATABASE_NAME.db")
+            Room.databaseBuilder(
+                context.applicationContext,
+                MainDatabase::class.java, "$DATABASE_NAME.db"
+            )
                 .build()
     }
 
