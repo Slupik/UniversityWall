@@ -6,11 +6,21 @@
 package io.github.slupik.universitywall.screen.registration
 
 import androidx.fragment.app.FragmentActivity
+import io.github.slupik.model.authorization.credentials.INVALID_LOGIN
+import io.github.slupik.model.authorization.credentials.INVALID_PASSWORD
+import io.github.slupik.model.authorization.registration.Registrar
+import io.github.slupik.model.authorization.registration.RegistrationResult
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class RegistrationViewLogic @Inject constructor(
+    private val registrar: Registrar,
     private val errorHandler: RegistrationErrorHandler
 ) {
+
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: RegistrationViewModel
     private lateinit var activity: FragmentActivity
@@ -30,6 +40,25 @@ class RegistrationViewLogic @Inject constructor(
         }
 
         viewModel.viewState.postValue(LoadingDataViewState())
+
+        registrar.register(
+            viewModel.login.value ?: INVALID_LOGIN,
+            viewModel.password.value ?: INVALID_PASSWORD,
+            viewModel.displayName.value ?: ""
+        ).subscribeBy {
+            when(it) {
+                RegistrationResult.CONNECTION_ERROR -> {
+                    errorHandler.onConnectionError()
+                }
+                RegistrationResult.INVALID_LOGIN -> {
+                    errorHandler.onLoginAlreadyExists()
+                }
+                RegistrationResult.SUCCESS -> {
+                    //TODO implement
+                }
+            }
+            viewModel.viewState.postValue(StartViewState())
+        }.remember()
     }
 
     private fun isAtLeastOneFieldEmpty(): Boolean =
@@ -40,6 +69,10 @@ class RegistrationViewLogic @Inject constructor(
 
     fun inject(activity: FragmentActivity) {
         this.activity = activity
+    }
+
+    private fun Disposable.remember() {
+        compositeDisposable.add(this)
     }
 
 }
