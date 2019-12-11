@@ -4,8 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import io.github.slupik.universitywall.activity.Activity
+import io.github.slupik.universitywall.screen.group.GroupsFragment
 import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
-import io.github.slupik.universitywall.screen.registration.RegistrationFragment
 
 
 class MainActivity : Activity() {
@@ -16,7 +16,7 @@ class MainActivity : Activity() {
 
         if (savedInstanceState == null) {
             supportFragmentManager.beginTransaction()
-                .replace(R.id.container, RegistrationFragment.newInstance())
+                .replace(R.id.container, GroupsFragment.newInstance())
                 .commitNow()
         }
     }

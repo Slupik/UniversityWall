@@ -35,7 +35,7 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
     }
 
     override fun getLayoutId(): Int =
-        R.layout.messages_fragment
+        R.layout.groups_fragment
 
     override fun getFragmentClass(): KClass<GroupsViewModel> =
         GroupsViewModel::class
