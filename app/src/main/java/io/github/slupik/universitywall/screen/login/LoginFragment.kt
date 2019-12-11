@@ -29,7 +29,7 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>() {
 
     override fun onViewModelCreated(viewModel: LoginViewModel) {
         super.onViewModelCreated(viewModel)
-        dependencyInjectionComponent.inject(this)
+        appDepInComponent.inject(this)
         viewLogic.inject(internalViewModel)
         internalViewModel.setLogic(viewLogic)
         setupView()

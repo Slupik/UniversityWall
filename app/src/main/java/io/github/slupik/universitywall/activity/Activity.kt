@@ -7,6 +7,8 @@ package io.github.slupik.universitywall.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import io.github.slupik.universitywall.application.MyApplication
+import io.github.slupik.universitywall.dagger.ActivityModule
+import io.github.slupik.universitywall.dagger.ActivitySubcomponent
 import io.github.slupik.universitywall.dagger.ApplicationComponent
 
 /**
@@ -14,12 +16,16 @@ import io.github.slupik.universitywall.dagger.ApplicationComponent
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-abstract class Activity: AppCompatActivity() {
+abstract class Activity : AppCompatActivity() {
 
     protected val application: MyApplication
         get() = super.getApplication() as MyApplication
 
-    val dependencyInjectionComponent: ApplicationComponent
-    get() = application.mainComponent
+    val appDepInComponent: ApplicationComponent
+        get() = application.mainComponent
+
+    val activityDepInComponent: ActivitySubcomponent by lazy {
+        appDepInComponent.plus(ActivityModule(this))
+    }
 
 }

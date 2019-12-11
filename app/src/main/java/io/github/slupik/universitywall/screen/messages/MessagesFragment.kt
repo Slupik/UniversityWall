@@ -52,7 +52,7 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
 
     override fun onViewModelCreated(viewModel: MessagesViewModel) {
         super.onViewModelCreated(viewModel)
-        dependencyInjectionComponent.inject(this)
+        appDepInComponent.inject(this)
 
         adapter = MessagesAdapter(
             viewModel = viewModel

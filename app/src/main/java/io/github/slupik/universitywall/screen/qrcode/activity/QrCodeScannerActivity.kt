@@ -38,7 +38,7 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
     lateinit var invitationEmitter: InvitationEmitter
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        dependencyInjectionComponent.inject(this)
+        appDepInComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_code_scanner_activity)
 

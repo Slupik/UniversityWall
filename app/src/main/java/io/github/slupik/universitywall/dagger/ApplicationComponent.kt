@@ -34,11 +34,12 @@ import javax.inject.Singleton
 @Singleton
 interface ApplicationComponent {
 
+    fun plus(subModule: ActivityModule): ActivitySubcomponent
+
     fun inject(clazz: BarcodeGraphic)
     fun inject(clazz: QrCodeScannerFragment)
     fun inject(clazz: QrCodeScannerActivity)
     fun inject(clazz: LoginFragment)
     fun inject(clazz: MessagesFragment)
-
 
 }
