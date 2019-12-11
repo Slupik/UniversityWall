@@ -10,6 +10,8 @@ import io.github.slupik.universitywall.application.MyApplication
 import io.github.slupik.universitywall.dagger.ActivityModule
 import io.github.slupik.universitywall.dagger.ActivitySubcomponent
 import io.github.slupik.universitywall.dagger.ApplicationComponent
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 
 /**
  * Created by Sebastian Witasik on 07.12.2019.
@@ -26,6 +28,17 @@ abstract class Activity : AppCompatActivity() {
 
     val activityDepInComponent: ActivitySubcomponent by lazy {
         appDepInComponent.plus(ActivityModule(this))
+    }
+
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
+
+    override fun onDestroy() {
+        compositeDisposable.dispose()
+        super.onDestroy()
+    }
+
+    protected fun Disposable.remember() {
+        compositeDisposable.add(this)
     }
 
 }

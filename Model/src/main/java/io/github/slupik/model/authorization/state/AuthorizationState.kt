@@ -5,19 +5,13 @@
 
 package io.github.slupik.model.authorization.state
 
-import io.reactivex.Observable
-
 /**
- * Created by Sebastian Witasik on 08.12.2019.
+ * Created by Sebastian Witasik on 11.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-interface AuthorizationStateProvider {
-
-    val state: Observable<AuthorizationState>
-
-    fun isLoggedIn(): Boolean
-
-    fun isCredentialKnown(): Boolean
-
+enum class AuthorizationState {
+    LOGGED_IN,
+    LOGGED_OUT,
+    SESSION_TIMEOUT
 }

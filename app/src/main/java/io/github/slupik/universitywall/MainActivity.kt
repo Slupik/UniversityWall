@@ -1,21 +1,22 @@
 package io.github.slupik.universitywall
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import io.github.slupik.network.authorization.token.TokenHolder
+import android.widget.FrameLayout
+import io.github.slupik.model.authorization.state.AuthorizationStateProvider
 import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.fragment.Fragment
 import io.github.slupik.universitywall.screen.login.LoginFragment
 import io.github.slupik.universitywall.screen.messages.MessagesFragment
-import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 
 class MainActivity : Activity() {
 
     @Inject
-    lateinit var tokenHolder: TokenHolder
+    lateinit var authorizationStateProvider: AuthorizationStateProvider
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,16 +27,25 @@ class MainActivity : Activity() {
         if (savedInstanceState == null) {
             setupFragment()
         }
+
+        authorizationStateProvider
+            .state
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeBy {
+                setupFragment()
+            }.remember()
     }
 
     private fun setupFragment() {
-        supportFragmentManager.beginTransaction()
-            .replace(R.id.container, getFragment())
-            .commitNow()
+        if(findViewById<FrameLayout>(R.id.main_container) != null) {
+            supportFragmentManager.beginTransaction()
+                .replace(R.id.main_container, getFragment())
+                .commitNow()
+        }
     }
 
     private fun getFragment(): Fragment {
-        return if(tokenHolder.session.isEmpty()) {
+        return if (authorizationStateProvider.isLoggedIn()) {
             LoginFragment.newInstance()
         } else {
             MessagesFragment.newInstance()
@@ -43,11 +53,7 @@ class MainActivity : Activity() {
     }
 
     fun startQrActivity(view: View) {
-        val intent = Intent(this, QrCodeScannerActivity::class.java)
-        startActivity(
-            intent,
-            null
-        )
+        setupFragment()
     }
 
 }

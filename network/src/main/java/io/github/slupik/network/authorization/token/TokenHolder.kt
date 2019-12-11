@@ -10,6 +10,7 @@ package io.github.slupik.network.authorization.token
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
+
 interface TokenHolder {
 
     var session: String

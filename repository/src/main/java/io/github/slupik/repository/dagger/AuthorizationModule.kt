@@ -9,7 +9,9 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.model.authorization.credentials.CredentialsProvider
+import io.github.slupik.model.authorization.token.TokenRepository
 import io.github.slupik.repository.credential.SharedPreferencesCredentialRepository
+import io.github.slupik.repository.token.SharedPreferencesTokenRepository
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.
@@ -24,5 +26,8 @@ abstract class AuthorizationModule {
 
     @Binds
     abstract fun credentialProvider(repository: SharedPreferencesCredentialRepository): CredentialsProvider
+
+    @Binds
+    abstract fun tokenRepository(repository: SharedPreferencesTokenRepository): TokenRepository
 
 }

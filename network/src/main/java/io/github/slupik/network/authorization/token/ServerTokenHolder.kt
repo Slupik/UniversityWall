@@ -5,6 +5,7 @@
 
 package io.github.slupik.network.authorization.token
 
+import io.github.slupik.model.authorization.token.TokenRepository
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -14,11 +15,13 @@ import javax.inject.Singleton
  * All rights reserved & copyright ©
  */
 
-const val INVALID_TOKEN: String = ""
-
 @Singleton
-class ServerTokenHolder @Inject constructor(): TokenHolder {
+class ServerTokenHolder @Inject constructor(
+    private val repository: TokenRepository
+) : TokenHolder {
 
-    override var session: String = INVALID_TOKEN
+    override var session: String
+        get() = repository.sessionToken
+        set(value) = repository.saveSessionToken(value)
 
 }

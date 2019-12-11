@@ -6,8 +6,8 @@
 package io.github.slupik.universitywall.screen.registration
 
 import androidx.fragment.app.FragmentActivity
-import io.github.slupik.model.authorization.credentials.INVALID_LOGIN
-import io.github.slupik.model.authorization.credentials.INVALID_PASSWORD
+import io.github.slupik.model.authorization.INVALID_LOGIN
+import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.registration.Registrar
 import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.reactivex.disposables.CompositeDisposable

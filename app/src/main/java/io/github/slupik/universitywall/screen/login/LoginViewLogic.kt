@@ -1,9 +1,9 @@
 package io.github.slupik.universitywall.screen.login
 
+import io.github.slupik.model.authorization.INVALID_LOGIN
+import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
-import io.github.slupik.model.authorization.credentials.INVALID_LOGIN
-import io.github.slupik.model.authorization.credentials.INVALID_PASSWORD
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -40,7 +40,6 @@ class LoginViewLogic @Inject constructor(
             viewModel.login.value ?: INVALID_LOGIN,
             viewModel.password.value ?: INVALID_PASSWORD
         ).subscribe { result ->
-            viewModel.viewState.postValue(StartViewState())
             when (result!!) {
                 AuthorizationResult.CONNECTION_ERROR -> {
                     viewModel.viewState.postValue(
@@ -58,7 +57,7 @@ class LoginViewLogic @Inject constructor(
                     )
                 }
                 AuthorizationResult.SUCCESS -> {
-                    //TODO move to main screen
+                    viewModel.viewState.postValue(StartViewState())
                 }
             }
         }.remember()

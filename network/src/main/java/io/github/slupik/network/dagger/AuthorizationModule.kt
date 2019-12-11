@@ -12,6 +12,7 @@ import io.github.slupik.model.authorization.authorizer.Authorizer
 import io.github.slupik.model.authorization.registration.Registrar
 import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.github.slupik.model.authorization.state.AuthorizationStateProvider
+import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.ServerAuthorizationStateProvider
 import io.github.slupik.network.authorization.authorizer.ServerAuthorizer
@@ -50,6 +51,10 @@ abstract class AuthorizationModule {
     @Binds
     abstract fun authorizationStateProvider(stateProvider: ServerAuthorizationStateProvider):
             AuthorizationStateProvider
+
+    @Binds
+    abstract fun authorizationStatePublisher(stateProvider: ServerAuthorizationStateProvider):
+            AuthorizationStatePublisher
 
     @Binds
     abstract fun tokenHolder(holder: ServerTokenHolder):
