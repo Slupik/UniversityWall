@@ -34,9 +34,7 @@ class LoginViewLogic @Inject constructor(
             return
         }
 
-        viewModel.viewState.postValue(
-            LoadingDataViewState()
-        )
+        viewModel.viewState.postValue(LoadingDataViewState())
 
         authorizer.logIn(
             viewModel.login.value ?: INVALID_LOGIN,
@@ -62,6 +60,7 @@ class LoginViewLogic @Inject constructor(
                     //TODO move to main screen
                 }
             }
+            viewModel.viewState.postValue(StartViewState())
         }.remember()
     }
 
