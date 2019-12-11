@@ -29,7 +29,8 @@ import javax.inject.Singleton
         RepositoryModule::class,
         ContextModule::class,
         InvitationModule::class,
-        MessagesModule::class
+        MessagesModule::class,
+        GroupsModule::class
     ]
 )
 @Singleton
