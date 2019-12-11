@@ -11,6 +11,7 @@ import dagger.Provides
 import io.github.slupik.network.DOMAIN_URL
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationService
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
+import io.github.slupik.network.message.retrofit.GroupsDownloadingService
 import io.github.slupik.network.message.retrofit.MessagesDownloadingService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
@@ -44,5 +45,9 @@ class RetrofitServices {
     @Provides
     fun provideMessagesDownloadingService(retrofit: Retrofit): MessagesDownloadingService =
         retrofit.create(MessagesDownloadingService::class.java)
+
+    @Provides
+    fun provideGroupsDownloadingService(retrofit: Retrofit): GroupsDownloadingService =
+        retrofit.create(GroupsDownloadingService::class.java)
 
 }

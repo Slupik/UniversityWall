@@ -100,7 +100,7 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
         )
 
         binding.btnRefreshMessages.setOnClickListener {
-            messagesProvider.refresh()
+            messagesProvider.refresh().subscribe().remember()
         }
     }
 

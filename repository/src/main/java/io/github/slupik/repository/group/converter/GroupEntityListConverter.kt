@@ -3,11 +3,11 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.repository.message.converter
+package io.github.slupik.repository.group.converter
 
-import io.github.slupik.model.message.Message
 import io.github.slupik.model.Converter
-import io.github.slupik.repository.database.MessageEntity
+import io.github.slupik.model.group.Group
+import io.github.slupik.repository.database.GroupEntity
 import javax.inject.Inject
 
 /**
@@ -15,11 +15,11 @@ import javax.inject.Inject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class MessageEntityListConverter @Inject constructor(
-    private val converter: Converter<MessageEntity, Message>
-) : Converter<List<@JvmSuppressWildcards MessageEntity>, List<@JvmSuppressWildcards Message>>() {
+class GroupEntityListConverter @Inject constructor(
+    private val converter: Converter<GroupEntity, Group>
+) : Converter<List<@JvmSuppressWildcards GroupEntity>, List<@JvmSuppressWildcards Group>>() {
 
-    override fun convert(input: List<MessageEntity>): List<Message> =
+    override fun convert(input: List<GroupEntity>): List<Group> =
         input.map(converter::convert)
 
 }

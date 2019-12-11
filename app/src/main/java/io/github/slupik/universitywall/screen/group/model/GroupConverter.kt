@@ -3,21 +3,20 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.repository.message.converter
+package io.github.slupik.universitywall.screen.group.model
 
-import io.github.slupik.model.message.Message
 import io.github.slupik.model.Converter
-import io.github.slupik.repository.database.MessageEntity
+import io.github.slupik.model.group.Group
 import javax.inject.Inject
 
 /**
- * Created by Sebastian Witasik on 10.12.2019.
+ * Created by Sebastian Witasik on 11.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class MessageEntityConverter @Inject constructor() : Converter<MessageEntity, Message>() {
+class GroupConverter @Inject constructor() : Converter<Group, DisplayableGroup>() {
 
-    override fun convert(input: MessageEntity): Message {
+    override fun convert(input: Group): DisplayableGroup {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 

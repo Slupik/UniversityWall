@@ -5,17 +5,20 @@
 
 package io.github.slupik.model.dagger
 
+import dagger.Binds
 import dagger.Module
+import io.github.slupik.model.group.GroupsProvider
+import io.github.slupik.model.group.GroupsSynchronizer
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-@Module(
-    includes = [
-        MessagesModule::class,
-        GroupsModule::class
-    ]
-)
-class ModelModule
+@Module
+abstract class GroupsModule {
+
+    @Binds
+    abstract fun groupsProvider(provider: GroupsSynchronizer): GroupsProvider
+
+}

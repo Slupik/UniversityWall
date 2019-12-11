@@ -8,8 +8,8 @@ package io.github.slupik.repository.dagger
 import android.content.Context
 import dagger.Module
 import dagger.Provides
-import io.github.slupik.repository.message.database.MessageDao
-import io.github.slupik.repository.message.database.MessagesDatabase
+import io.github.slupik.repository.database.MainDao
+import io.github.slupik.repository.database.MainDatabase
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -20,11 +20,11 @@ import io.github.slupik.repository.message.database.MessagesDatabase
 class MessageDatabaseModule {
 
     @Provides
-    fun database(context: Context): MessagesDatabase =
-        MessagesDatabase.getInstance(context)
+    fun database(context: Context): MainDatabase =
+        MainDatabase.getInstance(context)
 
     @Provides
-    fun dao(database: MessagesDatabase): MessageDao =
+    fun dao(database: MainDatabase): MainDao =
         database.messageDao()
 
 }

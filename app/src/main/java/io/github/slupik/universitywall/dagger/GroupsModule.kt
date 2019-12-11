@@ -8,9 +8,9 @@ package io.github.slupik.universitywall.dagger
 import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.Converter
-import io.github.slupik.model.message.Message
-import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
-import io.github.slupik.universitywall.screen.messages.model.MessageConverter
+import io.github.slupik.model.group.Group
+import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
+import io.github.slupik.universitywall.screen.group.model.GroupConverter
 
 /**
  * Created by Sebastian Witasik on 05.12.2019.
@@ -18,10 +18,10 @@ import io.github.slupik.universitywall.screen.messages.model.MessageConverter
  * All rights reserved & copyright ©
  */
 @Module
-abstract class MessagesModule {
+abstract class GroupsModule {
 
     @Binds
-    abstract fun messageConverter(factory: MessageConverter):
-            Converter<Message, DisplayableMessage>
+    abstract fun groupConverter(factory: GroupConverter):
+            Converter<Group, DisplayableGroup>
 
 }

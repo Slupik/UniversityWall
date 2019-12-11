@@ -7,6 +7,10 @@ package io.github.slupik.universitywall.dagger
 
 import dagger.Binds
 import dagger.Module
+import io.github.slupik.model.Converter
+import io.github.slupik.model.group.Group
+import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
+import io.github.slupik.universitywall.screen.group.model.GroupConverter
 import io.github.slupik.universitywall.screen.registration.DialogedRegistrationErrorHandler
 import io.github.slupik.universitywall.screen.registration.RegistrationErrorHandler
 
@@ -20,5 +24,8 @@ abstract class RegistrationModule {
 
     @Binds
     abstract fun errorHandler(handler: DialogedRegistrationErrorHandler): RegistrationErrorHandler
+
+    @Binds
+    abstract fun groupConverter(converter: GroupConverter): Converter<Group, DisplayableGroup>
 
 }
