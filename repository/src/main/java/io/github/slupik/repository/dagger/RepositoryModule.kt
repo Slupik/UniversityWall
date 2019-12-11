@@ -16,6 +16,7 @@ import dagger.Module
     includes = [
         AuthorizationModule::class,
         MessageDatabaseModule::class,
+        GroupsModule::class,
         MessagesModule::class
     ]
 )
