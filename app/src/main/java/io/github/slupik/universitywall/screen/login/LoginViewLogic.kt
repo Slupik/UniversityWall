@@ -4,11 +4,15 @@ import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
 import io.github.slupik.model.authorization.credentials.INVALID_LOGIN
 import io.github.slupik.model.authorization.credentials.INVALID_PASSWORD
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import javax.inject.Inject
 
 class LoginViewLogic @Inject constructor(
     private val authorizer: Authorizer
 ) {
+
+    private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: LoginViewModel
 
@@ -30,9 +34,7 @@ class LoginViewLogic @Inject constructor(
             return
         }
 
-        viewModel.viewState.postValue(
-            LoadingDataViewState()
-        )
+        viewModel.viewState.postValue(LoadingDataViewState())
 
         authorizer.logIn(
             viewModel.login.value ?: INVALID_LOGIN,
@@ -58,7 +60,12 @@ class LoginViewLogic @Inject constructor(
                     //TODO move to main screen
                 }
             }
-        }
+            viewModel.viewState.postValue(StartViewState())
+        }.remember()
+    }
+
+    private fun Disposable.remember() {
+        compositeDisposable.add(this)
     }
 
 }

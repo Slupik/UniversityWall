@@ -60,7 +60,7 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         QrCodeScannerViewModel::class
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
-        (activity as QrCodeScannerActivity).dependencyInjectionComponent.inject(this)
+        (activity as QrCodeScannerActivity).appDepInComponent.inject(this)
         super.onActivityCreated(savedInstanceState)
 
         mPreview = activity?.findViewById(R.id.preview)

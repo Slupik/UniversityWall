@@ -9,12 +9,17 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
+import io.github.slupik.model.authorization.registration.Registrar
+import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.github.slupik.model.authorization.state.AuthorizationStateProvider
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.ServerAuthorizationStateProvider
 import io.github.slupik.network.authorization.authorizer.ServerAuthorizer
-import io.github.slupik.network.authorization.retrofit.AuthorizationResponse
-import io.github.slupik.network.authorization.retrofit.AuthorizationResponseConverter
+import io.github.slupik.network.authorization.registrar.ServerAwareRegistrar
+import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponse
+import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponseConverter
+import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponse
+import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponseConverter
 import io.github.slupik.network.authorization.token.ServerTokenHolder
 import io.github.slupik.network.authorization.token.TokenHolder
 
@@ -27,12 +32,20 @@ import io.github.slupik.network.authorization.token.TokenHolder
 abstract class AuthorizationModule {
 
     @Binds
+    abstract fun provideAuthorizer(authorizer: ServerAuthorizer):
+            Authorizer
+
+    @Binds
     abstract fun authorizationResponseConverter(converter: AuthorizationResponseConverter):
             ResponseConverter<AuthorizationResponse, AuthorizationResult>
 
     @Binds
-    abstract fun authorizer(authorizer: ServerAuthorizer):
-            Authorizer
+    abstract fun provideRegistrar(registrar: ServerAwareRegistrar):
+            Registrar
+
+    @Binds
+    abstract fun registrationResponseConverter(converter: RegistrationResponseConverter):
+            ResponseConverter<RegistrationResponse, RegistrationResult>
 
     @Binds
     abstract fun authorizationStateProvider(stateProvider: ServerAuthorizationStateProvider):

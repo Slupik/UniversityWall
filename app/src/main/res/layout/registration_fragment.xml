@@ -1,13 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".screen.registration.RegistrationFragment">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="Hello" />
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
 
-</FrameLayout>
+    <data tools:ignore="MissingConstraints">
+
+        <variable
+                name="viewmodel"
+                type="io.github.slupik.universitywall.screen.registration.RegistrationViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".screen.registration.RegistrationFragment">
+
+        <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:elevation="20dp"
+                android:gravity="center_horizontal|center_vertical"
+                android:orientation="horizontal"
+                android:visibility="@{viewmodel.viewState.loading}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:visibility="gone">
+
+            <ProgressBar
+                    android:id="@+id/progressBar2"
+                    style="?android:attr/progressBarStyle"
+                    android:layout_width="116dp"
+                    android:layout_height="128dp" />
+        </LinearLayout>
+
+        <Button
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
+                android:onClick="@{()->viewmodel.onRegister()}"
+                android:text="@string/registration_form_button"
+                app:layout_constraintEnd_toEndOf="@+id/editText2"
+                app:layout_constraintTop_toBottomOf="@+id/editText3" />
+
+        <EditText
+                android:id="@+id/editText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="48dp"
+                android:ems="10"
+                android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
+                android:hint="@string/registration_form_login"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:text="@={viewmodel.login}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+        <EditText
+                android:id="@+id/editText4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:ems="10"
+                android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
+                android:hint="@string/registration_form_name"
+                android:importantForAutofill="no"
+                android:inputType="textPersonName"
+                android:text="@={viewmodel.displayName}"
+                app:layout_constraintStart_toStartOf="@+id/editText"
+                app:layout_constraintTop_toBottomOf="@+id/editText" />
+
+        <EditText
+                android:id="@+id/editText2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:ems="10"
+                android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
+                android:hint="@string/registration_form_password"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:text="@={viewmodel.password}"
+                app:layout_constraintStart_toStartOf="@+id/editText"
+                app:layout_constraintTop_toBottomOf="@+id/editText4" />
+
+        <EditText
+                android:id="@+id/editText3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:ems="10"
+                android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
+                android:hint="@string/registration_form_password_repeat"
+                android:importantForAutofill="no"
+                android:inputType="textPassword"
+                android:text="@={viewmodel.repeatedPassword}"
+                app:layout_constraintStart_toStartOf="@+id/editText"
+                app:layout_constraintTop_toBottomOf="@+id/editText2" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

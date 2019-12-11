@@ -11,7 +11,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
 import androidx.lifecycle.ViewModelProviders
+import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.application.MyApplication
+import io.github.slupik.universitywall.dagger.ActivitySubcomponent
 import io.github.slupik.universitywall.dagger.ApplicationComponent
 import io.github.slupik.universitywall.viewmodel.ViewModel
 import kotlin.reflect.KClass
@@ -29,8 +31,11 @@ abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
     protected val application: MyApplication
         get() = context?.applicationContext as MyApplication
 
-    protected val dependencyInjectionComponent: ApplicationComponent
+    protected val appDepInComponent: ApplicationComponent
         get() = application.mainComponent
+
+    protected val activityDepInComponent: ActivitySubcomponent
+        get() = (activity as Activity).activityDepInComponent
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
