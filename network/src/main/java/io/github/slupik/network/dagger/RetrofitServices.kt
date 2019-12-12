@@ -13,7 +13,7 @@ import io.github.slupik.network.authorization.retrofit.authorization.Authorizati
 import io.github.slupik.network.authorization.retrofit.authorization.MockedAuthorizationService
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
 import io.github.slupik.network.group.retrofit.GroupActionsService
-import io.github.slupik.network.message.retrofit.GroupsDownloadingService
+import io.github.slupik.network.group.retrofit.GroupsDownloadingService
 import io.github.slupik.network.message.retrofit.MessagesDownloadingService
 import io.github.slupik.network.message.retrofit.MockedMessagesDownloadingService
 import retrofit2.Retrofit

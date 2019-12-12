@@ -10,7 +10,7 @@ import io.github.slupik.model.group.GroupsDownloader
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.token.TokenHolder
 import io.github.slupik.network.group.model.GroupListResponse
-import io.github.slupik.network.message.retrofit.GroupsDownloadingService
+import io.github.slupik.network.group.retrofit.GroupsDownloadingService
 import io.reactivex.Single
 import javax.inject.Inject
 

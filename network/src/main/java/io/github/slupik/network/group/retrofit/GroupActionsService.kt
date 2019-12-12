@@ -19,9 +19,9 @@ import retrofit2.http.Header
 interface GroupActionsService {
 
     @GET("group/join")
-    fun joinToGroup(@Header("token") token: String, id: String): Single<GroupListResponse>
+    fun joinToGroup(@Header("token") token: String, @Header("id") id: String): Single<GroupListResponse>
 
     @GET("group/leave")
-    fun leaveGroup(@Header("token") token: String, id: String): Single<GroupLeaveResponse>
+    fun leaveGroup(@Header("token") token: String, @Header("id") id: String): Single<GroupLeaveResponse>
 
 }

@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
 import io.github.slupik.model.group.Group
+import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.GroupsFragmentBinding
@@ -24,6 +25,9 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController
 
     private lateinit var binding: GroupsFragmentBinding
     private lateinit var adapter: GroupsAdapter
+
+    @Inject
+    lateinit var groupsActions: GroupActions
 
     @Inject
     lateinit var groupsProvider: GroupsProvider
@@ -60,13 +64,24 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController
         internalViewModel.setLogic(viewLogic)
 
         adapter = GroupsAdapter(
-            viewModel = viewModel
+            actions = groupsActions,
+            groupsProvider = groupsProvider
         )
 
         binding.rvMessages.adapter = adapter
         binding.rvMessages.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+
+        adapter.submitList(
+            mutableListOf(
+                DisplayableGroup(
+                    id = 0,
+                    name = "name",
+                    owner = "John Doe"
+                )
+            )
+        )
 
         groupsProvider.groupsEmitter.subscribe {
             adapter.submitList(
@@ -87,15 +102,6 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController
                     it.printStackTrace()
                 }
             ).remember()
-        adapter.submitList(
-            mutableListOf(
-                DisplayableGroup(
-                    id = 0,
-                    name = "name",
-                    owner = "John Doe"
-                )
-            )
-        )
     }
 
     override fun moveToScanner() {

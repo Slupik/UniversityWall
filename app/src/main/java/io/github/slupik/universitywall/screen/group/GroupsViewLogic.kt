@@ -65,7 +65,11 @@ class GroupsViewLogic @Inject constructor(
             .refresh()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
-            .subscribe()
+            .subscribeBy(
+                onError = {
+                    it.printStackTrace()
+                }
+            )
             .remember()
     }
 

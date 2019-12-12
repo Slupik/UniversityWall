@@ -3,7 +3,7 @@
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
-package io.github.slupik.network.message.retrofit
+package io.github.slupik.network.group.retrofit
 
 import io.github.slupik.network.group.model.GroupListResponse
 import io.reactivex.Single
