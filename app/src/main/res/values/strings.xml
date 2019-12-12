@@ -54,6 +54,9 @@
     <string name="group_add">Add</string>
     <string name="group_leave">Leave</string>
     <string name="message_list_goto_groups">Groups</string>
+    <string name="no">NO</string>
+    <string name="group_invitation_confirmation">Do you really want join to group %1$s?</string>
+    <string name="group_invitation_confirmation_title">Confirmation</string>
 
 
 </resources>

@@ -68,8 +68,16 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
             requestCameraPermission()
         }
         invitationEmitter.invitations.subscribe {
-            Log.d("BARCODE", it.description)
-        }
+            Log.d("QrCodeScannerActivity", "Clicked barcode name: "+it.description)
+
+            val positiveAction = DialogInterface.OnClickListener { _, _ -> finish() }
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.group_invitation_confirmation_title)
+                .setMessage(getString(R.string.group_invitation_confirmation, it.description))
+                .setPositiveButton(R.string.ok, positiveAction)
+                .setNegativeButton(R.string.no, null)
+                .show()
+        }.remember()
     }
 
     private fun requestCameraPermission() {
