@@ -14,6 +14,8 @@ import io.github.slupik.model.invitation.model.Invitation
  */
 interface InvitationBroadcaster {
 
-    fun broadcast(invitation: Invitation)
+    fun broadcastDetected(invitation: Invitation)
+
+    fun broadcastAccepted(invitation: Invitation)
 
 }

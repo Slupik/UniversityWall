@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.vision.barcode.Barcode
+import io.github.slupik.model.invitation.providing.InvitationBroadcaster
 import io.github.slupik.model.invitation.providing.InvitationEmitter
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.activity.Activity
@@ -36,6 +37,9 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
 
     @Inject
     lateinit var invitationEmitter: InvitationEmitter
+
+    @Inject
+    lateinit var invitationBroadcaster: InvitationBroadcaster
 
     override fun onCreate(savedInstanceState: Bundle?) {
         appDepInComponent.inject(this)
@@ -67,16 +71,21 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
         } else {
             requestCameraPermission()
         }
-        invitationEmitter.invitations.subscribe {
+        invitationEmitter.detectedInvitations.subscribe {
             Log.d("QrCodeScannerActivity", "Clicked barcode name: "+it.description)
 
-            val positiveAction = DialogInterface.OnClickListener { _, _ -> finish() }
+            val positiveAction = DialogInterface.OnClickListener { _, _ ->
+                invitationBroadcaster.broadcastAccepted(it)
+                finish()
+            }
+
             val builder = AlertDialog.Builder(this)
             builder.setTitle(R.string.group_invitation_confirmation_title)
                 .setMessage(getString(R.string.group_invitation_confirmation, it.description))
                 .setPositiveButton(R.string.ok, positiveAction)
                 .setNegativeButton(R.string.no, null)
                 .show()
+
         }.remember()
     }
 
