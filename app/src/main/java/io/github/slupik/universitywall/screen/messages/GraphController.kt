@@ -5,18 +5,13 @@
 
 package io.github.slupik.universitywall.screen.messages
 
-import io.github.slupik.universitywall.viewmodel.ViewModel
+/**
+ * Created by Sebastian Witasik on 12.12.2019.
+ * E-mail: SebastianWitasik@gmail.com
+ * All rights reserved & copyright ©
+ */
+interface GraphController {
 
-class MessagesViewModel : ViewModel() {
-
-    private lateinit var logic: MessagesViewLogic
-
-    fun inject(logic: MessagesViewLogic) {
-        this.logic = logic
-    }
-
-    fun onGotoGroups() {
-        logic.onGotoGroups()
-    }
+    fun moveToGroupsScreen()
 
 }

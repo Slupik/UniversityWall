@@ -68,8 +68,8 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
         }.remember()
         groupsProvider
             .groups
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 {
                     adapter.submitList(
@@ -91,7 +91,12 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
         )
 
         binding.btnRefreshGroups.setOnClickListener {
-            groupsProvider.refresh().subscribe().remember()
+            groupsProvider
+                .refresh()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+                .remember()
         }
     }
 

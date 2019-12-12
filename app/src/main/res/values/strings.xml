@@ -53,6 +53,7 @@
     <string name="groups_list_refresh">Refresh</string>
     <string name="group_add">Add</string>
     <string name="group_leave">Leave</string>
+    <string name="message_list_goto_groups">Groups</string>
 
 
 </resources>
