@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019. by Sebastian Witasik
+  ~ All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
+  -->
+
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/nav_graph"
+        app:startDestination="@id/loginFragment">
+
+    <fragment
+            android:id="@+id/loginFragment"
+            android:name="io.github.slupik.universitywall.screen.login.LoginFragment"
+            android:label="LoginFragment"
+            tools:layout="@layout/login_fragment" >
+        <action
+                android:id="@+id/action_loginFragment_to_messagesFragment"
+                app:destination="@id/messagesFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/registrationFragment"
+            android:name="io.github.slupik.universitywall.screen.registration.RegistrationFragment"
+            android:label="RegistrationFragment"
+            tools:layout="@layout/registration_fragment" />
+    <fragment
+            android:id="@+id/messagesFragment"
+            android:name="io.github.slupik.universitywall.screen.messages.MessagesFragment"
+            android:label="MessagesFragment"
+            tools:layout="@layout/messages_fragment" />
+</navigation>

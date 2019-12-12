@@ -27,7 +27,7 @@ class SharedPreferencesTokenRepository @Inject constructor(
         get() = getStringFromPreferences(R.string.saved_session_token, INVALID_SESSION_TOKEN)
 
     override fun saveSessionToken(token: String) {
-        saveAsynchronously {
+        saveSynchronously {
             with(it) {
                 putString(R.string.saved_session_token, token)
             }

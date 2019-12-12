@@ -32,7 +32,7 @@ class ServerAuthorizationStateProvider @Inject constructor(
         get() = stateBroadcaster
 
     override fun isLoggedIn(): Boolean =
-        tokenHolder.session == INVALID_SESSION_TOKEN
+        tokenHolder.session != INVALID_SESSION_TOKEN
 
     override fun isCredentialKnown(): Boolean =
         credentialsProvider.login.isNotEmpty() && credentialsProvider.password.isNotEmpty()

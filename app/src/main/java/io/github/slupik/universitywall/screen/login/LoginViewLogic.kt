@@ -15,9 +15,14 @@ class LoginViewLogic @Inject constructor(
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: LoginViewModel
+    private lateinit var navigation: GraphController
 
     fun inject(viewModel: LoginViewModel) {
         this.viewModel = viewModel
+    }
+
+    fun inject(navigation: GraphController) {
+        this.navigation = navigation
     }
 
     fun onLogIn() {
@@ -58,6 +63,7 @@ class LoginViewLogic @Inject constructor(
                 }
                 AuthorizationResult.SUCCESS -> {
                     viewModel.viewState.postValue(StartViewState())
+                    navigation.moveToMessagesScreen()
                 }
             }
         }.remember()
