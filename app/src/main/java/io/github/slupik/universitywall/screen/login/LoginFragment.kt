@@ -57,7 +57,7 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>(), GraphController {
     }
 
     override fun moveToRegistrationScreen() {
-        //TODO implement
+        findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
     }
 
 }

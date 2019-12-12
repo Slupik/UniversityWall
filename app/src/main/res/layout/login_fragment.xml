@@ -44,15 +44,15 @@
         </LinearLayout>
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
-            android:text="@string/login_form_button"
-            android:onClick="@{()->viewmodel.onLogIn()}"
-            app:layout_constraintEnd_toEndOf="@+id/editText2"
-            app:layout_constraintTop_toBottomOf="@+id/editText2" />
+                android:id="@+id/button3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="32dp"
+                android:enabled="@{viewmodel.viewState.loading != View.VISIBLE}"
+                android:onClick="@{()->viewmodel.onLogIn()}"
+                android:text="@string/login_form_button"
+                app:layout_constraintEnd_toEndOf="@+id/editText2"
+                app:layout_constraintTop_toBottomOf="@+id/editText2" />
 
         <EditText
             android:id="@+id/editText"
@@ -116,6 +116,17 @@
                 app:layout_constraintStart_toEndOf="@+id/linearLayout"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintVertical_bias="0.16000003" />
+
+        <TextView
+                android:id="@+id/textView4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="@string/login_form_registration"
+                android:textStyle="italic"
+                android:onClick="@{()->viewmodel.onRegistration()}"
+                app:layout_constraintEnd_toEndOf="@+id/button3"
+                app:layout_constraintTop_toBottomOf="@+id/button3" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

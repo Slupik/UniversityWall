@@ -26,6 +26,10 @@ class LoginViewModel : ViewModel() {
         logic.onLogIn()
     }
 
+    fun onRegistration() {
+        logic.onRegistration()
+    }
+
     fun setLogic(viewLogic: LoginViewLogic) {
         this.logic = viewLogic
     }

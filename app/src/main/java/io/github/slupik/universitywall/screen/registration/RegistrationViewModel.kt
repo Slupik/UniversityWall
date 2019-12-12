@@ -27,6 +27,10 @@ class RegistrationViewModel : ViewModel() {
         this.logic = viewLogic
     }
 
+    fun onLogin() {
+        logic.onLogin()
+    }
+
     fun onRegister() {
         logic.onRegister()
     }

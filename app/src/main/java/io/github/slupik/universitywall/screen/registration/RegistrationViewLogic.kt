@@ -24,6 +24,7 @@ class RegistrationViewLogic @Inject constructor(
 
     private lateinit var viewModel: RegistrationViewModel
     private lateinit var activity: FragmentActivity
+    private lateinit var navigation: GraphController
 
     fun inject(viewModel: RegistrationViewModel) {
         this.viewModel = viewModel
@@ -54,7 +55,7 @@ class RegistrationViewLogic @Inject constructor(
                     errorHandler.onLoginAlreadyExists()
                 }
                 RegistrationResult.SUCCESS -> {
-                    //TODO implement
+                    navigation.moveToMessagesScreen()
                 }
             }
             viewModel.viewState.postValue(StartViewState())
@@ -67,8 +68,16 @@ class RegistrationViewLogic @Inject constructor(
                 viewModel.password.value.isNullOrEmpty() ||
                 viewModel.repeatedPassword.value.isNullOrEmpty()
 
+    fun onLogin() {
+        navigation.moveToLoginScreen()
+    }
+
     fun inject(activity: FragmentActivity) {
         this.activity = activity
+    }
+
+    fun inject(graphController: GraphController) {
+        this.navigation = graphController
     }
 
     private fun Disposable.remember() {

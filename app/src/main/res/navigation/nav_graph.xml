@@ -21,16 +21,53 @@
                 app:launchSingleTop="true"
                 app:popUpTo="@id/nav_graph"
                 app:popUpToInclusive="true" />
+        <action
+                android:id="@+id/action_loginFragment_to_registrationFragment"
+                app:destination="@id/registrationFragment" />
     </fragment>
 
     <fragment
             android:id="@+id/registrationFragment"
             android:name="io.github.slupik.universitywall.screen.registration.RegistrationFragment"
             android:label="RegistrationFragment"
-            tools:layout="@layout/registration_fragment" />
+            tools:layout="@layout/registration_fragment" >
+        <action
+                android:id="@+id/action_registrationFragment_to_messagesFragment"
+                app:destination="@id/messagesFragment"
+                app:launchSingleTop="true"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
+        <action
+                android:id="@+id/action_registrationFragment_to_loginFragment"
+                app:destination="@id/loginFragment"
+                app:popUpTo="@id/nav_graph"
+                app:popUpToInclusive="true" />
+    </fragment>
+
     <fragment
             android:id="@+id/messagesFragment"
             android:name="io.github.slupik.universitywall.screen.messages.MessagesFragment"
             android:label="MessagesFragment"
-            tools:layout="@layout/messages_fragment" />
+            tools:layout="@layout/messages_fragment" >
+        <action
+                android:id="@+id/action_messagesFragment_to_groupsFragment"
+                app:destination="@id/groupsFragment" />
+    </fragment>
+
+    <fragment
+            android:id="@+id/groupsFragment"
+            android:name="io.github.slupik.universitywall.screen.group.GroupsFragment"
+            android:label="GroupsFragment"
+            tools:layout="@layout/groups_fragment">
+        <action
+                android:id="@+id/action_groupsFragment_to_qrCodeScannerActivity"
+                app:destination="@id/qrCodeScannerActivity" />
+    </fragment>
+
+    <activity
+            android:id="@+id/qrCodeScannerActivity"
+            android:name="io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity"
+            android:label="qr_code_scanner_activity"
+            tools:layout="@layout/qr_code_scanner_activity" />
+
 </navigation>

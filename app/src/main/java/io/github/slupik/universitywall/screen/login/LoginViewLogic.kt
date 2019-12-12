@@ -73,4 +73,8 @@ class LoginViewLogic @Inject constructor(
         compositeDisposable.add(this)
     }
 
+    fun onRegistration() {
+        navigation.moveToRegistrationScreen()
+    }
+
 }
