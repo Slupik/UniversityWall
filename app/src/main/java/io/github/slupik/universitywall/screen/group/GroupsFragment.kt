@@ -10,6 +10,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
 import io.github.slupik.model.group.Group
+import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.GroupsFragmentBinding
@@ -20,16 +21,22 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
+class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController {
 
     private lateinit var binding: GroupsFragmentBinding
     private lateinit var adapter: GroupsAdapter
+
+    @Inject
+    lateinit var groupsActions: GroupActions
 
     @Inject
     lateinit var groupsProvider: GroupsProvider
 
     @Inject
     lateinit var groupsConverter: Converter<Group, DisplayableGroup>
+
+    @Inject
+    lateinit var viewLogic: GroupsViewLogic
 
     companion object {
         fun newInstance() = GroupsFragment()
@@ -51,16 +58,30 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
 
     override fun onViewModelCreated(viewModel: GroupsViewModel) {
         super.onViewModelCreated(viewModel)
-        appDepInComponent.inject(this)
+        activityDepInComponent.inject(this)
+        viewLogic.inject(internalViewModel)
+        viewLogic.inject(this)
+        internalViewModel.setLogic(viewLogic)
 
         adapter = GroupsAdapter(
-            viewModel = viewModel
+            actions = groupsActions,
+            groupsProvider = groupsProvider
         )
 
         binding.rvMessages.adapter = adapter
         binding.rvMessages.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
+
+        adapter.submitList(
+            mutableListOf(
+                DisplayableGroup(
+                    id = 0,
+                    name = "name",
+                    owner = "John Doe"
+                )
+            )
+        )
 
         groupsProvider.groupsEmitter.subscribe {
             adapter.submitList(
@@ -81,28 +102,10 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
                     it.printStackTrace()
                 }
             ).remember()
-        adapter.submitList(
-            mutableListOf(
-                DisplayableGroup(
-                    id = 0,
-                    name = "name",
-                    owner = "John Doe"
-                )
-            )
-        )
+    }
 
-        binding.btnRefreshGroups.setOnClickListener {
-            groupsProvider
-                .refresh()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-                .remember()
-        }
-
-        binding.btnGroupAdd.setOnClickListener {
-            findNavController().navigate(R.id.action_groupsFragment_to_qrCodeScannerActivity)
-        }
+    override fun moveToScanner() {
+        findNavController().navigate(R.id.action_groupsFragment_to_qrCodeScannerActivity)
     }
 
 }

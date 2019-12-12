@@ -5,6 +5,7 @@
 
 package io.github.slupik.network.group.retrofit
 
+import io.github.slupik.network.group.model.GroupLeaveResponse
 import io.github.slupik.network.group.model.GroupListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
@@ -15,9 +16,12 @@ import retrofit2.http.Header
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-interface GroupsDownloadingService {
+interface GroupActionsService {
 
-    @GET("messages/")
-    fun getGroups(@Header("token") token: String): Single<GroupListResponse>
+    @GET("group/join")
+    fun joinToGroup(@Header("token") token: String, @Header("id") id: String): Single<GroupListResponse>
+
+    @GET("group/leave")
+    fun leaveGroup(@Header("token") token: String, @Header("id") id: String): Single<GroupLeaveResponse>
 
 }

@@ -6,14 +6,22 @@
 package io.github.slupik.universitywall.screen.group
 
 import android.view.LayoutInflater
+import android.view.View
+import android.view.View.INVISIBLE
+import android.view.View.VISIBLE
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
+import io.github.slupik.model.group.GroupActions
+import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.adapter.DataBoundListAdapter
 import io.github.slupik.universitywall.databinding.GroupViewBinding
 import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 
 
 /**
@@ -23,15 +31,22 @@ import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
  */
 
 class GroupsAdapter constructor(
-    private val viewModel: GroupsViewModel
-): DataBoundListAdapter<DisplayableGroup>(
+    private val actions: GroupActions,
+    private val groupsProvider: GroupsProvider
+) : DataBoundListAdapter<DisplayableGroup>(
 
-    diffCallback = object: DiffUtil.ItemCallback<DisplayableGroup>() {
-        override fun areItemsTheSame(oldItem: DisplayableGroup, newItem: DisplayableGroup): Boolean {
+    diffCallback = object : DiffUtil.ItemCallback<DisplayableGroup>() {
+        override fun areItemsTheSame(
+            oldItem: DisplayableGroup,
+            newItem: DisplayableGroup
+        ): Boolean {
             return oldItem == newItem
         }
 
-        override fun areContentsTheSame(oldItem: DisplayableGroup, newItem: DisplayableGroup): Boolean {
+        override fun areContentsTheSame(
+            oldItem: DisplayableGroup,
+            newItem: DisplayableGroup
+        ): Boolean {
             return oldItem == newItem
         }
     }
@@ -51,6 +66,34 @@ class GroupsAdapter constructor(
             is GroupViewBinding -> {
                 binding.groupName.text = item.name
                 binding.groupOwner.text = item.owner
+
+                binding.btnLeaveGroup.setOnClickListener {
+                    binding.btnLeaveGroup.visibility = INVISIBLE
+                    binding.pbLeaving.visibility = VISIBLE
+                    actions
+                        .leave(""+item.id)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
+                        .subscribeBy(
+                            onComplete = {
+                                binding.btnLeaveGroup.visibility = VISIBLE
+                                binding.pbLeaving.visibility = View.GONE
+
+                                groupsProvider
+                                    .refresh()
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribeOn(Schedulers.io())
+                                    .subscribeBy(
+                                        onError = {
+                                            it.printStackTrace()
+                                        }
+                                    )
+                            },
+                            onError = {
+                                it.printStackTrace()
+                            }
+                        )
+                }
             }
         }
     }

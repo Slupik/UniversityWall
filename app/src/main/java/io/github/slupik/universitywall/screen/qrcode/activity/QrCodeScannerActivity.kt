@@ -20,6 +20,7 @@ import androidx.core.app.ActivityCompat
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.google.android.gms.vision.barcode.Barcode
+import io.github.slupik.model.invitation.providing.InvitationBroadcaster
 import io.github.slupik.model.invitation.providing.InvitationEmitter
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.activity.Activity
@@ -30,15 +31,18 @@ import javax.inject.Inject
 
 private const val RC_HANDLE_CAMERA_PERM = 2
 
-class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateListener  {
+class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateListener {
 
     private lateinit var sharedViewModel: SharedViewModel
 
     @Inject
     lateinit var invitationEmitter: InvitationEmitter
 
+    @Inject
+    lateinit var invitationBroadcaster: InvitationBroadcaster
+
     override fun onCreate(savedInstanceState: Bundle?) {
-        appDepInComponent.inject(this)
+        activityDepInComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_code_scanner_activity)
 
@@ -67,9 +71,23 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
         } else {
             requestCameraPermission()
         }
-        invitationEmitter.invitations.subscribe {
-            Log.d("BARCODE", it.description)
-        }
+
+        invitationEmitter.detectedInvitations.subscribe {
+            Log.d("QrCodeScannerActivity", "Clicked barcode name: " + it.description)
+
+            val positiveAction = DialogInterface.OnClickListener { _, _ ->
+                invitationBroadcaster.broadcastAccepted(it)
+                finish()
+            }
+
+            val builder = AlertDialog.Builder(this)
+            builder.setTitle(R.string.group_invitation_confirmation_title)
+                .setMessage(getString(R.string.group_invitation_confirmation, it.description))
+                .setPositiveButton(R.string.ok, positiveAction)
+                .setNegativeButton(R.string.no, null)
+                .show()
+
+        }.remember()
     }
 
     private fun requestCameraPermission() {
@@ -79,7 +97,8 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
                 Manifest.permission.CAMERA
             )
         ) {
-            ActivityCompat.requestPermissions(this, permissions,
+            ActivityCompat.requestPermissions(
+                this, permissions,
                 RC_HANDLE_CAMERA_PERM
             )
             return
@@ -106,7 +125,10 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
             return
         }
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.d("QrCodeScannerActivity", "Camera permission granted - initialize the camera source")
+            Log.d(
+                "QrCodeScannerActivity",
+                "Camera permission granted - initialize the camera source"
+            )
             sharedViewModel.cameraPermissionGranted.postValue(true)
             return
         }

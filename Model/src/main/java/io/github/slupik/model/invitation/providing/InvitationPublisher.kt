@@ -19,13 +19,20 @@ import javax.inject.Singleton
 @Singleton
 class InvitationPublisher @Inject constructor(): InvitationBroadcaster, InvitationEmitter {
 
-    private val publisher: PublishSubject<Invitation> = PublishSubject.create()
+    private val publisherOfDetected: PublishSubject<Invitation> = PublishSubject.create()
+    private val publisherOfAccepted: PublishSubject<Invitation> = PublishSubject.create()
 
-    override val invitations: Observable<Invitation>
-        get() = publisher
+    override val detectedInvitations: Observable<Invitation>
+        get() = publisherOfDetected
+    override val acceptedInvitations: Observable<Invitation>
+        get() = publisherOfAccepted
 
-    override fun broadcast(invitation: Invitation) {
-        publisher.onNext(invitation)
+    override fun broadcastDetected(invitation: Invitation) {
+        publisherOfDetected.onNext(invitation)
+    }
+
+    override fun broadcastAccepted(invitation: Invitation) {
+        publisherOfAccepted.onNext(invitation)
     }
 
 }

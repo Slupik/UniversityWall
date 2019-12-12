@@ -75,10 +75,11 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
             invitationFactory
                 .create(barcode.rawValue)
                 .doOnSuccess {invitation ->
-                    invitationBroadcaster.broadcast(invitation)
+                    invitationBroadcaster.broadcastDetected(invitation)
                 }
                 .subscribe()
-        }
+                .remember()
+        }.remember()
 
         gestureDetector = GestureDetector(context, captureGestureListener)
         scaleGestureDetector = ScaleGestureDetector(context,
@@ -147,7 +148,7 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         sharedViewModel.touchEvents.subscribe { event ->
             scaleGestureDetector.onTouchEvent(event)
             gestureDetector.onTouchEvent(event)
-        }
+        }.remember()
     }
 
     override fun onResume() {

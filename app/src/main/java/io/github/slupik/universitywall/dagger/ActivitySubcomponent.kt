@@ -7,6 +7,8 @@ package io.github.slupik.universitywall.dagger
 
 import dagger.Subcomponent
 import io.github.slupik.model.dagger.ActivityScope
+import io.github.slupik.universitywall.screen.group.GroupsFragment
+import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 import io.github.slupik.universitywall.screen.registration.RegistrationFragment
 
 /**
@@ -24,5 +26,7 @@ import io.github.slupik.universitywall.screen.registration.RegistrationFragment
 interface ActivitySubcomponent {
 
     fun inject(clazz: RegistrationFragment)
+    fun inject(clazz: QrCodeScannerActivity)
+    fun inject(clazz: GroupsFragment)
 
 }

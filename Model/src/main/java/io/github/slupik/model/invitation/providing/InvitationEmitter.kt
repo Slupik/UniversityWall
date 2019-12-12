@@ -15,6 +15,8 @@ import io.reactivex.Observable
  */
 interface InvitationEmitter {
 
-    val invitations: Observable<Invitation>
+    val detectedInvitations: Observable<Invitation>
+
+    val acceptedInvitations: Observable<Invitation>
 
 }

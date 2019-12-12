@@ -8,8 +8,10 @@ package io.github.slupik.network.dagger
 import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.group.Group
+import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsDownloader
 import io.github.slupik.network.ResponseConverter
+import io.github.slupik.network.group.ServerAwareGroupActions
 import io.github.slupik.network.group.ServerAwareGroupsDownloader
 import io.github.slupik.network.group.model.GroupListResponse
 import io.github.slupik.network.group.model.GroupListResponseConverter
@@ -22,7 +24,7 @@ import io.github.slupik.network.group.model.GroupResponseConverter
  * All rights reserved & copyright ©
  */
 @Module
-abstract class GroupsDownloaderModule {
+abstract class GroupsModule {
 
     @Binds
     abstract fun downloader(downloader: ServerAwareGroupsDownloader):
@@ -35,5 +37,9 @@ abstract class GroupsDownloaderModule {
     @Binds
     abstract fun groupResponseConverter(converter: GroupResponseConverter):
             ResponseConverter<GroupResponse, Group>
+
+    @Binds
+    abstract fun provideGroupActions(converter: ServerAwareGroupActions):
+            GroupActions
 
 }

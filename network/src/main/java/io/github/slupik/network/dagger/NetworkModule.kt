@@ -17,7 +17,7 @@ import dagger.Module
         RetrofitServices::class,
         AuthorizationModule::class,
         MessagesDownloaderModule::class,
-        GroupsDownloaderModule::class
+        GroupsModule::class
     ]
 )
 class NetworkModule
