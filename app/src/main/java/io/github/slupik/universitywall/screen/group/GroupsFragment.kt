@@ -6,6 +6,7 @@
 package io.github.slupik.universitywall.screen.group
 
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
 import io.github.slupik.model.group.Group
@@ -97,6 +98,10 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>() {
                 .subscribeOn(Schedulers.io())
                 .subscribe()
                 .remember()
+        }
+
+        binding.btnGroupAdd.setOnClickListener {
+            findNavController().navigate(R.id.action_groupsFragment_to_qrCodeScannerActivity)
         }
     }
 
