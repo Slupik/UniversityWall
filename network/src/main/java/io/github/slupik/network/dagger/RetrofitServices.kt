@@ -12,6 +12,7 @@ import io.github.slupik.network.DOMAIN_URL
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationService
 import io.github.slupik.network.authorization.retrofit.authorization.MockedAuthorizationService
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
+import io.github.slupik.network.group.retrofit.GroupActionsService
 import io.github.slupik.network.message.retrofit.GroupsDownloadingService
 import io.github.slupik.network.message.retrofit.MessagesDownloadingService
 import io.github.slupik.network.message.retrofit.MockedMessagesDownloadingService
@@ -53,5 +54,9 @@ class RetrofitServices {
     @Provides
     fun provideGroupsDownloadingService(retrofit: Retrofit): GroupsDownloadingService =
         retrofit.create(GroupsDownloadingService::class.java)
+
+    @Provides
+    fun provideGroupActionsService(retrofit: Retrofit): GroupActionsService =
+        retrofit.create(GroupActionsService::class.java)
 
 }

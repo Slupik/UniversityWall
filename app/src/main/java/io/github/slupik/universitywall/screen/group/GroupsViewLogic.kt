@@ -5,6 +5,7 @@
 
 package io.github.slupik.universitywall.screen.group
 
+import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.model.invitation.providing.InvitationEmitter
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -17,6 +18,7 @@ import javax.inject.Inject
 class GroupsViewLogic @Inject constructor(
     private val groupsProvider: GroupsProvider,
     private val dialogHandler: InvitationDialogHandler,
+    private val actions: GroupActions,
     invitationEmitter: InvitationEmitter
 ) {
 
@@ -29,8 +31,19 @@ class GroupsViewLogic @Inject constructor(
         invitationEmitter
             .acceptedInvitations
             .subscribeBy(
-                onNext = {
-                    dialogHandler.onGroupJoined(it.description)
+                onNext = { invitation ->
+                    actions
+                        .join(invitation.link)
+                        .subscribeBy(
+                            onComplete = {
+                                dialogHandler.onGroupJoined(invitation.description)
+                                refresh()
+                            },
+                            onError = {actionError ->
+                                actionError.printStackTrace()
+                                dialogHandler.onGroupJoiningError()
+                            }
+                        )
                 },
                 onError = {
                     dialogHandler.onGroupJoiningError()
