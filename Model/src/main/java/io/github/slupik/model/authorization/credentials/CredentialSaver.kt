@@ -11,7 +11,7 @@ package io.github.slupik.model.authorization.credentials
  * All rights reserved & copyright ©
  */
 interface CredentialSaver {
-//TODO implement
+
     fun save(login: String, password: String)
 
 }

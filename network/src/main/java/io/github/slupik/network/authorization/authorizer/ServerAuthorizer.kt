@@ -8,9 +8,12 @@ package io.github.slupik.network.authorization.authorizer
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
 import io.github.slupik.model.authorization.credentials.CredentialSaver
+import io.github.slupik.model.authorization.state.AuthorizationState
+import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponse
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationService
+import io.github.slupik.network.authorization.token.TokenHolder
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -22,6 +25,8 @@ import javax.inject.Inject
 class ServerAuthorizer @Inject constructor(
     private val service: AuthorizationService,
     private val saver: CredentialSaver,
+    private val tokenHolder: TokenHolder,
+    private val statePublisher: AuthorizationStatePublisher,
     private val converter: ResponseConverter<AuthorizationResponse, AuthorizationResult>
 ): Authorizer {
 
@@ -31,11 +36,14 @@ class ServerAuthorizer @Inject constructor(
                 .doOnSuccess { response ->
                     if(response.token.isNotEmpty()) {
                         saver.save(login, password)
+                        tokenHolder.session = response.token
+                        statePublisher.onNewState(AuthorizationState.LOGGED_IN)
                     }
                 }
                 .map(converter::convert)
                 .onErrorReturn {
                     it.printStackTrace()
+                    statePublisher.onNewState(AuthorizationState.LOGGED_OUT)
                     AuthorizationResult.CONNECTION_ERROR
                 }
         } catch (e: Exception) {

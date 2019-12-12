@@ -6,10 +6,10 @@
 package io.github.slupik.repository.credential
 
 import android.content.Context
+import io.github.slupik.model.authorization.INVALID_LOGIN
+import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.model.authorization.credentials.CredentialsProvider
-import io.github.slupik.model.authorization.credentials.INVALID_LOGIN
-import io.github.slupik.model.authorization.credentials.INVALID_PASSWORD
 import io.github.slupik.repository.R
 import io.github.slupik.repository.sharedpreferences.SharedPreferencesRepository
 import javax.inject.Inject

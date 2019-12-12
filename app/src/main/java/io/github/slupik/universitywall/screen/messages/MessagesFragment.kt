@@ -6,6 +6,7 @@
 package io.github.slupik.universitywall.screen.messages
 
 import androidx.databinding.DataBindingUtil
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
 import io.github.slupik.model.message.Message
@@ -21,7 +22,7 @@ import java.util.*
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
+class MessagesFragment : FragmentWithViewModel<MessagesViewModel>(), GraphController {
 
     private lateinit var binding: MessagesFragmentBinding
     private lateinit var adapter: MessagesAdapter
@@ -31,6 +32,9 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
 
     @Inject
     lateinit var messagesConverter: Converter<Message, DisplayableMessage>
+
+    @Inject
+    lateinit var viewLogic: MessagesViewLogic
 
     companion object {
         fun newInstance() = MessagesFragment()
@@ -54,6 +58,9 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
         super.onViewModelCreated(viewModel)
         appDepInComponent.inject(this)
 
+        internalViewModel.inject(viewLogic)
+        viewLogic.inject(this)
+
         adapter = MessagesAdapter(
             viewModel = viewModel
         )
@@ -70,8 +77,8 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
         }.remember()
         messagesProvider
             .messages
-            .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
             .subscribe(
                 {
                     adapter.submitList(
@@ -100,8 +107,17 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>() {
         )
 
         binding.btnRefreshMessages.setOnClickListener {
-            messagesProvider.refresh().subscribe().remember()
+            messagesProvider
+                .refresh()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
+                .subscribe()
+                .remember()
         }
+    }
+
+    override fun moveToGroupsScreen() {
+        findNavController().navigate(R.id.action_messagesFragment_to_groupsFragment)
     }
 
 }

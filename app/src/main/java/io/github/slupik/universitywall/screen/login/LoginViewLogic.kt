@@ -1,9 +1,9 @@
 package io.github.slupik.universitywall.screen.login
 
+import io.github.slupik.model.authorization.INVALID_LOGIN
+import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
-import io.github.slupik.model.authorization.credentials.INVALID_LOGIN
-import io.github.slupik.model.authorization.credentials.INVALID_PASSWORD
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
 import javax.inject.Inject
@@ -15,9 +15,14 @@ class LoginViewLogic @Inject constructor(
     private val compositeDisposable: CompositeDisposable = CompositeDisposable()
 
     private lateinit var viewModel: LoginViewModel
+    private lateinit var navigation: GraphController
 
     fun inject(viewModel: LoginViewModel) {
         this.viewModel = viewModel
+    }
+
+    fun inject(navigation: GraphController) {
+        this.navigation = navigation
     }
 
     fun onLogIn() {
@@ -57,15 +62,19 @@ class LoginViewLogic @Inject constructor(
                     )
                 }
                 AuthorizationResult.SUCCESS -> {
-                    //TODO move to main screen
+                    viewModel.viewState.postValue(StartViewState())
+                    navigation.moveToMessagesScreen()
                 }
             }
-            viewModel.viewState.postValue(StartViewState())
         }.remember()
     }
 
     private fun Disposable.remember() {
         compositeDisposable.add(this)
+    }
+
+    fun onRegistration() {
+        navigation.moveToRegistrationScreen()
     }
 
 }

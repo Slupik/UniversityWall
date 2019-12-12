@@ -11,9 +11,6 @@ package io.github.slupik.model.authorization.credentials
  * All rights reserved & copyright ©
  */
 
-const val INVALID_LOGIN: String = ""
-const val INVALID_PASSWORD: String = ""
-
 interface CredentialsProvider {
 
     val login: String

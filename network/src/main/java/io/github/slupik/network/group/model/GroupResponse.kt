@@ -11,5 +11,7 @@ package io.github.slupik.network.group.model
  * All rights reserved & copyright ©
  */
 data class GroupResponse(
-    val name: String
+    val id: Int,
+    val name: String,
+    val owner: String
 )

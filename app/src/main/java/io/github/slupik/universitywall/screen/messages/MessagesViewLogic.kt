@@ -5,18 +5,18 @@
 
 package io.github.slupik.universitywall.screen.messages
 
-import io.github.slupik.universitywall.viewmodel.ViewModel
+import javax.inject.Inject
 
-class MessagesViewModel : ViewModel() {
+class MessagesViewLogic @Inject constructor() {
 
-    private lateinit var logic: MessagesViewLogic
+    private lateinit var navigation: GraphController
 
-    fun inject(logic: MessagesViewLogic) {
-        this.logic = logic
+    fun inject(navigation: GraphController) {
+        this.navigation = navigation
     }
 
     fun onGotoGroups() {
-        logic.onGotoGroups()
+        navigation.moveToGroupsScreen()
     }
 
 }

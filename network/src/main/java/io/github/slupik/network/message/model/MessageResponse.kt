@@ -10,6 +10,21 @@ package io.github.slupik.network.message.model
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
+
+typealias DateInIsoFormat = String
+
 data class MessageResponse(
-    val name: String
+    val id: Int,
+    val type: Int,
+    val typeName: String,
+    val title: String,
+    val content: String,
+    val author: String,
+    val group: String,
+    val postedTime: DateInIsoFormat,
+    val expirationTime: DateInIsoFormat,
+    val beginningTime: DateInIsoFormat,
+    val endingTime: DateInIsoFormat,
+    val attachmentName: String,
+    val attachmentUrl: String
 )

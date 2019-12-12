@@ -8,9 +8,12 @@ package io.github.slupik.network.authorization.registrar
 import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.model.authorization.registration.Registrar
 import io.github.slupik.model.authorization.registration.RegistrationResult
+import io.github.slupik.model.authorization.state.AuthorizationState
+import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponse
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
+import io.github.slupik.network.authorization.token.TokenHolder
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -22,6 +25,8 @@ import javax.inject.Inject
 class ServerAwareRegistrar @Inject constructor(
     private val service: RegistrationService,
     private val saver: CredentialSaver,
+    private val tokenHolder: TokenHolder,
+    private val statePublisher: AuthorizationStatePublisher,
     private val converter: ResponseConverter<RegistrationResponse, RegistrationResult>
 ): Registrar {
 
@@ -35,11 +40,14 @@ class ServerAwareRegistrar @Inject constructor(
                 .doOnSuccess { response ->
                     if(response.token.isNotEmpty()) {
                         saver.save(login, password)
+                        tokenHolder.session = response.token
+                        statePublisher.onNewState(AuthorizationState.LOGGED_IN)
                     }
                 }
                 .map(converter::convert)
                 .onErrorReturn {
                     it.printStackTrace()
+                    statePublisher.onNewState(AuthorizationState.LOGGED_OUT)
                     RegistrationResult.CONNECTION_ERROR
                 }
         } catch (e: Exception) {
