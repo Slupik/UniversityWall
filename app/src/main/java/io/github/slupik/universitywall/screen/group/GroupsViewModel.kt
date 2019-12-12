@@ -8,5 +8,19 @@ package io.github.slupik.universitywall.screen.group
 import io.github.slupik.universitywall.viewmodel.ViewModel
 
 class GroupsViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
+
+    private lateinit var logic: GroupsViewLogic
+
+    fun setLogic(viewLogic: GroupsViewLogic) {
+        this.logic = viewLogic
+    }
+
+    fun refresh(){
+        logic.refresh()
+    }
+
+    fun joinToGroup(){
+        logic.joinToGroup()
+    }
+
 }

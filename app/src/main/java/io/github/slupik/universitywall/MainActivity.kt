@@ -15,7 +15,7 @@ class MainActivity : Activity() {
     @Inject
     lateinit var authorizationStateProvider: AuthorizationStateProvider
 
-    lateinit var navigator: NavController
+    private lateinit var navigator: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

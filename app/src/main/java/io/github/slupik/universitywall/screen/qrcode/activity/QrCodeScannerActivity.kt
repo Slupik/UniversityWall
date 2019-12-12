@@ -31,7 +31,7 @@ import javax.inject.Inject
 
 private const val RC_HANDLE_CAMERA_PERM = 2
 
-class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateListener  {
+class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateListener {
 
     private lateinit var sharedViewModel: SharedViewModel
 
@@ -42,7 +42,7 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
     lateinit var invitationBroadcaster: InvitationBroadcaster
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        appDepInComponent.inject(this)
+        activityDepInComponent.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(R.layout.qr_code_scanner_activity)
 
@@ -71,8 +71,9 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
         } else {
             requestCameraPermission()
         }
+
         invitationEmitter.detectedInvitations.subscribe {
-            Log.d("QrCodeScannerActivity", "Clicked barcode name: "+it.description)
+            Log.d("QrCodeScannerActivity", "Clicked barcode name: " + it.description)
 
             val positiveAction = DialogInterface.OnClickListener { _, _ ->
                 invitationBroadcaster.broadcastAccepted(it)
@@ -96,7 +97,8 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
                 Manifest.permission.CAMERA
             )
         ) {
-            ActivityCompat.requestPermissions(this, permissions,
+            ActivityCompat.requestPermissions(
+                this, permissions,
                 RC_HANDLE_CAMERA_PERM
             )
             return
@@ -123,7 +125,10 @@ class QrCodeScannerActivity : Activity(), BarcodeGraphicTracker.BarcodeUpdateLis
             return
         }
         if (grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-            Log.d("QrCodeScannerActivity", "Camera permission granted - initialize the camera source")
+            Log.d(
+                "QrCodeScannerActivity",
+                "Camera permission granted - initialize the camera source"
+            )
             sharedViewModel.cameraPermissionGranted.postValue(true)
             return
         }

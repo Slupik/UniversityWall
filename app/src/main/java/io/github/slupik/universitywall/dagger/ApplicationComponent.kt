@@ -10,10 +10,8 @@ import io.github.slupik.model.dagger.ModelModule
 import io.github.slupik.network.dagger.NetworkModule
 import io.github.slupik.repository.dagger.RepositoryModule
 import io.github.slupik.universitywall.MainActivity
-import io.github.slupik.universitywall.screen.group.GroupsFragment
 import io.github.slupik.universitywall.screen.login.LoginFragment
 import io.github.slupik.universitywall.screen.messages.MessagesFragment
-import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.QrCodeScannerFragment
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
 import javax.inject.Singleton
@@ -41,10 +39,8 @@ interface ApplicationComponent {
 
     fun inject(clazz: BarcodeGraphic)
     fun inject(clazz: QrCodeScannerFragment)
-    fun inject(clazz: QrCodeScannerActivity)
     fun inject(clazz: LoginFragment)
     fun inject(clazz: MessagesFragment)
-    fun inject(clazz: GroupsFragment)
     fun inject(clazz: MainActivity)
 
 }

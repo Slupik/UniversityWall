@@ -33,6 +33,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:text="@string/groups_list_refresh"
+                android:onClick="@{()->viewmodel.refresh()}"
                 app:layout_constraintEnd_toStartOf="@+id/guideline"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -42,6 +43,7 @@
                 android:layout_width="0dp"
                 android:layout_height="64dp"
                 android:text="@string/group_add"
+                android:onClick="@{()->viewmodel.joinToGroup()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/guideline"
                 app:layout_constraintTop_toTopOf="@+id/btnRefreshGroups" />
