@@ -16,6 +16,7 @@ import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithViewModel
 import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.reflect.KClass
@@ -89,11 +90,20 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>(), GraphContro
             ).remember()
 
         binding.btnRefreshMessages.setOnClickListener {
+            viewModel.viewState.postValue(LoadingDataViewState())
             messagesProvider
                 .refresh()
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribeOn(Schedulers.io())
-                .subscribe()
+                .subscribeBy(
+                    onComplete = {
+                        viewModel.viewState.postValue(StartViewState())
+                    },
+                    onError = {
+                        it.printStackTrace()
+                        viewModel.viewState.postValue(StartViewState())
+                    }
+                )
                 .remember()
         }
     }

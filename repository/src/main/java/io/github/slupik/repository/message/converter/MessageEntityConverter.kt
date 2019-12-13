@@ -12,6 +12,7 @@ import io.github.slupik.repository.database.MESSAGE_TYPE_CANCELED_CLASSES
 import io.github.slupik.repository.database.MESSAGE_TYPE_INFO
 import io.github.slupik.repository.database.MESSAGE_TYPE_TEST
 import io.github.slupik.repository.database.MessageEntity
+import org.threeten.bp.OffsetDateTime
 import javax.inject.Inject
 
 /**
@@ -29,10 +30,10 @@ class MessageEntityConverter @Inject constructor() : Converter<MessageEntity, Me
             content = input.content,
             author = input.author,
             group = input.group,
-            postedTime = input.postedTime,
-            expirationTime = input.expirationTime,
-            beginningTime = input.beginningTime,
-            endingTime = input.endingTime,
+            postedTime = DateTimeConverter.toOffsetDateTime(input.postedTime)?: OffsetDateTime.now(),
+            expirationTime = DateTimeConverter.toOffsetDateTime(input.expirationTime)?: OffsetDateTime.now(),
+            beginningTime = DateTimeConverter.toOffsetDateTime(input.beginningTime)?: OffsetDateTime.now(),
+            endingTime = DateTimeConverter.toOffsetDateTime(input.endingTime)?: OffsetDateTime.now(),
             attachmentName = input.attachmentName,
             attachmentUrl = input.attachmentUrl
         )

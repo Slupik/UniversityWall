@@ -50,7 +50,7 @@ internal class MessagesSyncingServiceTest {
         whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
-        whenever(repository.save(any())).thenReturn(Completable.complete())
+        whenever(repository.set(any())).thenReturn(Completable.complete())
 
         sut.refresh()
             .test()
@@ -62,7 +62,7 @@ internal class MessagesSyncingServiceTest {
             )
 
         Mockito.verify(downloader, Mockito.times(1)).downloadMessages()
-        Mockito.verify(repository, Mockito.times(1)).save(downloadResult)
+        Mockito.verify(repository, Mockito.times(1)).set(downloadResult)
     }
 
     @Test
@@ -78,7 +78,7 @@ internal class MessagesSyncingServiceTest {
         whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
-        whenever(repository.save(any())).thenReturn(Completable.complete())
+        whenever(repository.set(any())).thenReturn(Completable.complete())
 
         sut.refresh()
             .test()
@@ -90,7 +90,7 @@ internal class MessagesSyncingServiceTest {
             )
 
         Mockito.verify(downloader, Mockito.times(1)).downloadMessages()
-        Mockito.verify(repository, Mockito.times(1)).save(downloadResult)
+        Mockito.verify(repository, Mockito.times(1)).set(downloadResult)
     }
 
     @Test
@@ -102,7 +102,7 @@ internal class MessagesSyncingServiceTest {
         whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
-        whenever(repository.save(any())).thenReturn(Completable.complete())
+        whenever(repository.set(any())).thenReturn(Completable.complete())
 
         sut.refresh()
             .test()
@@ -112,7 +112,7 @@ internal class MessagesSyncingServiceTest {
             )
 
         Mockito.verify(downloader, Mockito.times(1)).downloadMessages()
-        Mockito.verify(repository, Mockito.times(1)).save(downloadResult)
+        Mockito.verify(repository, Mockito.times(1)).set(downloadResult)
     }
 
     @Test

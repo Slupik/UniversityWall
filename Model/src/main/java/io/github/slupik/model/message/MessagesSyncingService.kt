@@ -23,7 +23,9 @@ class MessagesSyncingService @Inject constructor(
             .flatMap {rList ->
                 downloader.downloadMessages()
                     .doOnSuccess {
-                        repository.save(it)
+                        repository
+                            .set(it)
+                            .subscribe()
                     }
                     .map {sList ->
                         sList
