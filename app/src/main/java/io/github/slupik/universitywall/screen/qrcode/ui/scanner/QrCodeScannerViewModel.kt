@@ -7,6 +7,4 @@ package io.github.slupik.universitywall.screen.qrcode.ui.scanner
 
 import io.github.slupik.universitywall.viewmodel.ViewModel
 
-class QrCodeScannerViewModel : ViewModel() {
-    // TODO: Implement the ViewModel
-}
+class QrCodeScannerViewModel : ViewModel()
