@@ -11,6 +11,6 @@ package io.github.slupik.network.group.model
  * All rights reserved & copyright ©
  */
 data class GroupLeaveResponse (
-    val errorCode: Int,
+    val statusCode: Int,
     val name: String
 )

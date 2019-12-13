@@ -9,6 +9,7 @@ import io.github.slupik.network.group.model.GroupListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -17,7 +18,10 @@ import retrofit2.http.Header
  */
 interface GroupsDownloadingService {
 
-    @GET("messages/")
+    @Headers(
+        "User-Agent: UniversityWall"
+    )
+    @GET("groups")
     fun getGroups(@Header("token") token: String): Single<GroupListResponse>
 
 }
