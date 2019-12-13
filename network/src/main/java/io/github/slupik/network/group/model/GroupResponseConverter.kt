@@ -17,8 +17,12 @@ import javax.inject.Inject
 class GroupResponseConverter @Inject constructor() :
     ResponseConverter<GroupResponse, Group>() {
 
-    override fun convert(response: GroupResponse): Group {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun convert(response: GroupResponse): Group =
+        Group(
+            localId = null,
+            remoteId = response.id,
+            name = response.name,
+            owner = response.owner
+        )
 
 }

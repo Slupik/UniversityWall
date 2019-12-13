@@ -11,5 +11,8 @@ package io.github.slupik.model.group
  * All rights reserved & copyright ©
  */
 data class Group (
-    val localId: Int
+    val localId: Int?,
+    val remoteId: Int,
+    val name: String,
+    val owner: String
 )
