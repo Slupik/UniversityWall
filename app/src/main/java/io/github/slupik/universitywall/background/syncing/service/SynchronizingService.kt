@@ -10,7 +10,7 @@ import android.content.Intent
 import android.os.Build
 import android.os.IBinder
 import androidx.core.app.NotificationCompat
-import io.github.slupik.model.message.MessagesProvider
+import io.github.slupik.model.message.MessagesSynchronizer
 import io.github.slupik.universitywall.MainActivity
 import io.github.slupik.universitywall.background.syncing.dagger.ContextModule
 import io.github.slupik.universitywall.background.syncing.dagger.DaggerBackgroundSyncingComponent
@@ -26,25 +26,32 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 
-const val CHANNEL_ID = "DATA_SYNCING"
-const val SYNC_TIME: Long = 5*60*1000
+private const val CHANNEL_ID = "DATA_SYNCING"
+private const val SYNC_TIME: Long = 5 * 60 * 1000
 
 class SynchronizingService : Service() {
 
     @Inject
-    lateinit var provider: MessagesProvider
+    lateinit var synchronizer: MessagesSynchronizer
+
+    @Inject
+    lateinit var sender: NotificationSender
 
     private var disposed: Disposable? = null
 
+    private val timer: Timer = Timer()
     private val timerTask: TimerTask = object : TimerTask() {
         override fun run() {
             disposed?.apply { dispose() }
-            disposed = provider
+            disposed = synchronizer
                 .refresh()
-                .subscribeBy()
+                .subscribeBy {
+                    if (it.isNotEmpty()) {
+                        sender.notifyAboutNewMessages(it)
+                    }
+                }
         }
     }
-    private val timer: Timer = Timer()
 
     override fun onStart(intent: Intent?, startid: Int) {
         makeAsForegroundService()

@@ -22,7 +22,8 @@ import javax.inject.Singleton
         ContextModule::class,
         NetworkModule::class,
         RepositoryModule::class,
-        MessagesModule::class
+        MessagesModule::class,
+        SynchronizationModule::class
     ]
 )
 @Singleton
