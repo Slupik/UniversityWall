@@ -6,7 +6,6 @@
 package io.github.slupik.universitywall.background.syncing
 
 import android.content.Context
-import android.util.Log
 import androidx.work.RxWorker
 import androidx.work.WorkerParameters
 import io.github.slupik.model.message.MessagesProvider
@@ -37,8 +36,6 @@ class MessagesSyncingWorker(
             .contextModule(ContextModule(applicationContext))
             .build()
             .inject(this)
-
-        Log.w("BARCODE_T", "CREATE_WORK")
 
         return provider
             .refresh()

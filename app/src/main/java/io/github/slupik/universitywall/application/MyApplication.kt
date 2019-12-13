@@ -6,13 +6,17 @@
 package io.github.slupik.universitywall.application
 
 import android.app.Application
+import android.content.Intent
+import androidx.core.content.ContextCompat
 import androidx.work.*
+import io.github.slupik.universitywall.background.service.SynchronizingService
 import io.github.slupik.universitywall.background.syncing.MESSAGES_SYNCING_WORK_NAME
 import io.github.slupik.universitywall.background.syncing.MessagesSyncingWorker
 import io.github.slupik.universitywall.dagger.ApplicationComponent
 import io.github.slupik.universitywall.dagger.ContextModule
 import io.github.slupik.universitywall.dagger.DaggerApplicationComponent
 import java.util.concurrent.TimeUnit
+
 
 /**
  * Created by Sebastian Witasik on 07.12.2019.
@@ -31,7 +35,13 @@ class MyApplication : Application() {
             )
             .build()
         startBackgroundMessagesSyncing()
+        startSyncing()
         super.onCreate()
+    }
+
+    private fun startSyncing() {
+        val serviceIntent = Intent(this, SynchronizingService::class.java)
+        ContextCompat.startForegroundService(this, serviceIntent)
     }
 
     private fun startBackgroundMessagesSyncing() {
