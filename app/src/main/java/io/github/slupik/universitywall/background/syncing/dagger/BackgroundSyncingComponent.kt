@@ -9,7 +9,7 @@ import dagger.Component
 import io.github.slupik.model.dagger.MessagesModule
 import io.github.slupik.network.dagger.NetworkModule
 import io.github.slupik.repository.dagger.RepositoryModule
-import io.github.slupik.universitywall.background.service.SynchronizingService
+import io.github.slupik.universitywall.background.syncing.service.SynchronizingService
 import javax.inject.Singleton
 
 /**

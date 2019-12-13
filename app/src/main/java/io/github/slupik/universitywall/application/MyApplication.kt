@@ -8,7 +8,7 @@ package io.github.slupik.universitywall.application
 import android.app.Application
 import android.content.Intent
 import androidx.core.content.ContextCompat
-import io.github.slupik.universitywall.background.service.SynchronizingService
+import io.github.slupik.universitywall.background.syncing.service.SynchronizingService
 import io.github.slupik.universitywall.dagger.ApplicationComponent
 import io.github.slupik.universitywall.dagger.ContextModule
 import io.github.slupik.universitywall.dagger.DaggerApplicationComponent

@@ -25,13 +25,13 @@
             </intent-filter>
         </activity>
 
-        <receiver android:name=".background.service.AutostartReceiver">
+        <receiver android:name=".background.AutostartReceiver">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".background.service.SynchronizingService"
+        <service android:name="io.github.slupik.universitywall.background.syncing.service.SynchronizingService"
                 android:enabled="true" />
     </application>
 
