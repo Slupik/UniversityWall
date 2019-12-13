@@ -61,7 +61,8 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>(), GraphContro
         viewLogic.inject(this)
 
         adapter = MessagesAdapter(
-            viewModel = viewModel
+            viewModel = viewModel,
+            context = application
         )
 
         binding.rvMessages.adapter = adapter

@@ -5,7 +5,6 @@
 
 package io.github.slupik.network.message.model
 
-import android.util.Log
 import io.github.slupik.model.message.Message
 import io.github.slupik.model.message.MessageType
 import io.github.slupik.network.ResponseConverter
@@ -23,9 +22,8 @@ class MessageResponseConverter @Inject constructor() :
 
     private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
 
-    override fun convert(response: MessageResponse): Message {
-        Log.d("BARCODE_T", "response "+response.postedTime)
-        return Message(
+    override fun convert(response: MessageResponse): Message =
+        Message(
             id = response.id,
             type = getMessageType(response.type),
             title = response.title,
@@ -39,10 +37,9 @@ class MessageResponseConverter @Inject constructor() :
             attachmentName = response.attachmentName,
             attachmentUrl = response.attachmentUrl
         )
-    }
 
     private fun getMessageType(typeId: Int): MessageType =
-        when(typeId) {
+        when (typeId) {
             MESSAGE_TYPE_TEST -> MessageType.TEST
             MESSAGE_TYPE_INFO -> MessageType.INFO
             MESSAGE_TYPE_CANCELED_CLASSES -> MessageType.CANCELED_CLASSES

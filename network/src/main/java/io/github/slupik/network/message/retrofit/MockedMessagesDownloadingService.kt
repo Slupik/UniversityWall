@@ -56,7 +56,7 @@ class MockedMessagesDownloadingService : MessagesDownloadingService {
             beginningTime = fromOffsetDateTime(OffsetDateTime.now()),
             endingTime = fromOffsetDateTime(OffsetDateTime.now()),
             attachmentName = "att name $id",
-            attachmentUrl = "att url $id"
+            attachmentUrl = "http://ipv4.download.thinkbroadband.com/5MB.zip"
         )
 
     private fun fromOffsetDateTime(date: OffsetDateTime): String {

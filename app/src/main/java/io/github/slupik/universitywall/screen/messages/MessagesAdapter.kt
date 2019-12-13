@@ -5,9 +5,13 @@
 
 package io.github.slupik.universitywall.screen.messages
 
+import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat.startActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
@@ -29,7 +33,8 @@ private const val MESSAGE_TYPE_CANCELED_CLASSES = 1
 private const val MESSAGE_TYPE_INFO = 2
 
 class MessagesAdapter constructor(
-    private val viewModel: MessagesViewModel
+    private val viewModel: MessagesViewModel,
+    private val context: Context
 ): DataBoundListAdapter<DisplayableMessage>(
 
     diffCallback = object: DiffUtil.ItemCallback<DisplayableMessage>() {
@@ -67,10 +72,15 @@ class MessagesAdapter constructor(
                 binding.messageCreationTime.text = item.creationTime
                 binding.messageContent.text = item.content
                 binding.messageGroupName.text = item.group
-                if(!item.attachmentName.isBlank()) {
+                if(item.attachmentName.isBlank()) {
                     binding.messageFileInfo.visibility = View.GONE
                 } else {
                     binding.messageFileInfo.text = item.attachmentName
+                    binding.messageFileInfo.setOnClickListener {
+                        val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(item.attachmentUrl))
+                        browserIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(context, browserIntent, null)
+                    }
                 }
             }
         }

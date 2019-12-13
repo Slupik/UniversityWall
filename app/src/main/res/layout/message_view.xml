@@ -62,6 +62,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
+                android:paddingBottom="8dp"
                 app:layout_constraintStart_toStartOf="@+id/messageCreatorName"
                 app:layout_constraintTop_toBottomOf="@+id/messageContent"
                 tools:text="Download file (file name)" />
@@ -76,16 +77,6 @@
                 app:layout_constraintTop_toBottomOf="@+id/messageTitle"
                 tools:text="Informatyka 3 Inżynieria Oprogramowania" />
 
-        <Button
-                android:id="@+id/button5"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:layout_marginBottom="8dp"
-                android:text="Delete"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/messageContent"
-                app:layout_constraintTop_toBottomOf="@+id/messageFileInfo" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
