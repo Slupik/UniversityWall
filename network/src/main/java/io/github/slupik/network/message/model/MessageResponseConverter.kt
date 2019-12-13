@@ -24,8 +24,7 @@ class MessageResponseConverter @Inject constructor() :
 
     override fun convert(response: MessageResponse): Message =
         Message(
-            localId = null,
-            remoteId = response.id,
+            id = response.id,
             type = getMessageType(response.type),
             title = response.title,
             content = response.content,

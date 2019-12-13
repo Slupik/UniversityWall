@@ -23,7 +23,7 @@ class MessageConverter @Inject constructor() : Converter<Message, DisplayableMes
 
     override fun convert(input: Message): DisplayableMessage =
         DisplayableMessage(
-            id = input.remoteId,
+            id = input.id,
             type = input.type,
             header = input.title,
             content = input.content,

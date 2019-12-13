@@ -23,8 +23,7 @@ class MessageEntityConverter @Inject constructor() : Converter<MessageEntity, Me
 
     override fun convert(input: MessageEntity): Message =
         Message(
-            localId = input.localId,
-            remoteId = input.remoteId,
+            id = input.id,
             type = getMessageType(input.type),
             title = input.title,
             content = input.content,

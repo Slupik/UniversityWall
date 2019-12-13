@@ -18,7 +18,7 @@ class GroupConverter @Inject constructor() : Converter<Group, DisplayableGroup>(
 
     override fun convert(input: Group): DisplayableGroup =
         DisplayableGroup(
-            id = input.remoteId,
+            id = input.id,
             name = input.name,
             owner = input.owner
         )

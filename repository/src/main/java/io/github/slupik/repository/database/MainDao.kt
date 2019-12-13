@@ -27,7 +27,7 @@ interface MainDao {
     @Query("SELECT * FROM $MESSAGES_TABLE_NAME")
     fun getAllMessages(): Single<List<MessageEntity>>
 
-    @Query("SELECT * FROM $MESSAGES_TABLE_NAME WHERE localId = :id")
+    @Query("SELECT * FROM $MESSAGES_TABLE_NAME WHERE id = :id")
     fun getMessageByLocalId(id: String): Single<MessageEntity>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

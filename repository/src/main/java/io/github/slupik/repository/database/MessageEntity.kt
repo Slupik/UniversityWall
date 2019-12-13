@@ -22,8 +22,9 @@ const val MESSAGE_TYPE_INFO = 2
 
 @Entity(tableName = MESSAGES_TABLE_NAME)
 data class MessageEntity(
-    @ColumnInfo(name = "remoteId")
-    val remoteId: Int,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int,
     @ColumnInfo(name = "type")
     val type: Int,
     @ColumnInfo(name = "title")
@@ -46,8 +47,4 @@ data class MessageEntity(
     val attachmentName: String,
     @ColumnInfo(name = "attachmentUrl")
     val attachmentUrl: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "localId")
-    var localId: Int = -1
-}
+)

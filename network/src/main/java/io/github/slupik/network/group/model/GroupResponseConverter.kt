@@ -19,8 +19,7 @@ class GroupResponseConverter @Inject constructor() :
 
     override fun convert(response: GroupResponse): Group =
         Group(
-            localId = null,
-            remoteId = response.id,
+            id = response.id,
             name = response.name,
             owner = response.owner
         )

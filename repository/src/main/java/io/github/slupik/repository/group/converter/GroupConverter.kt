@@ -19,11 +19,9 @@ class GroupConverter @Inject constructor() : Converter<Group, GroupEntity>() {
 
     override fun convert(input: Group): GroupEntity =
         GroupEntity(
-            remoteId = input.remoteId,
+            id = input.id,
             name = input.name,
             owner = input.owner
-        ).apply {
-            localId = input.localId?: -1
-        }
+        )
 
 }

@@ -23,7 +23,7 @@ class MessageConverter @Inject constructor() : Converter<Message, MessageEntity>
 
     override fun convert(input: Message): MessageEntity =
         MessageEntity(
-            remoteId = input.remoteId,
+            id = input.id,
             type = getMessageCode(input.type),
             title = input.title,
             content = input.content,
@@ -35,9 +35,7 @@ class MessageConverter @Inject constructor() : Converter<Message, MessageEntity>
             endingTime = input.endingTime,
             attachmentName = input.attachmentName,
             attachmentUrl = input.attachmentUrl
-        ).apply {
-            localId = input.localId?: -1
-        }
+        )
 
     private fun getMessageCode(type: MessageType): Int =
         when(type) {

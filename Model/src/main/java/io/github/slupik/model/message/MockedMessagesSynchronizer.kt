@@ -28,8 +28,7 @@ class MockedMessagesSynchronizer @Inject constructor(): MessagesSynchronizer {
 
     private fun getMessage(id: Int) =
         Message(
-            localId = id,
-            remoteId = id,
+            id = id,
             type = MessageType.TEST,
             title = "title1",
             content = "Lorem ipsum $id",

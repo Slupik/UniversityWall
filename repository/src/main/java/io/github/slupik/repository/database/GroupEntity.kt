@@ -16,14 +16,11 @@ import androidx.room.PrimaryKey
  */
 @Entity(tableName = GROUPS_TABLE_NAME)
 data class GroupEntity(
-    @ColumnInfo(name = "remoteId")
-    val remoteId: Int,
+    @PrimaryKey
+    @ColumnInfo(name = "id")
+    val id: Int,
     @ColumnInfo(name = "name")
     val name: String,
     @ColumnInfo(name = "owner")
     val owner: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "localId")
-    var localId: Int = -1
-}
+)
