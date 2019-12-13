@@ -5,7 +5,7 @@
 
 package io.github.slupik.model.message
 
-import java.time.OffsetDateTime
+import org.threeten.bp.OffsetDateTime
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
