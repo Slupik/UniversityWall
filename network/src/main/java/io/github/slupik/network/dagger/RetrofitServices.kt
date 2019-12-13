@@ -52,6 +52,7 @@ class RetrofitServices {
     @Provides
     fun provideGroupsDownloadingService(retrofit: Retrofit): GroupsDownloadingService =
         retrofit.create(GroupsDownloadingService::class.java)
+//        MockedGroupsDownloadingService()
 
     @Provides
     fun provideGroupActionsService(retrofit: Retrofit): GroupActionsService =

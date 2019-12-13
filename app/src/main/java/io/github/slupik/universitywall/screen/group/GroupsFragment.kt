@@ -63,6 +63,8 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController
         viewLogic.inject(this)
         internalViewModel.setLogic(viewLogic)
 
+        viewModel.viewState.postValue(StartViewState())
+
         adapter = GroupsAdapter(
             actions = groupsActions,
             groupsProvider = groupsProvider

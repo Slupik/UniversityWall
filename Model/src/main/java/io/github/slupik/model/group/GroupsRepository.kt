@@ -16,6 +16,8 @@ import io.reactivex.Single
  */
 interface GroupsRepository {
 
+    fun set(groups: List<Group>): Completable
+
     fun save(groups: List<Group>): Completable
 
     fun fetchAll(): Flowable<List<Group>>

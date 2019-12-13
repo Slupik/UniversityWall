@@ -61,13 +61,18 @@ class GroupsViewLogic @Inject constructor(
     }
 
     fun refresh() {
+        viewModel.viewState.postValue(LoadingDataViewState())
         groupsProvider
             .refresh()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeOn(Schedulers.io())
             .subscribeBy(
+                onComplete = {
+                    viewModel.viewState.postValue(StartViewState())
+                },
                 onError = {
                     it.printStackTrace()
+                    viewModel.viewState.postValue(StartViewState())
                 }
             )
             .remember()

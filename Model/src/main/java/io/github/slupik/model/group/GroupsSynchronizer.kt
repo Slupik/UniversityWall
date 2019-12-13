@@ -39,7 +39,7 @@ class GroupsSynchronizer @Inject constructor(
     private fun Single<List<Group>>.saveAndEmitNewList(): Completable =
         this.flatMapCompletable { messages ->
             repository
-                .save(messages)
+                .set(messages)
                 .andThen(
                     Completable.defer {
                         emitNewList()
