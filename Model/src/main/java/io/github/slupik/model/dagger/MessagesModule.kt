@@ -7,8 +7,10 @@ package io.github.slupik.model.dagger
 
 import dagger.Binds
 import dagger.Module
+import io.github.slupik.model.message.MessagesHolder
 import io.github.slupik.model.message.MessagesProvider
 import io.github.slupik.model.message.MessagesSynchronizer
+import io.github.slupik.model.message.MessagesSyncingService
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -19,6 +21,9 @@ import io.github.slupik.model.message.MessagesSynchronizer
 abstract class MessagesModule {
 
     @Binds
-    abstract fun messagesProvider(provider: MessagesSynchronizer): MessagesProvider
+    abstract fun messagesProvider(provider: MessagesHolder): MessagesProvider
+
+    @Binds
+    abstract fun messagesSynchronizer(provider: MessagesSyncingService): MessagesSynchronizer
 
 }

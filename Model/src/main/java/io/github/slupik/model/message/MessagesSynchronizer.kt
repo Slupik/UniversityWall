@@ -5,56 +5,18 @@
 
 package io.github.slupik.model.message
 
-import io.reactivex.BackpressureStrategy
-import io.reactivex.Completable
-import io.reactivex.Flowable
 import io.reactivex.Single
-import io.reactivex.subjects.PublishSubject
-import javax.inject.Inject
-import javax.inject.Singleton
 
 /**
- * Created by Sebastian Witasik on 10.12.2019.
+ * Created by Sebastian Witasik on 13.12.2019.
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-@Singleton
-class MessagesSynchronizer @Inject constructor(
-    private val downloader: MessagesDownloader,
-    private val repository: MessagesRepository
-) : MessagesProvider {
 
-    private val messagesPublisher: PublishSubject<List<Message>> = PublishSubject.create()
-    override val messagesEmitter: Flowable<List<Message>>
-        get() = messagesPublisher.toFlowable(BackpressureStrategy.BUFFER)
+typealias NewMessage = Message
 
-    override val messages: Single<List<Message>>
-        get() = repository.getAll()
+interface MessagesSynchronizer {
 
-    override fun refresh(): Completable =
-        downloader
-            .downloadMessages()
-            .saveAndEmitNewList()
-
-    private fun Single<List<Message>>.saveAndEmitNewList(): Completable =
-        this.flatMapCompletable { messages ->
-            repository
-                .save(messages)
-                .andThen(
-                    Completable.defer {
-                        emitNewList()
-                    }
-                )
-        }
-
-    private fun emitNewList(): Completable =
-        repository
-            .getAll()
-            .doOnSuccess { refreshedList ->
-                messagesPublisher.onNext(refreshedList)
-            }.flatMapCompletable {
-                Completable.complete()
-            }
+    fun refresh(): Single<List<NewMessage>>
 
 }
-
