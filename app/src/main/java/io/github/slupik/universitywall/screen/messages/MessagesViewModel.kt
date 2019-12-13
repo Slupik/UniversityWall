@@ -5,11 +5,16 @@
 
 package io.github.slupik.universitywall.screen.messages
 
+import androidx.lifecycle.MutableLiveData
 import io.github.slupik.universitywall.viewmodel.ViewModel
 
 class MessagesViewModel : ViewModel() {
 
     private lateinit var logic: MessagesViewLogic
+
+    val viewState: MutableLiveData<MessagesViewState> by lazy {
+        MutableLiveData<MessagesViewState>()
+    }
 
     fun inject(logic: MessagesViewLogic) {
         this.logic = logic

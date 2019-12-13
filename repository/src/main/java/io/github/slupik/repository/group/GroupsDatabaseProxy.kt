@@ -24,7 +24,12 @@ class GroupsDatabaseProxy @Inject constructor(
     private val database: MainDao,
     private val converterToEntity: Converter<Group, GroupEntity>,
     private val converterFromEntity: Converter<List<GroupEntity>, List<Group>>
-): GroupsRepository {
+) : GroupsRepository {
+
+    override fun set(groups: List<Group>): Completable {
+        deleteAll()
+        return save(groups)
+    }
 
     override fun save(groups: List<Group>): Completable =
         database.insertGroups(groups.map(converterToEntity::convert))
@@ -40,7 +45,7 @@ class GroupsDatabaseProxy @Inject constructor(
             .map(converterFromEntity::convert)
 
     override fun deleteAll() {
-        database.deleteAllMessages()
+        database.deleteAllGroups()
     }
 
 }

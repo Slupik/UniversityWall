@@ -39,7 +39,7 @@ class MessageResponseConverter @Inject constructor() :
         )
 
     private fun getMessageType(typeId: Int): MessageType =
-        when(typeId) {
+        when (typeId) {
             MESSAGE_TYPE_TEST -> MessageType.TEST
             MESSAGE_TYPE_INFO -> MessageType.INFO
             MESSAGE_TYPE_CANCELED_CLASSES -> MessageType.CANCELED_CLASSES

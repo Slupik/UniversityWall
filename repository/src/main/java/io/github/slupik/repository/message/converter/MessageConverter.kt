@@ -29,10 +29,10 @@ class MessageConverter @Inject constructor() : Converter<Message, MessageEntity>
             content = input.content,
             author = input.author,
             group = input.group,
-            postedTime = input.postedTime,
-            expirationTime = input.expirationTime,
-            beginningTime = input.beginningTime,
-            endingTime = input.endingTime,
+            postedTime = DateTimeConverter.fromOffsetDateTime(input.postedTime)?: "",
+            expirationTime = DateTimeConverter.fromOffsetDateTime(input.expirationTime)?: "",
+            beginningTime = DateTimeConverter.fromOffsetDateTime(input.beginningTime)?: "",
+            endingTime = DateTimeConverter.fromOffsetDateTime(input.endingTime)?: "",
             attachmentName = input.attachmentName,
             attachmentUrl = input.attachmentUrl
         )

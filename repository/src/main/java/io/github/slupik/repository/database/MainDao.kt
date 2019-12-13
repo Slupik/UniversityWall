@@ -34,7 +34,7 @@ interface MainDao {
     fun insertMessage(message: MessageEntity): Completable
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    fun insertMessages(message: List<MessageEntity>): Completable
+    fun insertMessages(messages: List<MessageEntity>): Completable
 
     @Query("DELETE FROM $MESSAGES_TABLE_NAME")
     fun deleteAllMessages()

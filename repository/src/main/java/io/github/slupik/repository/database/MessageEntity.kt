@@ -8,7 +8,6 @@ package io.github.slupik.repository.database
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import org.threeten.bp.OffsetDateTime
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -22,7 +21,7 @@ const val MESSAGE_TYPE_INFO = 2
 
 @Entity(tableName = MESSAGES_TABLE_NAME)
 data class MessageEntity(
-    @PrimaryKey(autoGenerate = true)
+    @PrimaryKey
     @ColumnInfo(name = "id")
     val id: Int,
     @ColumnInfo(name = "type")
@@ -36,13 +35,13 @@ data class MessageEntity(
     @ColumnInfo(name = "groupName")
     val group: String,
     @ColumnInfo(name = "postedTime")
-    val postedTime: OffsetDateTime,
+    val postedTime: String,
     @ColumnInfo(name = "expirationTime")
-    val expirationTime: OffsetDateTime,
+    val expirationTime: String,
     @ColumnInfo(name = "beginningTime")
-    val beginningTime: OffsetDateTime,
+    val beginningTime: String,
     @ColumnInfo(name = "endingTime")
-    val endingTime: OffsetDateTime,
+    val endingTime: String,
     @ColumnInfo(name = "attachmentName")
     val attachmentName: String,
     @ColumnInfo(name = "attachmentUrl")

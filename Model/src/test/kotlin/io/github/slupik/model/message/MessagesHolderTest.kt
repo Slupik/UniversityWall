@@ -47,7 +47,7 @@ internal class MessagesHolderTest {
     fun `refresh and get all messages from repository`() {
         val newlyDownloaded = listOf(Mockito.mock(Message::class.java))
         whenever(synchronizer.refresh()).thenReturn(Single.just(newlyDownloaded))
-        whenever(repository.save(any())).thenReturn(Completable.complete())
+        whenever(repository.set(any())).thenReturn(Completable.complete())
         val repositoryResult = listOf(Mockito.mock(Message::class.java), newlyDownloaded[0])
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
 
@@ -61,7 +61,7 @@ internal class MessagesHolderTest {
     fun `refresh and emit new list`() {
         val newlyDownloaded = listOf(Mockito.mock(Message::class.java))
         whenever(synchronizer.refresh()).thenReturn(Single.just(newlyDownloaded))
-        whenever(repository.save(any())).thenReturn(Completable.complete())
+        whenever(repository.set(any())).thenReturn(Completable.complete())
         val repositoryResult = listOf(Mockito.mock(Message::class.java), newlyDownloaded[0])
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
 

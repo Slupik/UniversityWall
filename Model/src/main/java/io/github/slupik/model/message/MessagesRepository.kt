@@ -16,6 +16,8 @@ import io.reactivex.Single
  */
 interface MessagesRepository {
 
+    fun set(messages: List<Message>): Completable
+
     fun save(messages: List<Message>): Completable
 
     fun fetchAll(): Flowable<List<Message>>
