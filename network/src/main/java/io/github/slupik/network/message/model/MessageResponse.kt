@@ -13,6 +13,10 @@ package io.github.slupik.network.message.model
 
 typealias DateInIsoFormat = String
 
+const val MESSAGE_TYPE_TEST = 0
+const val MESSAGE_TYPE_CANCELED_CLASSES = 1
+const val MESSAGE_TYPE_INFO = 2
+
 data class MessageResponse(
     val id: Int,
     val type: Int,

@@ -45,11 +45,16 @@ class SynchronizingService : Service() {
             disposed?.apply { dispose() }
             disposed = synchronizer
                 .refresh()
-                .subscribeBy {
-                    if (it.isNotEmpty()) {
-                        sender.notifyAboutNewMessages(it)
+                .subscribeBy(
+                    onSuccess = {
+                        if (it.isNotEmpty()) {
+                            sender.notifyAboutNewMessages(it)
+                        }
+                    },
+                    onError = {
+                        it.printStackTrace()
                     }
-                }
+                )
         }
     }
 

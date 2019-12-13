@@ -56,6 +56,8 @@ dependencies {
     annotationProcessor 'com.google.dagger:dagger-android-processor:2.25.2'
     annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
 
+    implementation 'org.threeten:threetenbp:1.4.0'
+
     implementation 'androidx.appcompat:appcompat:1.1.0'
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'

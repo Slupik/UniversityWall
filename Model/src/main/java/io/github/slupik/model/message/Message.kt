@@ -13,8 +13,7 @@ import org.threeten.bp.OffsetDateTime
  * All rights reserved & copyright ©
  */
 data class Message(
-    val localId: Int?,
-    val remoteId: Int,
+    val id: Int,
     val type: MessageType,
     val title: String,
     val content: String,

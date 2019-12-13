@@ -6,7 +6,10 @@
 package io.github.slupik.network.message.model
 
 import io.github.slupik.model.message.Message
+import io.github.slupik.model.message.MessageType
 import io.github.slupik.network.ResponseConverter
+import org.threeten.bp.OffsetDateTime
+import org.threeten.bp.format.DateTimeFormatter
 import javax.inject.Inject
 
 /**
@@ -17,8 +20,36 @@ import javax.inject.Inject
 class MessageResponseConverter @Inject constructor() :
     ResponseConverter<MessageResponse, Message>() {
 
-    override fun convert(response: MessageResponse): Message {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    private val formatter = DateTimeFormatter.ISO_OFFSET_DATE_TIME
+
+    override fun convert(response: MessageResponse): Message =
+        Message(
+            id = response.id,
+            type = getMessageType(response.type),
+            title = response.title,
+            content = response.content,
+            author = response.author,
+            group = response.group,
+            postedTime = toOffsetDateTime(response.postedTime) ?: OffsetDateTime.now(),
+            expirationTime = toOffsetDateTime(response.expirationTime) ?: OffsetDateTime.now(),
+            beginningTime = toOffsetDateTime(response.beginningTime) ?: OffsetDateTime.now(),
+            endingTime = toOffsetDateTime(response.endingTime) ?: OffsetDateTime.now(),
+            attachmentName = response.attachmentName,
+            attachmentUrl = response.attachmentUrl
+        )
+
+    private fun getMessageType(typeId: Int): MessageType =
+        when(typeId) {
+            MESSAGE_TYPE_TEST -> MessageType.TEST
+            MESSAGE_TYPE_INFO -> MessageType.INFO
+            MESSAGE_TYPE_CANCELED_CLASSES -> MessageType.CANCELED_CLASSES
+            else -> MessageType.INFO
+        }
+
+    private fun toOffsetDateTime(value: String?): OffsetDateTime? {
+        return value?.let {
+            return formatter.parse(value, OffsetDateTime::from)
+        }
     }
 
 }

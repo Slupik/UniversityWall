@@ -5,8 +5,12 @@
 
 package io.github.slupik.repository.message.converter
 
-import io.github.slupik.model.message.Message
 import io.github.slupik.model.Converter
+import io.github.slupik.model.message.Message
+import io.github.slupik.model.message.MessageType
+import io.github.slupik.repository.database.MESSAGE_TYPE_CANCELED_CLASSES
+import io.github.slupik.repository.database.MESSAGE_TYPE_INFO
+import io.github.slupik.repository.database.MESSAGE_TYPE_TEST
 import io.github.slupik.repository.database.MessageEntity
 import javax.inject.Inject
 
@@ -17,8 +21,29 @@ import javax.inject.Inject
  */
 class MessageEntityConverter @Inject constructor() : Converter<MessageEntity, Message>() {
 
-    override fun convert(input: MessageEntity): Message {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun convert(input: MessageEntity): Message =
+        Message(
+            id = input.id,
+            type = getMessageType(input.type),
+            title = input.title,
+            content = input.content,
+            author = input.author,
+            group = input.group,
+            postedTime = input.postedTime,
+            expirationTime = input.expirationTime,
+            beginningTime = input.beginningTime,
+            endingTime = input.endingTime,
+            attachmentName = input.attachmentName,
+            attachmentUrl = input.attachmentUrl
+        )
+
+    private fun getMessageType(typeId: Int): MessageType =
+        when(typeId) {
+            MESSAGE_TYPE_TEST -> MessageType.TEST
+            MESSAGE_TYPE_INFO -> MessageType.INFO
+            MESSAGE_TYPE_CANCELED_CLASSES -> MessageType.CANCELED_CLASSES
+            else -> MessageType.INFO
+        }
+
 
 }

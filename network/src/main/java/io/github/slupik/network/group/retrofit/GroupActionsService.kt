@@ -5,11 +5,13 @@
 
 package io.github.slupik.network.group.retrofit
 
+import io.github.slupik.network.group.model.GroupJoinResponse
 import io.github.slupik.network.group.model.GroupLeaveResponse
-import io.github.slupik.network.group.model.GroupListResponse
 import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.Headers
+import retrofit2.http.Path
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -18,10 +20,16 @@ import retrofit2.http.Header
  */
 interface GroupActionsService {
 
-    @GET("group/join")
-    fun joinToGroup(@Header("token") token: String, @Header("id") id: String): Single<GroupListResponse>
+    @Headers(
+        "User-Agent: UniversityWall"
+    )
+    @GET("group/join/{id}")
+    fun joinToGroup(@Header("token") token: String, @Path("id") id: String): Single<GroupJoinResponse>
 
-    @GET("group/leave")
-    fun leaveGroup(@Header("token") token: String, @Header("id") id: String): Single<GroupLeaveResponse>
+    @Headers(
+        "User-Agent: UniversityWall"
+    )
+    @GET("group/leave/{id}")
+    fun leaveGroup(@Header("token") token: String, @Path("id") id: String): Single<GroupLeaveResponse>
 
 }

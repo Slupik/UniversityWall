@@ -15,10 +15,16 @@ import org.threeten.bp.OffsetDateTime
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
+
+const val MESSAGE_TYPE_TEST = 0
+const val MESSAGE_TYPE_CANCELED_CLASSES = 1
+const val MESSAGE_TYPE_INFO = 2
+
 @Entity(tableName = MESSAGES_TABLE_NAME)
 data class MessageEntity(
-    @ColumnInfo(name = "remoteId")
-    val remoteId: Int,
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    val id: Int,
     @ColumnInfo(name = "type")
     val type: Int,
     @ColumnInfo(name = "title")
@@ -41,8 +47,4 @@ data class MessageEntity(
     val attachmentName: String,
     @ColumnInfo(name = "attachmentUrl")
     val attachmentUrl: String
-) {
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "localId")
-    var localId: Int = -1
-}
+)

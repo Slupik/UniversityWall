@@ -16,8 +16,11 @@ import javax.inject.Inject
  */
 class GroupConverter @Inject constructor() : Converter<Group, DisplayableGroup>() {
 
-    override fun convert(input: Group): DisplayableGroup {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun convert(input: Group): DisplayableGroup =
+        DisplayableGroup(
+            id = input.id,
+            name = input.name,
+            owner = input.owner
+        )
 
 }

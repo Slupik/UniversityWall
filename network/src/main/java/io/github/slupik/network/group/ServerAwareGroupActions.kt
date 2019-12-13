@@ -25,10 +25,10 @@ class ServerAwareGroupActions @Inject constructor(
         service
             .joinToGroup(tokenHolder.session, id)
             .flatMapCompletable {
-                if(it.errorCode == 0) {
+                if(it.statusCode == 0) {
                     Completable.complete()
                 } else {
-                    Completable.error(GroupJoinException(it.errorCode))
+                    Completable.error(GroupJoinException(it.statusCode))
                 }
             }
 
@@ -36,10 +36,10 @@ class ServerAwareGroupActions @Inject constructor(
         service
             .leaveGroup(tokenHolder.session, id)
             .flatMapCompletable {
-                if(it.errorCode == 0) {
+                if(it.statusCode == 0) {
                     Completable.complete()
                 } else {
-                    Completable.error(GroupLeaveException(it.errorCode))
+                    Completable.error(GroupLeaveException(it.statusCode))
                 }
             }
 

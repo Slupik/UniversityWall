@@ -42,12 +42,12 @@ internal class MessagesSyncingServiceTest {
     @Test
     fun `download different messages and save into database`() {
         val downloadedMessage = Mockito.mock(Message::class.java)
-        whenever(downloadedMessage.remoteId).thenReturn(3)
+        whenever(downloadedMessage.id).thenReturn(3)
         val downloadResult = listOf(downloadedMessage)
         whenever(downloader.downloadMessages()).thenReturn(Single.just(downloadResult))
 
         val savedMessage = Mockito.mock(Message::class.java)
-        whenever(savedMessage.remoteId).thenReturn(2)
+        whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
         whenever(repository.save(any())).thenReturn(Completable.complete())
@@ -69,13 +69,13 @@ internal class MessagesSyncingServiceTest {
     fun `download similar messages and save into database`() {
         val downloadedMessage = Mockito.mock(Message::class.java)
         val downloadedMessage2 = Mockito.mock(Message::class.java)
-        whenever(downloadedMessage.remoteId).thenReturn(2)
-        whenever(downloadedMessage2.remoteId).thenReturn(3)
+        whenever(downloadedMessage.id).thenReturn(2)
+        whenever(downloadedMessage2.id).thenReturn(3)
         val downloadResult = listOf(downloadedMessage, downloadedMessage2)
         whenever(downloader.downloadMessages()).thenReturn(Single.just(downloadResult))
 
         val savedMessage = Mockito.mock(Message::class.java)
-        whenever(savedMessage.remoteId).thenReturn(2)
+        whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
         whenever(repository.save(any())).thenReturn(Completable.complete())
@@ -99,7 +99,7 @@ internal class MessagesSyncingServiceTest {
         whenever(downloader.downloadMessages()).thenReturn(Single.just(downloadResult))
 
         val savedMessage = Mockito.mock(Message::class.java)
-        whenever(savedMessage.remoteId).thenReturn(2)
+        whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
         whenever(repository.getAll()).thenReturn(Single.just(repositoryResult))
         whenever(repository.save(any())).thenReturn(Completable.complete())
@@ -119,11 +119,11 @@ internal class MessagesSyncingServiceTest {
     fun checkSinglesTest() {
         val downloadedMessage = Mockito.mock(Message::class.java)
         val downloadedMessage2 = Mockito.mock(Message::class.java)
-        whenever(downloadedMessage.remoteId).thenReturn(2)
-        whenever(downloadedMessage2.remoteId).thenReturn(3)
+        whenever(downloadedMessage.id).thenReturn(2)
+        whenever(downloadedMessage2.id).thenReturn(3)
         val downloadResult = listOf(downloadedMessage, downloadedMessage2)
         val savedMessage = Mockito.mock(Message::class.java)
-        whenever(savedMessage.remoteId).thenReturn(2)
+        whenever(savedMessage.id).thenReturn(2)
         val repositoryResult = listOf(savedMessage)
 
         val testing = checkSingles(
@@ -144,7 +144,7 @@ internal class MessagesSyncingServiceTest {
                             .filter {sMess ->
                                 rList
                                     .none {rMess ->
-                                        sMess.remoteId == rMess.remoteId
+                                        sMess.id == rMess.id
                                     }
                             }
                     }

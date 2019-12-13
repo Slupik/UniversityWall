@@ -30,7 +30,7 @@ class MessagesSyncingService @Inject constructor(
                             .filter {sMess ->
                                 rList
                                     .none {rMess ->
-                                        sMess.remoteId == rMess.remoteId
+                                        sMess.id == rMess.id
                                     }
                             }
                     }

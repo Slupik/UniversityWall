@@ -73,16 +73,6 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
 
-        adapter.submitList(
-            mutableListOf(
-                DisplayableGroup(
-                    id = 0,
-                    name = "name",
-                    owner = "John Doe"
-                )
-            )
-        )
-
         groupsProvider.groupsEmitter.subscribe {
             adapter.submitList(
                 it.map(groupsConverter::convert)
