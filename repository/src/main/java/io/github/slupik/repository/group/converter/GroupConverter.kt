@@ -17,8 +17,13 @@ import javax.inject.Inject
  */
 class GroupConverter @Inject constructor() : Converter<Group, GroupEntity>() {
 
-    override fun convert(input: Group): GroupEntity {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
+    override fun convert(input: Group): GroupEntity =
+        GroupEntity(
+            remoteId = input.remoteId,
+            name = input.name,
+            owner = input.owner
+        ).apply {
+            localId = input.localId?: -1
+        }
 
 }

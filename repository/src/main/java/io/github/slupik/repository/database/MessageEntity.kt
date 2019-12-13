@@ -15,6 +15,11 @@ import org.threeten.bp.OffsetDateTime
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
+
+const val MESSAGE_TYPE_TEST = 0
+const val MESSAGE_TYPE_CANCELED_CLASSES = 1
+const val MESSAGE_TYPE_INFO = 2
+
 @Entity(tableName = MESSAGES_TABLE_NAME)
 data class MessageEntity(
     @ColumnInfo(name = "remoteId")
