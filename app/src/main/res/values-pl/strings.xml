@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2019. by Sebastian Witasik
+  ~ All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
+  -->
+
+<resources>
+    <string name="app_name">UniversityWall</string>
+
+    <string name="ok">OK</string>
+    <string name="permission_camera_rationale">Dostęp do kamery jest niezbęny dla wykrywacza</string>
+    <string name="no_camera_permission">Aplikacja nie może działać prawidłowo bez pozwolenia dla kamery.
+        Aplikacja kończy swoje działanie
+    </string>
+    <string name="low_storage_error">Detekor kodów QR nie może być pobrany ze względu na brak pamięci.</string>
+    <string name="title_activity_main">Czytnik kodów QR</string>
+    <string name="barcode_header">Naciśnij &quot;Czytaj QRcode&quot; aby przeczytać QRcode</string>
+    <string name="read_barcode">Czytaj QRcode</string>
+    <string name="auto_focus">Autofokus</string>
+    <string name="use_flash">Użyj latarki</string>
+    <string name="barcode_success">Pomyślnie odczytano QRcode</string>
+    <string name="barcode_failure">Nie wykryto żadnego kodu</string>
+    <string name="barcode_error">"Błąd podczas odczytywania kodu: %1$s"</string>
+
+
+    <!--    login fragment    -->
+    <string name="wrong_login">Zły login</string>
+    <string name="wrong_password">Błędne hasło</string>
+    <string name="login_form_password">Hasło</string>
+    <string name="login_form_login">Login</string>
+    <string name="login_form_button">Zaloguj się</string>
+    <string name="login_form_registration">Nie mam konta</string>
+    <string name="connection_error_login">Błąd połączenia. Spróbuj ponownie później.</string>
+
+
+    <!--    messages list fragment    -->
+    <string name="messages_list_refresh">Odśwież</string>
+
+
+    <!--    registration fragment    -->
+    <string name="registration_form_login">Login</string>
+    <string name="registration_form_name">Nazwa wyświetlana</string>
+    <string name="registration_form_password">Hasło</string>
+    <string name="registration_form_password_repeat">Potwórz hasło</string>
+    <string name="registration_form_button">Zarejestrój</string>
+    <string name="register_back_to_login">Wróć</string>
+
+    <string name="registration_error_title">Błąd</string>
+    <string name="registration_error_">Rejestracja</string>
+    <string name="connection_error_registration">Błąd połączenia. Spróbuj ponownie później.</string>
+    <string name="registration_error_ok">OK</string>
+    <string name="connection_error_login_exists">Wprowadzony login już istnieje, wprowadź inny</string>
+    <string name="connection_error_inappropriate_password">Hasło powinno być długości co najmniej 4 znaków</string>
+    <string name="connection_error_different_passwords">Wprowadzone hasła są inne, wprowadź je.</string>
+    <string name="connection_error_empty_fields">Co najmniej 1 pole jest puste.</string>
+
+
+    <!--    groups fragment    -->
+    <string name="groups_list_refresh">Odśwież</string>
+    <string name="group_add">Dodaj</string>
+    <string name="group_leave">Opuść</string>
+    <string name="message_list_goto_groups">Grupy</string>
+    <string name="no">NIE</string>
+    <string name="group_invitation_confirmation">Czy na pewno chcesz dołączyć do grupy %1$s?</string>
+    <string name="group_invitation_confirmation_title">Potwierdzenie</string>
+
+    <string name="group_joining_success_title">Witaj!</string>
+    <string name="group_joined_successfully">Pomyślnie dołączyłeś do grupy %1$s!</string>
+    <string name="group_joining_fail_title">Błąd</string>
+    <string name="group_joined_failed">Nie możesz dołączyć teraz. Spróbuj ponownie później.</string>
+
+
+</resources>

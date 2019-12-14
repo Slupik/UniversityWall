@@ -43,7 +43,7 @@
     <string name="registration_error_">Register</string>
     <string name="connection_error_registration">Connection error. Try again later.</string>
     <string name="registration_error_ok">OK</string>
-    <string name="connection_error_login_exists">Types login already exists, correct this</string>
+    <string name="connection_error_login_exists">Typed login already exists, correct this</string>
     <string name="connection_error_inappropriate_password">Password should have length between at least of 4 chars</string>
     <string name="connection_error_different_passwords">Typed passwords are different, correct this</string>
     <string name="connection_error_empty_fields">At least one field is empty</string>
