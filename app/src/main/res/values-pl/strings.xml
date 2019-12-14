@@ -52,7 +52,7 @@
     <string name="connection_error_login_exists">Wprowadzony login już istnieje, wprowadź inny</string>
     <string name="connection_error_inappropriate_password">Hasło powinno być długości co najmniej 4 znaków</string>
     <string name="connection_error_different_passwords">Wprowadzone hasła są inne, wprowadź je.</string>
-    <string name="connection_error_empty_fields">Co najmniej 1 pole jest puste.</string>
+    <string name="connection_error_empty_fields">Co najmniej 1 pole jest puste lub za krótki (hasło).</string>
 
 
     <!--    groups fragment    -->

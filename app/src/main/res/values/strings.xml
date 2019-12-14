@@ -46,7 +46,7 @@
     <string name="connection_error_login_exists">Typed login already exists, correct this</string>
     <string name="connection_error_inappropriate_password">Password should have length between at least of 4 chars</string>
     <string name="connection_error_different_passwords">Typed passwords are different, correct this</string>
-    <string name="connection_error_empty_fields">At least one field is empty</string>
+    <string name="connection_error_empty_fields">At least one field is empty or too short (password).</string>
 
 
     <!--    groups fragment    -->

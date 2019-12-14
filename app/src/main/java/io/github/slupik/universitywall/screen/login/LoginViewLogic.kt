@@ -26,13 +26,13 @@ class LoginViewLogic @Inject constructor(
     }
 
     fun onLogIn() {
-        if(viewModel.login.value.isNullOrBlank()) {
+        if (viewModel.login.value.isNullOrBlank()) {
             viewModel.viewState.postValue(
                 WrongLoginViewState()
             )
             return
         }
-        if(viewModel.password.value.isNullOrBlank()) {
+        if (viewModel.password.value.isNullOrBlank() || (viewModel.password.value as String).length <= 4) {
             viewModel.viewState.postValue(
                 WrongPasswordViewState()
             )

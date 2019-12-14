@@ -66,7 +66,9 @@ class RegistrationViewLogic @Inject constructor(
         viewModel.displayName.value.isNullOrBlank() ||
                 viewModel.login.value.isNullOrBlank() ||
                 viewModel.password.value.isNullOrEmpty() ||
-                viewModel.repeatedPassword.value.isNullOrEmpty()
+                viewModel.repeatedPassword.value.isNullOrEmpty() ||
+                (viewModel.password.value as String).length <= 4
+
 
     fun onLogin() {
         navigation.moveToLoginScreen()
