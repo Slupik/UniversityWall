@@ -10,13 +10,10 @@ import dagger.Module
 import dagger.Provides
 import io.github.slupik.network.DOMAIN_URL
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationService
-import io.github.slupik.network.authorization.retrofit.authorization.MockedAuthorizationService
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
 import io.github.slupik.network.group.retrofit.GroupActionsService
 import io.github.slupik.network.group.retrofit.GroupsDownloadingService
-import io.github.slupik.network.group.retrofit.MockedGroupsDownloadingService
 import io.github.slupik.network.message.retrofit.MessagesDownloadingService
-import io.github.slupik.network.message.retrofit.MockedMessagesDownloadingService
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
@@ -40,8 +37,8 @@ class RetrofitServices {
 
     @Provides
     fun provideAuthorizationService(retrofit: Retrofit): AuthorizationService =
-//        retrofit.create(AuthorizationService::class.java)
-        MockedAuthorizationService()
+        retrofit.create(AuthorizationService::class.java)
+//        MockedAuthorizationService()
 
     @Provides
     fun provideRegistrationService(retrofit: Retrofit): RegistrationService =
@@ -49,13 +46,13 @@ class RetrofitServices {
 
     @Provides
     fun provideMessagesDownloadingService(retrofit: Retrofit): MessagesDownloadingService =
-//        retrofit.create(MessagesDownloadingService::class.java)
-        MockedMessagesDownloadingService()
+        retrofit.create(MessagesDownloadingService::class.java)
+//        MockedMessagesDownloadingService()
 
     @Provides
     fun provideGroupsDownloadingService(retrofit: Retrofit): GroupsDownloadingService =
-//        retrofit.create(GroupsDownloadingService::class.java)
-        MockedGroupsDownloadingService()
+        retrofit.create(GroupsDownloadingService::class.java)
+//        MockedGroupsDownloadingService()
 
     @Provides
     fun provideGroupActionsService(retrofit: Retrofit): GroupActionsService =

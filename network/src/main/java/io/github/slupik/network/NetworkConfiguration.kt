@@ -10,4 +10,4 @@ package io.github.slupik.network
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-const val DOMAIN_URL = "http://153.19.166.8:8000/"
+const val DOMAIN_URL = "http://192.168.0.101:8000/"
