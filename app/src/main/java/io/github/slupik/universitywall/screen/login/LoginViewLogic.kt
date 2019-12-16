@@ -1,6 +1,5 @@
 package io.github.slupik.universitywall.screen.login
 
-import android.util.Log
 import io.github.slupik.model.authorization.INVALID_LOGIN
 import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
@@ -53,16 +52,13 @@ class LoginViewLogic @Inject constructor(
             .subscribeOn(Schedulers.io())
             .subscribeBy(
                 onSuccess = { result ->
-                    Log.d("BARCODE", "TEST $result")
                     when (result!!) {
                         AuthorizationResult.CONNECTION_ERROR -> {
-                            Log.d("BARCODE", "TEST -> CONNECTION_ERROR")
                             viewModel.viewState.postValue(
                                 ConnectionErrorViewState()
                             )
                         }
                         AuthorizationResult.INVALID_LOGIN -> {
-                            Log.d("BARCODE", "TEST -> INVALID_LOGIN")
                             viewModel.viewState.postValue(
                                 WrongLoginViewState()
                             )
@@ -79,7 +75,6 @@ class LoginViewLogic @Inject constructor(
                     }
                 },
                 onError = {
-                    Log.d("BARCODE", "TEST (IT) $it")
                     viewModel.viewState.postValue(
                         ConnectionErrorViewState()
                     )

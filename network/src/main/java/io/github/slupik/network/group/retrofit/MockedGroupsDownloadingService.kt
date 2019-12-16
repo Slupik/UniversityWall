@@ -9,6 +9,7 @@ import io.github.slupik.network.group.model.GroupListResponse
 import io.github.slupik.network.group.model.GroupResponse
 import io.reactivex.Single
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -22,8 +23,8 @@ class MockedGroupsDownloadingService: GroupsDownloadingService {
             GroupListResponse(
                 errorCode = 0,
                 list = listOf(
-                    getGroup(0),
-                    getGroup(1)
+                    getGroup(Random.nextInt(0, 5)),
+                    getGroup(Random.nextInt(0, 5))
                 )
             )
         ).delay(3, TimeUnit.SECONDS)
