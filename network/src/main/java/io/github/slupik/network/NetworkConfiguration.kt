@@ -10,4 +10,4 @@ package io.github.slupik.network
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-const val DOMAIN_URL = "https://api.github.com/"
+const val DOMAIN_URL = "http://localhost:8000/"
