@@ -34,6 +34,8 @@ class GroupsViewLogic @Inject constructor(
                 onNext = { invitation ->
                     actions
                         .join(invitation.link)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
                         .subscribeBy(
                             onComplete = {
                                 dialogHandler.onGroupJoined(invitation.description)

@@ -4,8 +4,11 @@ import io.github.slupik.model.authorization.INVALID_LOGIN
 import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.disposables.Disposable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class LoginViewLogic @Inject constructor(
@@ -44,29 +47,39 @@ class LoginViewLogic @Inject constructor(
         authorizer.logIn(
             viewModel.login.value ?: INVALID_LOGIN,
             viewModel.password.value ?: INVALID_PASSWORD
-        ).subscribe { result ->
-            when (result!!) {
-                AuthorizationResult.CONNECTION_ERROR -> {
+        )
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribeOn(Schedulers.io())
+            .subscribeBy(
+                onSuccess = { result ->
+                    when (result!!) {
+                        AuthorizationResult.CONNECTION_ERROR -> {
+                            viewModel.viewState.postValue(
+                                ConnectionErrorViewState()
+                            )
+                        }
+                        AuthorizationResult.INVALID_LOGIN -> {
+                            viewModel.viewState.postValue(
+                                WrongLoginViewState()
+                            )
+                        }
+                        AuthorizationResult.INVALID_PASSWORD -> {
+                            viewModel.viewState.postValue(
+                                WrongPasswordViewState()
+                            )
+                        }
+                        AuthorizationResult.SUCCESS -> {
+                            viewModel.viewState.postValue(StartViewState())
+                            navigation.moveToMessagesScreen()
+                        }
+                    }
+                },
+                onError = {
                     viewModel.viewState.postValue(
                         ConnectionErrorViewState()
                     )
                 }
-                AuthorizationResult.INVALID_LOGIN -> {
-                    viewModel.viewState.postValue(
-                        WrongLoginViewState()
-                    )
-                }
-                AuthorizationResult.INVALID_PASSWORD -> {
-                    viewModel.viewState.postValue(
-                        WrongPasswordViewState()
-                    )
-                }
-                AuthorizationResult.SUCCESS -> {
-                    viewModel.viewState.postValue(StartViewState())
-                    navigation.moveToMessagesScreen()
-                }
-            }
-        }.remember()
+            ).remember()
     }
 
     private fun Disposable.remember() {

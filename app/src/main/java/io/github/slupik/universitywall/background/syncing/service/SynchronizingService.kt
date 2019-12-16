@@ -14,8 +14,10 @@ import io.github.slupik.model.message.MessagesSynchronizer
 import io.github.slupik.universitywall.MainActivity
 import io.github.slupik.universitywall.background.syncing.dagger.ContextModule
 import io.github.slupik.universitywall.background.syncing.dagger.DaggerBackgroundSyncingComponent
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
@@ -45,6 +47,8 @@ class SynchronizingService : Service() {
             disposed?.apply { dispose() }
             disposed = synchronizer
                 .refresh()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribeBy(
                     onSuccess = {
                         if (it.isNotEmpty()) {
