@@ -24,12 +24,12 @@ interface GroupActionsService {
         "User-Agent: UniversityWall"
     )
     @GET("group/join/{id}")
-    fun joinToGroup(@Header("token") token: String, @Path("id") id: String): Single<GroupJoinResponse>
+    fun joinToGroup(@Header("Authorization") token: String, @Path("id") id: String): Single<GroupJoinResponse>
 
     @Headers(
         "User-Agent: UniversityWall"
     )
     @GET("group/leave/{id}")
-    fun leaveGroup(@Header("token") token: String, @Path("id") id: String): Single<GroupLeaveResponse>
+    fun leaveGroup(@Header("Authorization") token: String, @Path("id") id: String): Single<GroupLeaveResponse>
 
 }
