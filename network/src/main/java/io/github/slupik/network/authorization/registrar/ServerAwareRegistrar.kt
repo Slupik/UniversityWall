@@ -11,6 +11,7 @@ import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.github.slupik.model.authorization.state.AuthorizationState
 import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
+import io.github.slupik.network.authorization.authorizer.TOKEN_PREFIX
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponse
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
 import io.github.slupik.network.authorization.token.TokenHolder
@@ -40,7 +41,7 @@ class ServerAwareRegistrar @Inject constructor(
                 .doOnSuccess { response ->
                     if(response.token.isNotEmpty()) {
                         saver.save(login, password)
-                        tokenHolder.session = response.token
+                        tokenHolder.session = TOKEN_PREFIX + response.token
                         statePublisher.onNewState(AuthorizationState.LOGGED_IN)
                     }
                 }
