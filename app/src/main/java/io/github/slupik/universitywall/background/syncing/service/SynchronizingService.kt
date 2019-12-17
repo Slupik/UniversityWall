@@ -41,6 +41,8 @@ class SynchronizingService : Service() {
 
     private var disposed: Disposable? = null
 
+    private var workStarted: Boolean = false
+
     private val timer: Timer = Timer()
     private val timerTask: TimerTask = object : TimerTask() {
         override fun run() {
@@ -63,15 +65,19 @@ class SynchronizingService : Service() {
     }
 
     override fun onStart(intent: Intent?, startid: Int) {
-        makeAsForegroundService()
+        if (!workStarted) {
+            makeAsForegroundService()
 
-        DaggerBackgroundSyncingComponent
-            .builder()
-            .contextModule(ContextModule(applicationContext))
-            .build()
-            .inject(this)
+            DaggerBackgroundSyncingComponent
+                .builder()
+                .contextModule(ContextModule(applicationContext))
+                .build()
+                .inject(this)
 
-        timer.schedule(timerTask, 0, SYNC_TIME)
+            timer.schedule(timerTask, 0, SYNC_TIME)
+
+            workStarted = true
+        }
     }
 
     private fun makeAsForegroundService() {
