@@ -33,10 +33,14 @@ class MainActivity : Activity() {
             .state
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy {
-                if (!authorizationStateProvider.isLoggedIn()) {
+                if (!authorizationStateProvider.isLoggedIn() && !isCurrentlyOnPageWithAuthorization()) {
                     navigator.navigate(R.id.loginFragment)
                 }
             }.remember()
     }
+
+    private fun isCurrentlyOnPageWithAuthorization(): Boolean =
+        navigator.currentDestination?.id == R.id.loginFragment ||
+                navigator.currentDestination?.id == R.id.registrationFragment
 
 }

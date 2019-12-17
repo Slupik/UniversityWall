@@ -75,6 +75,7 @@ class LoginViewLogic @Inject constructor(
                     }
                 },
                 onError = {
+                    it.printStackTrace()
                     viewModel.viewState.postValue(
                         ConnectionErrorViewState()
                     )
