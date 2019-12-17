@@ -46,9 +46,24 @@ class MessageResponseConverter @Inject constructor() :
             else -> MessageType.INFO
         }
 
-    private fun toOffsetDateTime(value: String?): OffsetDateTime? {
-        return value?.let {
-            return formatter.parse(value, OffsetDateTime::from)
+    private fun toOffsetDateTime(value: String?): OffsetDateTime? =
+        try {
+            if(!value.isNullOrBlank()) {
+                formatter.parse(normalize(value), OffsetDateTime::from)
+            } else {
+                null
+            }
+        } catch (e: Throwable) {
+            e.printStackTrace()
+            null
+        }
+
+    private fun normalize(value: String): String {
+        val index = value.indexOf("+")
+        return if(index>0 && value.isNotEmpty()) {
+            value.subSequence(0, index).toString()+".000"+value.subSequence(index, value.length)
+        } else {
+            ""
         }
     }
 
