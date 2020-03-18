@@ -15,7 +15,7 @@ import kotlin.reflect.KClass
 object ErrorCodeMapper {
 
     fun throwErrorForCode(code: Int): KClass<out ConnectionException>? =
-        when(code) {
+        when (code) {
             1 -> {
                 InvalidTokenException::class
             }

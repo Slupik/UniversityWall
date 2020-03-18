@@ -41,7 +41,7 @@ class GroupsViewLogic @Inject constructor(
                                 dialogHandler.onGroupJoined(invitation.description)
                                 refresh()
                             },
-                            onError = {actionError ->
+                            onError = { actionError ->
                                 actionError.printStackTrace()
                                 dialogHandler.onGroupJoiningError()
                             }

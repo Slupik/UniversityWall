@@ -24,7 +24,7 @@ class MessagesDatabaseProxy @Inject constructor(
     private val database: MainDao,
     private val converterToEntity: Converter<Message, MessageEntity>,
     private val converterFromEntity: Converter<List<MessageEntity>, List<Message>>
-): MessagesRepository {
+) : MessagesRepository {
 
     override fun set(messages: List<Message>): Completable {
         deleteAll()

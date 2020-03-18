@@ -14,16 +14,17 @@ import javax.inject.Inject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class AuthorizationResponseConverter @Inject constructor(): ResponseConverter<AuthorizationResponse, AuthorizationResult>() {
+class AuthorizationResponseConverter @Inject constructor() :
+    ResponseConverter<AuthorizationResponse, AuthorizationResult>() {
 
     override fun convert(response: AuthorizationResponse): AuthorizationResult {
-        if(!response.validLogin) {
+        if (!response.validLogin) {
             return AuthorizationResult.INVALID_LOGIN
         }
-        if(!response.validPassword) {
+        if (!response.validPassword) {
             return AuthorizationResult.INVALID_PASSWORD
         }
-        if(response.token.isEmpty()) {
+        if (response.token.isEmpty()) {
             return AuthorizationResult.CONNECTION_ERROR
         }
         return AuthorizationResult.SUCCESS

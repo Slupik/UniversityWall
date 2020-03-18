@@ -18,7 +18,7 @@ import javax.inject.Inject
  */
 class DialogedRegistrationErrorHandler @Inject constructor(
     private val activity: FragmentActivity
-): RegistrationErrorHandler {
+) : RegistrationErrorHandler {
 
     override fun onConnectionError() {
         showErrorInfo(

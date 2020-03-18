@@ -40,7 +40,6 @@ interface MainDao {
     fun deleteAllMessages()
 
 
-
     @Query("SELECT * FROM $GROUPS_TABLE_NAME")
     fun fetchAllGroups(): Flowable<List<GroupEntity>>
 

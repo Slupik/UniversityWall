@@ -14,13 +14,14 @@ import javax.inject.Inject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class RegistrationResponseConverter @Inject constructor(): ResponseConverter<RegistrationResponse, RegistrationResult>() {
+class RegistrationResponseConverter @Inject constructor() :
+    ResponseConverter<RegistrationResponse, RegistrationResult>() {
 
     override fun convert(response: RegistrationResponse): RegistrationResult {
-        if(!response.validLogin) {
+        if (!response.validLogin) {
             return RegistrationResult.INVALID_LOGIN
         }
-        if(response.token.isEmpty()) {
+        if (response.token.isEmpty()) {
             return RegistrationResult.CONNECTION_ERROR
         }
         return RegistrationResult.SUCCESS

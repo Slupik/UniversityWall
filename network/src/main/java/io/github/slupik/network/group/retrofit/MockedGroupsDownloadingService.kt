@@ -16,7 +16,7 @@ import kotlin.random.Random
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class MockedGroupsDownloadingService: GroupsDownloadingService {
+class MockedGroupsDownloadingService : GroupsDownloadingService {
 
     override fun getGroups(token: String): Single<GroupListResponse> =
         Single.just(

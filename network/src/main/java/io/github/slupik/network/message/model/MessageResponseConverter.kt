@@ -48,7 +48,7 @@ class MessageResponseConverter @Inject constructor() :
 
     private fun toOffsetDateTime(value: String?): OffsetDateTime? =
         try {
-            if(!value.isNullOrBlank()) {
+            if (!value.isNullOrBlank()) {
                 formatter.parse(normalize(value), OffsetDateTime::from)
             } else {
                 null
@@ -60,8 +60,8 @@ class MessageResponseConverter @Inject constructor() :
 
     private fun normalize(value: String): String {
         val index = value.indexOf("+")
-        return if(index>0 && value.isNotEmpty()) {
-            value.subSequence(0, index).toString()+".000"+value.subSequence(index, value.length)
+        return if (index > 0 && value.isNotEmpty()) {
+            value.subSequence(0, index).toString() + ".000" + value.subSequence(index, value.length)
         } else {
             ""
         }

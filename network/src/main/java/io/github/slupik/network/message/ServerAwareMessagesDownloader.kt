@@ -23,7 +23,7 @@ class ServerAwareMessagesDownloader @Inject constructor(
     private val tokenHolder: TokenHolder,
     private val service: MessagesDownloadingService,
     private val converter: ResponseConverter<MessageListResponse, List<Message>>
-): MessagesDownloader {
+) : MessagesDownloader {
 
     override fun downloadMessages(): Single<List<Message>> =
         service

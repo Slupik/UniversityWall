@@ -20,11 +20,11 @@ class GroupsViewModel : ViewModel() {
         this.logic = viewLogic
     }
 
-    fun refresh(){
+    fun refresh() {
         logic.refresh()
     }
 
-    fun joinToGroup(){
+    fun joinToGroup() {
         logic.joinToGroup()
     }
 

@@ -15,7 +15,7 @@ import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.C
  */
 class ScaleListener(
     private val provideCameraSource: () -> CameraSource
-): ScaleGestureDetector.OnScaleGestureListener {
+) : ScaleGestureDetector.OnScaleGestureListener {
 
     override fun onScale(detector: ScaleGestureDetector?): Boolean =
         false

@@ -16,11 +16,11 @@ import javax.inject.Inject
  */
 private const val AMOUNT_OF_MESSAGES = 0
 
-class MockedMessagesSynchronizer @Inject constructor(): MessagesSynchronizer {
+class MockedMessagesSynchronizer @Inject constructor() : MessagesSynchronizer {
 
     override fun refresh(): Single<List<NewMessage>> {
         val list = mutableListOf<Message>()
-        for(i in 1..AMOUNT_OF_MESSAGES) {
+        for (i in 1..AMOUNT_OF_MESSAGES) {
             list.add(getMessage(i))
         }
         return Single.just(list)
@@ -39,7 +39,7 @@ class MockedMessagesSynchronizer @Inject constructor(): MessagesSynchronizer {
             beginningTime = OffsetDateTime.now(),
             endingTime = OffsetDateTime.now(),
             attachmentName = "File to download $id",
-            attachmentUrl ="url $id of file"
+            attachmentUrl = "url $id of file"
         )
 
 }

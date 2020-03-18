@@ -25,7 +25,7 @@ import javax.inject.Singleton
 class ServerAuthorizationStateProvider @Inject constructor(
     private val tokenHolder: TokenHolder,
     private val credentialsProvider: CredentialsProvider
-): AuthorizationStateProvider, AuthorizationStatePublisher {
+) : AuthorizationStateProvider, AuthorizationStatePublisher {
 
     private val stateBroadcaster: PublishSubject<AuthorizationState> = PublishSubject.create()
     override val state: Observable<AuthorizationState>

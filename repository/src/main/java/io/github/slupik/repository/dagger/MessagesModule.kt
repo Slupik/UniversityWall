@@ -7,14 +7,14 @@ package io.github.slupik.repository.dagger
 
 import dagger.Binds
 import dagger.Module
+import io.github.slupik.model.Converter
 import io.github.slupik.model.message.Message
 import io.github.slupik.model.message.MessagesRepository
-import io.github.slupik.model.Converter
+import io.github.slupik.repository.database.MessageEntity
 import io.github.slupik.repository.message.MessagesDatabaseProxy
 import io.github.slupik.repository.message.converter.MessageConverter
 import io.github.slupik.repository.message.converter.MessageEntityConverter
 import io.github.slupik.repository.message.converter.MessageEntityListConverter
-import io.github.slupik.repository.database.MessageEntity
 
 /**
  * Created by Sebastian Witasik on 08.12.2019.

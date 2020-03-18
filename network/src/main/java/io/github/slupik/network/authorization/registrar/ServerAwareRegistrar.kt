@@ -29,7 +29,7 @@ class ServerAwareRegistrar @Inject constructor(
     private val tokenHolder: TokenHolder,
     private val statePublisher: AuthorizationStatePublisher,
     private val converter: ResponseConverter<RegistrationResponse, RegistrationResult>
-): Registrar {
+) : Registrar {
 
     override fun register(
         login: String,
@@ -39,7 +39,7 @@ class ServerAwareRegistrar @Inject constructor(
         try {
             service.register(login, password, displayName)
                 .doOnSuccess { response ->
-                    if(response.token.isNotEmpty()) {
+                    if (response.token.isNotEmpty()) {
                         saver.save(login, password)
                         tokenHolder.session = TOKEN_PREFIX + response.token
                         statePublisher.onNewState(AuthorizationState.LOGGED_IN)

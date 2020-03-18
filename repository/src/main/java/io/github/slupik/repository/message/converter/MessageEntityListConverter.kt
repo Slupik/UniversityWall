@@ -5,8 +5,8 @@
 
 package io.github.slupik.repository.message.converter
 
-import io.github.slupik.model.message.Message
 import io.github.slupik.model.Converter
+import io.github.slupik.model.message.Message
 import io.github.slupik.repository.database.MessageEntity
 import javax.inject.Inject
 

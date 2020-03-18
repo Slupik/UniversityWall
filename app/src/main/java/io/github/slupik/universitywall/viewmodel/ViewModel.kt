@@ -12,5 +12,4 @@ import androidx.lifecycle.ViewModel as AndroidViewModel
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-abstract class ViewModel: AndroidViewModel() {
-}
+abstract class ViewModel : AndroidViewModel()

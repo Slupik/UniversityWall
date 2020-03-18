@@ -12,7 +12,7 @@ import io.reactivex.Single
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class MockedAuthorizationService: AuthorizationService {
+class MockedAuthorizationService : AuthorizationService {
 
     override fun authorize(login: String, password: String): Single<AuthorizationResponse> =
         getValidConnection()

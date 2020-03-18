@@ -23,7 +23,7 @@ class ServerAwareGroupsDownloader @Inject constructor(
     private val tokenHolder: TokenHolder,
     private val service: GroupsDownloadingService,
     private val converter: ResponseConverter<GroupListResponse, List<Group>>
-): GroupsDownloader {
+) : GroupsDownloader {
 
     override fun downloadGroups(): Single<List<Group>> =
         service

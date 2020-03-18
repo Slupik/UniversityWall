@@ -27,7 +27,7 @@ class MessageListResponseConverter @Inject constructor(
                 ?.objectInstance
                 ?.let { exception ->
                     throw exception
-                }?: throw UnknownConnectionException()
+                } ?: throw UnknownConnectionException()
         }
         return response.list?.map(messageConverter::convert) ?: listOf()
     }

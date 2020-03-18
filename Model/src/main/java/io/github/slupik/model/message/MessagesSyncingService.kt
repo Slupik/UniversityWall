@@ -20,18 +20,18 @@ class MessagesSyncingService @Inject constructor(
 
     override fun refresh(): Single<List<NewMessage>> =
         repository.getAll()
-            .flatMap {rList ->
+            .flatMap { rList ->
                 downloader.downloadMessages()
                     .doOnSuccess {
                         repository
                             .set(it)
                             .subscribe()
                     }
-                    .map {sList ->
+                    .map { sList ->
                         sList
-                            .filter {sMess ->
+                            .filter { sMess ->
                                 rList
-                                    .none {rMess ->
+                                    .none { rMess ->
                                         sMess.id == rMess.id
                                     }
                             }

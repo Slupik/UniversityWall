@@ -17,7 +17,7 @@ import io.reactivex.subjects.PublishSubject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class SharedViewModel: ViewModel() {
+class SharedViewModel : ViewModel() {
 
     val rationalCameraPermission: MutableLiveData<View.OnClickListener> by lazy {
         MutableLiveData<View.OnClickListener>()

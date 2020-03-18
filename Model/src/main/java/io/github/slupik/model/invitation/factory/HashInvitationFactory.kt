@@ -23,7 +23,7 @@ class HashInvitationFactory @Inject constructor() :
     InvitationFactory {
 
     override fun create(raw: String): Single<Invitation> =
-        if(PATTERN.matches(raw)) {
+        if (PATTERN.matches(raw)) {
 
             val type = getInvitationType(raw) ?: throw Exception("Type can't be a null")
             val link = getLink(raw)
@@ -41,18 +41,18 @@ class HashInvitationFactory @Inject constructor() :
         }
 
     private fun getDescription(raw: String): String {
-        val start = "universitywall_invite_".length+1
-        return raw.substring(start, raw.length- HASH_LENGTH)
+        val start = "universitywall_invite_".length + 1
+        return raw.substring(start, raw.length - HASH_LENGTH)
     }
 
     private fun getLink(raw: String): String {
-        val hash = raw.substring(raw.length- HASH_LENGTH, raw.length)
-        return DOMAIN +hash
+        val hash = raw.substring(raw.length - HASH_LENGTH, raw.length)
+        return DOMAIN + hash
     }
 
     private fun getInvitationType(raw: String): InvitationType? {
         val start = "universitywall_invite_".length
-        return when(raw.substring(start, start+1)) {
+        return when (raw.substring(start, start + 1)) {
             "0" -> InvitationType.INFINITE
             "1" -> InvitationType.SINGLE
             else -> null

@@ -10,7 +10,7 @@ package io.github.slupik.network.group.model
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-data class GroupLeaveResponse (
+data class GroupLeaveResponse(
     val statusCode: Int,
     val name: String
 )
