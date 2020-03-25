@@ -34,20 +34,20 @@ class GroupsSynchronizer @Inject constructor(
     override fun refresh(): Completable =
         downloader
             .downloadGroups()
-            .saveAndEmitNewList()
+            .saveAndEmitRefreshedList()
 
-    private fun Single<List<Group>>.saveAndEmitNewList(): Completable =
+    private fun Single<List<Group>>.saveAndEmitRefreshedList(): Completable =
         this.flatMapCompletable { messages ->
             repository
                 .set(messages)
                 .andThen(
                     Completable.defer {
-                        emitNewList()
+                        emitRefreshedList()
                     }
                 )
         }
 
-    private fun emitNewList(): Completable =
+    private fun emitRefreshedList(): Completable =
         repository
             .getAll()
             .doOnSuccess { refreshedList ->
