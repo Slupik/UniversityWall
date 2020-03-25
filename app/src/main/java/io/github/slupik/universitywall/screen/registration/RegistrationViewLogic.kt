@@ -8,7 +8,7 @@ package io.github.slupik.universitywall.screen.registration
 import androidx.fragment.app.FragmentActivity
 import io.github.slupik.model.authorization.INVALID_LOGIN
 import io.github.slupik.model.authorization.INVALID_PASSWORD
-import io.github.slupik.model.authorization.registration.Registrar
+import io.github.slupik.model.authorization.registration.Registrant
 import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
@@ -18,7 +18,7 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 class RegistrationViewLogic @Inject constructor(
-    private val registrar: Registrar,
+    private val registrant: Registrant,
     private val errorHandler: RegistrationErrorHandler
 ) {
 
@@ -44,7 +44,7 @@ class RegistrationViewLogic @Inject constructor(
 
         viewModel.viewState.postValue(LoadingDataViewState())
 
-        registrar.register(
+        registrant.register(
             viewModel.login.value ?: INVALID_LOGIN,
             viewModel.password.value ?: INVALID_PASSWORD,
             viewModel.displayName.value ?: ""

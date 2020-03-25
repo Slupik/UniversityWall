@@ -6,7 +6,7 @@
 package io.github.slupik.network.authorization.registrar
 
 import io.github.slupik.model.authorization.credentials.CredentialSaver
-import io.github.slupik.model.authorization.registration.Registrar
+import io.github.slupik.model.authorization.registration.Registrant
 import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.github.slupik.model.authorization.state.AuthorizationState
 import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
@@ -23,13 +23,13 @@ import javax.inject.Inject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class ServerAwareRegistrar @Inject constructor(
+class ServerAwareRegistrant @Inject constructor(
     private val service: RegistrationService,
     private val saver: CredentialSaver,
     private val tokenHolder: TokenHolder,
     private val statePublisher: AuthorizationStatePublisher,
     private val converter: ResponseConverter<RegistrationResponse, RegistrationResult>
-) : Registrar {
+) : Registrant {
 
     override fun register(
         login: String,
