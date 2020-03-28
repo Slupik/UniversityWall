@@ -1,14 +1,13 @@
 package io.github.slupik.universitywall.screen.registration
 
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.RegistrationFragmentBinding
-import io.github.slupik.universitywall.fragment.FragmentWithViewModel
+import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class RegistrationFragment : FragmentWithViewModel<RegistrationViewModel>(), GraphController {
+class RegistrationFragment : FragmentWithDataBinding<RegistrationViewModel, RegistrationFragmentBinding>(), GraphController {
 
     @Inject
     lateinit var viewLogic: RegistrationViewLogic
@@ -41,13 +40,8 @@ class RegistrationFragment : FragmentWithViewModel<RegistrationViewModel>(), Gra
         internalViewModel.repeatedPassword.postValue("")
     }
 
-    override fun bindModelToView() {
-        val binding: RegistrationFragmentBinding =
-            DataBindingUtil.setContentView(activity!!, getLayoutId())
+    override fun bindViewModel() {
         binding.viewmodel = internalViewModel
-        binding.setLifecycleOwner {
-            viewLifecycleOwner.lifecycle
-        }
     }
 
     override fun moveToMessagesScreen() {

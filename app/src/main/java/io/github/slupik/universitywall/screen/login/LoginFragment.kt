@@ -5,15 +5,14 @@
 
 package io.github.slupik.universitywall.screen.login
 
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.LoginFragmentBinding
-import io.github.slupik.universitywall.fragment.FragmentWithViewModel
+import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class LoginFragment : FragmentWithViewModel<LoginViewModel>(), GraphController {
+class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBinding>(), GraphController {
 
     @Inject
     lateinit var viewLogic: LoginViewLogic
@@ -44,13 +43,8 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>(), GraphController {
         internalViewModel.password.postValue("")
     }
 
-    override fun bindModelToView() {
-        val binding: LoginFragmentBinding =
-            DataBindingUtil.setContentView(activity!!, getLayoutId())
+    override fun bindViewModel() {
         binding.viewmodel = internalViewModel
-        binding.setLifecycleOwner {
-            viewLifecycleOwner.lifecycle
-        }
     }
 
     override fun moveToMessagesScreen() {

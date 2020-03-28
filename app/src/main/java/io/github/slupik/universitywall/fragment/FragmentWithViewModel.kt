@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2019. by Sebastian Witasik
+ * Copyright (c) 2020. by Sebastian Witasik
  * All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
  */
 
@@ -10,6 +10,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.application.MyApplication
@@ -51,18 +53,11 @@ abstract class FragmentWithViewModel<ViewModelType : ViewModel> : Fragment() {
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
         internalViewModel = ViewModelProviders.of(this).get(getFragmentClass().java)
-        bindModelToView()
+        onAssignViewModel()
         onViewModelCreated(internalViewModel)
     }
 
-    protected open fun bindModelToView() {
-//        val binding: ...Binding =
-//            DataBindingUtil.setContentView(activity!!, getLayoutId())
-//        binding.viewmodel = internalViewModel
-//        binding.setLifecycleOwner {
-//            viewLifecycleOwner.lifecycle
-//        }
-    }
+    protected open fun onAssignViewModel() { }
 
     protected open fun onViewModelCreated(viewModel: ViewModelType) {}
 
