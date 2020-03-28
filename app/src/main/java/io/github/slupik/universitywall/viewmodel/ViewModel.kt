@@ -5,6 +5,8 @@
 
 package io.github.slupik.universitywall.viewmodel
 
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.disposables.Disposable
 import androidx.lifecycle.ViewModel as AndroidViewModel
 
 /**
@@ -12,4 +14,12 @@ import androidx.lifecycle.ViewModel as AndroidViewModel
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-abstract class ViewModel : AndroidViewModel()
+abstract class ViewModel : AndroidViewModel() {
+
+    protected val disposables: CompositeDisposable = CompositeDisposable()
+
+    private fun Disposable.remember() {
+        disposables.add(this)
+    }
+
+}

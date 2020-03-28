@@ -29,7 +29,6 @@ class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBindi
 
     override fun onViewModelCreated(viewModel: LoginViewModel) {
         super.onViewModelCreated(viewModel)
-        setupView()
 
         appDepInComponent.inject(this)
         viewLogic.inject(internalViewModel)
@@ -37,15 +36,12 @@ class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBindi
         internalViewModel.setLogic(viewLogic)
     }
 
-    private fun setupView() {
-        internalViewModel.viewState.postValue(StartViewState())
-        internalViewModel.login.postValue("")
-        internalViewModel.password.postValue("")
-    }
-
     override fun bindViewModel() {
         binding.viewmodel = internalViewModel
     }
+
+    override fun getViewModel() =
+        appDepInComponent.loginViewModelFactory.create()
 
     override fun moveToMessagesScreen() {
         findNavController().navigate(R.id.action_loginFragment_to_messagesFragment)

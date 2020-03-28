@@ -10,8 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.LayoutRes
-import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProviders
 import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.application.MyApplication
@@ -52,10 +50,13 @@ abstract class FragmentWithViewModel<ViewModelType : ViewModel> : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        internalViewModel = ViewModelProviders.of(this).get(getFragmentClass().java)
+        internalViewModel = getViewModel()
         onAssignViewModel()
         onViewModelCreated(internalViewModel)
     }
+
+    protected open fun getViewModel(): ViewModelType =
+        ViewModelProviders.of(this).get(getFragmentClass().java)
 
     protected open fun onAssignViewModel() { }
 

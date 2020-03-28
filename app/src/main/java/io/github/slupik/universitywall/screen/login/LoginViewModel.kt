@@ -6,9 +6,13 @@
 package io.github.slupik.universitywall.screen.login
 
 import androidx.lifecycle.MutableLiveData
+import com.squareup.inject.assisted.AssistedInject
+import io.github.slupik.model.authorization.authorizer.Authorizer
 import io.github.slupik.universitywall.viewmodel.ViewModel
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel @AssistedInject constructor(
+    private val authorizer: Authorizer
+) : ViewModel() {
 
     private lateinit var logic: LoginViewLogic
 
@@ -22,6 +26,10 @@ class LoginViewModel : ViewModel() {
         MutableLiveData<LoginViewState>()
     }
 
+    init {
+        viewState.postValue(StartViewState())
+    }
+
     fun onLogIn() {
         logic.onLogIn()
     }
@@ -32,6 +40,11 @@ class LoginViewModel : ViewModel() {
 
     fun setLogic(viewLogic: LoginViewLogic) {
         this.logic = viewLogic
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): LoginViewModel
     }
 
 }
