@@ -9,17 +9,10 @@ import androidx.navigation.fragment.findNavController
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.LoginFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
-import javax.inject.Inject
+import io.github.slupik.universitywall.utils.subscribe
 import kotlin.reflect.KClass
 
-class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBinding>(), GraphController {
-
-    @Inject
-    lateinit var viewLogic: LoginViewLogic
-
-    companion object {
-        fun newInstance() = LoginFragment()
-    }
+class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBinding>() {
 
     override fun getLayoutId(): Int =
         R.layout.login_fragment
@@ -29,11 +22,23 @@ class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBindi
 
     override fun onViewModelCreated(viewModel: LoginViewModel) {
         super.onViewModelCreated(viewModel)
-
         appDepInComponent.inject(this)
-        viewLogic.inject(internalViewModel)
-        viewLogic.inject(this)
-        internalViewModel.setLogic(viewLogic)
+        viewModel.navigation.subscribe(this) { onChangeScreenCommand(it) }
+    }
+
+    private fun onChangeScreenCommand(command: NavigationCommand) {
+        when (command) {
+            NavigationCommand.REGISTRATION_SCREEN -> moveToRegistrationScreen()
+            NavigationCommand.MESSAGES_SCREEN -> moveToMessagesScreen()
+        }
+    }
+
+    private fun moveToMessagesScreen() {
+        findNavController().navigate(R.id.action_loginFragment_to_messagesFragment)
+    }
+
+    private fun moveToRegistrationScreen() {
+        findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
     }
 
     override fun bindViewModel() {
@@ -42,13 +47,5 @@ class LoginFragment : FragmentWithDataBinding<LoginViewModel, LoginFragmentBindi
 
     override fun getViewModel() =
         appDepInComponent.loginViewModelFactory.create()
-
-    override fun moveToMessagesScreen() {
-        findNavController().navigate(R.id.action_loginFragment_to_messagesFragment)
-    }
-
-    override fun moveToRegistrationScreen() {
-        findNavController().navigate(R.id.action_loginFragment_to_registrationFragment)
-    }
 
 }

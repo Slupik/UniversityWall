@@ -16,10 +16,14 @@ import androidx.lifecycle.ViewModel as AndroidViewModel
  */
 abstract class ViewModel : AndroidViewModel() {
 
-    protected val disposables: CompositeDisposable = CompositeDisposable()
+    private val disposables: CompositeDisposable = CompositeDisposable()
 
-    private fun Disposable.remember() {
+    protected fun Disposable.remember() {
         disposables.add(this)
+    }
+
+    protected fun disposeAll() {
+        disposables.dispose()
     }
 
 }
