@@ -30,16 +30,20 @@ class MessageEntityConverter @Inject constructor() : Converter<MessageEntity, Me
             content = input.content,
             author = input.author,
             group = input.group,
-            postedTime = DateTimeConverter.toOffsetDateTime(input.postedTime)?: OffsetDateTime.now(),
-            expirationTime = DateTimeConverter.toOffsetDateTime(input.expirationTime)?: OffsetDateTime.now(),
-            beginningTime = DateTimeConverter.toOffsetDateTime(input.beginningTime)?: OffsetDateTime.now(),
-            endingTime = DateTimeConverter.toOffsetDateTime(input.endingTime)?: OffsetDateTime.now(),
+            postedTime = DateTimeConverter.toOffsetDateTime(input.postedTime)
+                ?: OffsetDateTime.now(),
+            expirationTime = DateTimeConverter.toOffsetDateTime(input.expirationTime)
+                ?: OffsetDateTime.now(),
+            beginningTime = DateTimeConverter.toOffsetDateTime(input.beginningTime)
+                ?: OffsetDateTime.now(),
+            endingTime = DateTimeConverter.toOffsetDateTime(input.endingTime)
+                ?: OffsetDateTime.now(),
             attachmentName = input.attachmentName,
             attachmentUrl = input.attachmentUrl
         )
 
     private fun getMessageType(typeId: Int): MessageType =
-        when(typeId) {
+        when (typeId) {
             MESSAGE_TYPE_TEST -> MessageType.TEST
             MESSAGE_TYPE_INFO -> MessageType.INFO
             MESSAGE_TYPE_CANCELED_CLASSES -> MessageType.CANCELED_CLASSES

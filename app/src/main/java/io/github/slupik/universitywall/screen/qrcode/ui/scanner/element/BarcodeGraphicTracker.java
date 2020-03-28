@@ -5,10 +5,13 @@
 package io.github.slupik.universitywall.screen.qrcode.ui.scanner.element;
 
 import android.content.Context;
+
 import androidx.annotation.UiThread;
+
 import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.Tracker;
 import com.google.android.gms.vision.barcode.Barcode;
+
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.camera.GraphicOverlay;
 
 /**

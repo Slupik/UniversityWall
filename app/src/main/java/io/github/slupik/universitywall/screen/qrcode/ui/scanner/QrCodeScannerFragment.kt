@@ -64,17 +64,18 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         super.onActivityCreated(savedInstanceState)
 
         mPreview = activity?.findViewById(R.id.preview)
-        mGraphicOverlay = activity?.findViewById<GraphicOverlay<BarcodeGraphic>?>(R.id.graphicOverlay)
+        mGraphicOverlay =
+            activity?.findViewById<GraphicOverlay<BarcodeGraphic>?>(R.id.graphicOverlay)
 
 
         val captureGestureListener =
             CaptureGestureListener(
                 mGraphicOverlay!!
             )
-        captureGestureListener.selected.subscribe {barcode ->
+        captureGestureListener.selected.subscribe { barcode ->
             invitationFactory
                 .create(barcode.rawValue)
-                .doOnSuccess {invitation ->
+                .doOnSuccess { invitation ->
                     invitationBroadcaster.broadcastDetected(invitation)
                 }
                 .subscribe()
@@ -163,7 +164,8 @@ class QrCodeScannerFragment : FragmentWithViewModel<QrCodeScannerViewModel>() {
         )
         if (code != ConnectionResult.SUCCESS) {
             val dlg =
-                GoogleApiAvailability.getInstance().getErrorDialog(activity, code,
+                GoogleApiAvailability.getInstance().getErrorDialog(
+                    activity, code,
                     RC_HANDLE_GMS
                 )
             dlg.show()

@@ -28,7 +28,7 @@ private const val GROUP_KEY_NEW_MESSAGES = "io.github.slupik.universitywall.NEW_
 
 class GroupedNotificationSender @Inject constructor(
     private val context: Context
-): NotificationSender {
+) : NotificationSender {
 
     private val id: AtomicInteger = AtomicInteger(0)
     private var groupId = getID()
@@ -51,9 +51,9 @@ class GroupedNotificationSender @Inject constructor(
     }
 
     private fun sendNotifications(messages: List<NewMessage>) {
-        val manager =  NotificationManagerCompat.from(context)
+        val manager = NotificationManagerCompat.from(context)
         manager.notificationChannelGroups
-        for(message in messages) {
+        for (message in messages) {
             manager.notify(getID(), getNotification(message))
         }
     }
@@ -73,7 +73,8 @@ class GroupedNotificationSender @Inject constructor(
                 "New Messages",
                 NotificationManager.IMPORTANCE_DEFAULT
             )
-            val manager: NotificationManager = context.getSystemService(NotificationManager::class.java)!!
+            val manager: NotificationManager =
+                context.getSystemService(NotificationManager::class.java)!!
             manager.createNotificationChannel(serviceChannel)
         }
     }

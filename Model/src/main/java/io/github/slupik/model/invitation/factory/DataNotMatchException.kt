@@ -10,4 +10,4 @@ package io.github.slupik.model.invitation.factory
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class DataNotMatchException: Exception()
+class DataNotMatchException : Exception()

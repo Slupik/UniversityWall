@@ -23,7 +23,7 @@ import kotlin.reflect.KClass
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
+abstract class FragmentWithViewModel<ViewModelType : ViewModel> : Fragment() {
 
     protected lateinit var internalViewModel: ViewModelType
     protected lateinit var userInterface: View
@@ -55,7 +55,7 @@ abstract class FragmentWithViewModel<ViewModelType: ViewModel>: Fragment() {
         onViewModelCreated(internalViewModel)
     }
 
-    open protected fun bindModelToView() {
+    protected open fun bindModelToView() {
 //        val binding: ...Binding =
 //            DataBindingUtil.setContentView(activity!!, getLayoutId())
 //        binding.viewmodel = internalViewModel

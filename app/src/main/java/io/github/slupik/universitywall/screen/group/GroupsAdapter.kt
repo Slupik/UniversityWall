@@ -71,7 +71,7 @@ class GroupsAdapter constructor(
                     binding.btnLeaveGroup.visibility = INVISIBLE
                     binding.pbLeaving.visibility = VISIBLE
                     actions
-                        .leave(""+item.id)
+                        .leave("" + item.id)
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribeOn(Schedulers.io())
                         .subscribeBy(

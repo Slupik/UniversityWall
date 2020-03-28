@@ -27,7 +27,7 @@ class GroupListResponseConverter @Inject constructor(
                 ?.objectInstance
                 ?.let { exception ->
                     throw exception
-                }?: throw UnknownConnectionException()
+                } ?: throw UnknownConnectionException()
         }
         return response.list?.map(groupConverter::convert) ?: listOf()
     }

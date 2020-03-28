@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment as AndroidFragment
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-abstract class Fragment: AndroidFragment() {
+abstract class Fragment : AndroidFragment() {
 
     protected val compositeDisposable: CompositeDisposable = CompositeDisposable()
 

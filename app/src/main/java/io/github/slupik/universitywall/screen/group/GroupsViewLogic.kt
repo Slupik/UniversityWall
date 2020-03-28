@@ -34,12 +34,14 @@ class GroupsViewLogic @Inject constructor(
                 onNext = { invitation ->
                     actions
                         .join(invitation.link)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribeOn(Schedulers.io())
                         .subscribeBy(
                             onComplete = {
                                 dialogHandler.onGroupJoined(invitation.description)
                                 refresh()
                             },
-                            onError = {actionError ->
+                            onError = { actionError ->
                                 actionError.printStackTrace()
                                 dialogHandler.onGroupJoiningError()
                             }

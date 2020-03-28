@@ -66,6 +66,6 @@ abstract class SharedPreferencesRepository constructor(
     }
 
     protected fun getStringFromPreferences(@StringRes id: Int, defaultValue: String): String =
-        getSharedPreferences().getString(context.getString(id), defaultValue)?: defaultValue
+        getSharedPreferences().getString(context.getString(id), defaultValue) ?: defaultValue
 
 }

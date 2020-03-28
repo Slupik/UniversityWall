@@ -10,6 +10,6 @@ package io.github.slupik.network.error
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-abstract class ConnectionException: Exception()
+abstract class ConnectionException : Exception()
 
-class UnknownConnectionException: ConnectionException()
+class UnknownConnectionException : ConnectionException()

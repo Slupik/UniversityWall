@@ -20,22 +20,29 @@ class MessagesSyncingService @Inject constructor(
 
     override fun refresh(): Single<List<NewMessage>> =
         repository.getAll()
-            .flatMap {rList ->
+            .flatMap { messagesBeforeRefresh ->
                 downloader.downloadMessages()
-                    .doOnSuccess {
-                        repository
-                            .set(it)
-                            .subscribe()
-                    }
-                    .map {sList ->
-                        sList
-                            .filter {sMess ->
-                                rList
-                                    .none {rMess ->
-                                        sMess.id == rMess.id
-                                    }
-                            }
-                    }
+                    .doOnSuccess { save(it) }
+                    .getNewMessages(messagesBeforeRefresh)
+            }
+
+    private fun save(messages: List<Message>) =
+        repository
+            .set(messages)
+            .subscribe()
+
+    private fun Single<List<NewMessage>>.getNewMessages(messagesBeforeRefresh: List<Message>): Single<List<NewMessage>> =
+        this.map { downloadedMessages ->
+            downloadedMessages
+                .filter { downloadedMessage ->
+                    downloadedMessage.isNotSaved(messagesBeforeRefresh)
+                }
+        }
+
+    private fun NewMessage.isNotSaved(messagesBeforeRefresh: List<Message>): Boolean =
+        messagesBeforeRefresh
+            .none { savedMessage ->
+                this.id == savedMessage.id
             }
 
 }

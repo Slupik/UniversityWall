@@ -19,13 +19,13 @@ import javax.inject.Inject
 class ServerAwareGroupActions @Inject constructor(
     private val tokenHolder: TokenHolder,
     private val service: GroupActionsService
-): GroupActions {
+) : GroupActions {
 
     override fun join(id: String): Completable =
         service
             .joinToGroup(tokenHolder.session, id)
             .flatMapCompletable {
-                if(it.statusCode == 0) {
+                if (it.statusCode == 0) {
                     Completable.complete()
                 } else {
                     Completable.error(GroupJoinException(it.statusCode))
@@ -36,7 +36,7 @@ class ServerAwareGroupActions @Inject constructor(
         service
             .leaveGroup(tokenHolder.session, id)
             .flatMapCompletable {
-                if(it.statusCode == 0) {
+                if (it.statusCode == 0) {
                     Completable.complete()
                 } else {
                     Completable.error(GroupLeaveException(it.statusCode))

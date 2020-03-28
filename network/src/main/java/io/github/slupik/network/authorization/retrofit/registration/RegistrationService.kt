@@ -16,7 +16,7 @@ import retrofit2.http.Header
  */
 interface RegistrationService {
 
-    @GET("temp")
+    @GET("api/register")
     fun register(
         @Header("login") login: String,
         @Header("password") password: String,

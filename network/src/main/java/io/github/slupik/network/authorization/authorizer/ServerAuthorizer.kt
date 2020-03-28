@@ -22,21 +22,24 @@ import javax.inject.Inject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
+
+const val TOKEN_PREFIX = "Bearer "
+
 class ServerAuthorizer @Inject constructor(
     private val service: AuthorizationService,
     private val saver: CredentialSaver,
     private val tokenHolder: TokenHolder,
     private val statePublisher: AuthorizationStatePublisher,
     private val converter: ResponseConverter<AuthorizationResponse, AuthorizationResult>
-): Authorizer {
+) : Authorizer {
 
     override fun logIn(login: String, password: String): Single<AuthorizationResult> =
         try {
             service.authorize(login, password)
                 .doOnSuccess { response ->
-                    if(response.token.isNotEmpty()) {
+                    if (response.token.isNotEmpty()) {
                         saver.save(login, password)
-                        tokenHolder.session = response.token
+                        tokenHolder.session = TOKEN_PREFIX + response.token
                         statePublisher.onNewState(AuthorizationState.LOGGED_IN)
                     }
                 }

@@ -30,11 +30,12 @@ class LoginFragment : FragmentWithViewModel<LoginViewModel>(), GraphController {
 
     override fun onViewModelCreated(viewModel: LoginViewModel) {
         super.onViewModelCreated(viewModel)
+        setupView()
+
         appDepInComponent.inject(this)
         viewLogic.inject(internalViewModel)
         viewLogic.inject(this)
         internalViewModel.setLogic(viewLogic)
-        setupView()
     }
 
     private fun setupView() {

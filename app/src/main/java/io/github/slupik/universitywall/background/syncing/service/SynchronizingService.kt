@@ -14,8 +14,10 @@ import io.github.slupik.model.message.MessagesSynchronizer
 import io.github.slupik.universitywall.MainActivity
 import io.github.slupik.universitywall.background.syncing.dagger.ContextModule
 import io.github.slupik.universitywall.background.syncing.dagger.DaggerBackgroundSyncingComponent
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
@@ -39,12 +41,16 @@ class SynchronizingService : Service() {
 
     private var disposed: Disposable? = null
 
+    private var workStarted: Boolean = false
+
     private val timer: Timer = Timer()
     private val timerTask: TimerTask = object : TimerTask() {
         override fun run() {
             disposed?.apply { dispose() }
             disposed = synchronizer
                 .refresh()
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribeOn(Schedulers.io())
                 .subscribeBy(
                     onSuccess = {
                         if (it.isNotEmpty()) {
@@ -59,15 +65,19 @@ class SynchronizingService : Service() {
     }
 
     override fun onStart(intent: Intent?, startid: Int) {
-        makeAsForegroundService()
+        if (!workStarted) {
+            makeAsForegroundService()
 
-        DaggerBackgroundSyncingComponent
-            .builder()
-            .contextModule(ContextModule(applicationContext))
-            .build()
-            .inject(this)
+            DaggerBackgroundSyncingComponent
+                .builder()
+                .contextModule(ContextModule(applicationContext))
+                .build()
+                .inject(this)
 
-        timer.schedule(timerTask, 0, SYNC_TIME)
+            timer.schedule(timerTask, 0, SYNC_TIME)
+
+            workStarted = true
+        }
     }
 
     private fun makeAsForegroundService() {

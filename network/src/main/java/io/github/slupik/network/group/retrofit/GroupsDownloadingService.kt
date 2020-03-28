@@ -21,7 +21,7 @@ interface GroupsDownloadingService {
     @Headers(
         "User-Agent: UniversityWall"
     )
-    @GET("groups")
-    fun getGroups(@Header("token") token: String): Single<GroupListResponse>
+    @GET("api/grouplist")
+    fun getGroups(@Header("Authorization") token: String): Single<GroupListResponse>
 
 }

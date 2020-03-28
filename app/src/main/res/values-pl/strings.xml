@@ -42,7 +42,7 @@
     <string name="registration_form_name">Nazwa wyświetlana</string>
     <string name="registration_form_password">Hasło</string>
     <string name="registration_form_password_repeat">Potwórz hasło</string>
-    <string name="registration_form_button">Zarejestrój</string>
+    <string name="registration_form_button">Zarejestruj</string>
     <string name="register_back_to_login">Wróć</string>
 
     <string name="registration_error_title">Błąd</string>

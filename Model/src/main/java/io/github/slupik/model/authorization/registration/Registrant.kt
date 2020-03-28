@@ -12,7 +12,7 @@ import io.reactivex.Single
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-interface Registrar {
+interface Registrant {
 
     fun register(login: String, password: String, displayName: String): Single<RegistrationResult>
 

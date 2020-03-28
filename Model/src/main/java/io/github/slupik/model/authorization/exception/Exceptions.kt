@@ -10,6 +10,6 @@ package io.github.slupik.model.authorization.exception
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class UserNotLoggedInException: Exception("User is not logged in.")
+class UserNotLoggedInException : Exception("User is not logged in.")
 
-class CreadentialsExpiredException: Exception("Credentials expired.")
+class CreadentialsExpiredException : Exception("Credentials expired.")

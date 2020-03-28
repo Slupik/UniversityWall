@@ -10,7 +10,7 @@ package io.github.slupik.model.group
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-data class Group (
+data class Group(
     val id: Int,
     val name: String,
     val owner: String

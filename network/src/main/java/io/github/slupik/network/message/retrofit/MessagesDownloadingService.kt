@@ -21,7 +21,7 @@ interface MessagesDownloadingService {
     @Headers(
         "User-Agent: UniversityWall"
     )
-    @GET("messages")
-    fun getMessages(@Header("token") token: String): Single<MessageListResponse>
+    @GET("api/messagelist")
+    fun getMessages(@Header("Authorization") token: String): Single<MessageListResponse>
 
 }

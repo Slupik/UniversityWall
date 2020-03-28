@@ -24,7 +24,7 @@ public class BarcodeGraphic extends GraphicOverlay.Graphic {
 
     private int mId;
 
-    private static final int COLOR_CHOICES[] = {
+    private static final int[] COLOR_CHOICES = {
             Color.BLUE,
             Color.CYAN,
             Color.GREEN

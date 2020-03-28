@@ -10,4 +10,4 @@ package io.github.slupik.network.error
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-class InvalidTokenException: ConnectionException()
+class InvalidTokenException : ConnectionException()

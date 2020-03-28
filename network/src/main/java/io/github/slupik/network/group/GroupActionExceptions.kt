@@ -12,12 +12,12 @@ package io.github.slupik.network.group
  */
 abstract class GroupActionException(
     message: String
-): Exception(message)
+) : Exception(message)
 
 class GroupJoinException(
     code: Int
-): GroupActionException("Error during try of joining to group. Id of the error: $code")
+) : GroupActionException("Error during try of joining to group. Id of the error: $code")
 
 class GroupLeaveException(
     code: Int
-): GroupActionException("Error during try of leaving of group. Id of the error: $code")
+) : GroupActionException("Error during try of leaving of group. Id of the error: $code")

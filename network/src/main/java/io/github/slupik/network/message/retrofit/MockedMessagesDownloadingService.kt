@@ -11,6 +11,7 @@ import io.reactivex.Single
 import org.threeten.bp.OffsetDateTime
 import org.threeten.bp.format.DateTimeFormatter
 import java.util.concurrent.TimeUnit
+import kotlin.random.Random
 
 /**
  * Created by Sebastian Witasik on 10.12.2019.
@@ -37,7 +38,8 @@ class MockedMessagesDownloadingService : MessagesDownloadingService {
             MessageListResponse(
                 errorCode = 0,
                 list = listOf(
-                    getMessage(0)
+                    getMessage(Random.nextInt(0, 5)),
+                    getMessage(Random.nextInt(0, 5))
                 )
             )
         ).delay(3, TimeUnit.SECONDS)

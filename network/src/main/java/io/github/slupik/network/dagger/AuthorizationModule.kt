@@ -9,14 +9,14 @@ import dagger.Binds
 import dagger.Module
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
-import io.github.slupik.model.authorization.registration.Registrar
+import io.github.slupik.model.authorization.registration.Registrant
 import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.github.slupik.model.authorization.state.AuthorizationStateProvider
 import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.ServerAuthorizationStateProvider
 import io.github.slupik.network.authorization.authorizer.ServerAuthorizer
-import io.github.slupik.network.authorization.registrar.ServerAwareRegistrar
+import io.github.slupik.network.authorization.registrar.ServerAwareRegistrant
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponse
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponseConverter
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponse
@@ -41,8 +41,8 @@ abstract class AuthorizationModule {
             ResponseConverter<AuthorizationResponse, AuthorizationResult>
 
     @Binds
-    abstract fun provideRegistrar(registrar: ServerAwareRegistrar):
-            Registrar
+    abstract fun provideRegistrar(registrar: ServerAwareRegistrant):
+            Registrant
 
     @Binds
     abstract fun registrationResponseConverter(converter: RegistrationResponseConverter):

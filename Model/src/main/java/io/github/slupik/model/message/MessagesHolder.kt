@@ -35,7 +35,7 @@ class MessagesHolder @Inject constructor(
         synchronizer
             .refresh()
             .ignoreElement()
-            .andThen(Completable.defer{
+            .andThen(Completable.defer {
                 repository
                     .getAll()
                     .doOnSuccess {

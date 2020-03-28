@@ -29,16 +29,16 @@ class MessageConverter @Inject constructor() : Converter<Message, MessageEntity>
             content = input.content,
             author = input.author,
             group = input.group,
-            postedTime = DateTimeConverter.fromOffsetDateTime(input.postedTime)?: "",
-            expirationTime = DateTimeConverter.fromOffsetDateTime(input.expirationTime)?: "",
-            beginningTime = DateTimeConverter.fromOffsetDateTime(input.beginningTime)?: "",
-            endingTime = DateTimeConverter.fromOffsetDateTime(input.endingTime)?: "",
+            postedTime = DateTimeConverter.fromOffsetDateTime(input.postedTime) ?: "",
+            expirationTime = DateTimeConverter.fromOffsetDateTime(input.expirationTime) ?: "",
+            beginningTime = DateTimeConverter.fromOffsetDateTime(input.beginningTime) ?: "",
+            endingTime = DateTimeConverter.fromOffsetDateTime(input.endingTime) ?: "",
             attachmentName = input.attachmentName,
             attachmentUrl = input.attachmentUrl
         )
 
     private fun getMessageCode(type: MessageType): Int =
-        when(type) {
+        when (type) {
             MessageType.TEST -> MESSAGE_TYPE_TEST
             MessageType.INFO -> MESSAGE_TYPE_INFO
             MessageType.CANCELED_CLASSES -> MESSAGE_TYPE_CANCELED_CLASSES

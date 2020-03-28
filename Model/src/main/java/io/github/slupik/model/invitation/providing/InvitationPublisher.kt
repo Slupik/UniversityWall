@@ -17,7 +17,7 @@ import javax.inject.Singleton
  * All rights reserved & copyright ©
  */
 @Singleton
-class InvitationPublisher @Inject constructor(): InvitationBroadcaster, InvitationEmitter {
+class InvitationPublisher @Inject constructor() : InvitationBroadcaster, InvitationEmitter {
 
     private val publisherOfDetected: PublishSubject<Invitation> = PublishSubject.create()
     private val publisherOfAccepted: PublishSubject<Invitation> = PublishSubject.create()

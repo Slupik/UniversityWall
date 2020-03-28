@@ -15,15 +15,16 @@ import javax.inject.Inject
  * E-mail: SebastianWitasik@gmail.com
  * All rights reserved & copyright ©
  */
-private val PATTERN = Regex("universitywall_invite_[0-1].{0,163}([A-Z]|[0-9]){64}")
 private const val HASH_LENGTH = 64
-private const val DOMAIN = "https://coolapp.com/join/"
+private const val INVITATION_PREFIX = "universitywall_invite_";
+private val PATTERN = Regex("$INVITATION_PREFIX[0-1].{0,163}([A-Z]|[0-9]){$HASH_LENGTH}")
+private const val URL_PATH = "https://coolapp.com/join/"
 
 class HashInvitationFactory @Inject constructor() :
     InvitationFactory {
 
     override fun create(raw: String): Single<Invitation> =
-        if(PATTERN.matches(raw)) {
+        if (PATTERN.matches(raw)) {
 
             val type = getInvitationType(raw) ?: throw Exception("Type can't be a null")
             val link = getLink(raw)
@@ -41,18 +42,18 @@ class HashInvitationFactory @Inject constructor() :
         }
 
     private fun getDescription(raw: String): String {
-        val start = "universitywall_invite_".length+1
-        return raw.substring(start, raw.length- HASH_LENGTH)
+        val start = INVITATION_PREFIX.length + 1
+        return raw.substring(start, raw.length - HASH_LENGTH)
     }
 
     private fun getLink(raw: String): String {
-        val hash = raw.substring(raw.length- HASH_LENGTH, raw.length)
-        return DOMAIN +hash
+        val hash = raw.substring(raw.length - HASH_LENGTH, raw.length)
+        return URL_PATH + hash
     }
 
     private fun getInvitationType(raw: String): InvitationType? {
-        val start = "universitywall_invite_".length
-        return when(raw.substring(start, start+1)) {
+        val start = INVITATION_PREFIX.length
+        return when (raw.substring(start, start + 1)) {
             "0" -> InvitationType.INFINITE
             "1" -> InvitationType.SINGLE
             else -> null
