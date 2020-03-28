@@ -5,7 +5,6 @@
 
 package io.github.slupik.universitywall.screen.group
 
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
@@ -14,16 +13,15 @@ import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.GroupsFragmentBinding
-import io.github.slupik.universitywall.fragment.FragmentWithViewModel
+import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController {
+class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBinding>(), GraphController {
 
-    private lateinit var binding: GroupsFragmentBinding
     private lateinit var adapter: GroupsAdapter
 
     @Inject
@@ -48,12 +46,8 @@ class GroupsFragment : FragmentWithViewModel<GroupsViewModel>(), GraphController
     override fun getFragmentClass(): KClass<GroupsViewModel> =
         GroupsViewModel::class
 
-    override fun bindModelToView() {
-        binding = DataBindingUtil.setContentView(activity!!, getLayoutId())
+    override fun bindViewModel() {
         binding.viewmodel = internalViewModel
-        binding.setLifecycleOwner {
-            viewLifecycleOwner.lifecycle
-        }
     }
 
     override fun onViewModelCreated(viewModel: GroupsViewModel) {

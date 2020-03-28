@@ -5,7 +5,6 @@
 
 package io.github.slupik.universitywall.screen.messages
 
-import androidx.databinding.DataBindingUtil
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
@@ -13,7 +12,7 @@ import io.github.slupik.model.message.Message
 import io.github.slupik.model.message.MessagesProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
-import io.github.slupik.universitywall.fragment.FragmentWithViewModel
+import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
@@ -21,9 +20,8 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class MessagesFragment : FragmentWithViewModel<MessagesViewModel>(), GraphController {
+class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFragmentBinding>(), GraphController {
 
-    private lateinit var binding: MessagesFragmentBinding
     private lateinit var adapter: MessagesAdapter
 
     @Inject
@@ -45,12 +43,8 @@ class MessagesFragment : FragmentWithViewModel<MessagesViewModel>(), GraphContro
     override fun getFragmentClass(): KClass<MessagesViewModel> =
         MessagesViewModel::class
 
-    override fun bindModelToView() {
-        binding = DataBindingUtil.setContentView(activity!!, getLayoutId())
+    override fun bindViewModel() {
         binding.viewmodel = internalViewModel
-        binding.setLifecycleOwner {
-            viewLifecycleOwner.lifecycle
-        }
     }
 
     override fun onViewModelCreated(viewModel: MessagesViewModel) {

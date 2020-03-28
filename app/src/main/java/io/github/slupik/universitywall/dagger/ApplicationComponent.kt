@@ -11,6 +11,7 @@ import io.github.slupik.network.dagger.NetworkModule
 import io.github.slupik.repository.dagger.RepositoryModule
 import io.github.slupik.universitywall.MainActivity
 import io.github.slupik.universitywall.screen.login.LoginFragment
+import io.github.slupik.universitywall.screen.login.LoginViewModel
 import io.github.slupik.universitywall.screen.messages.MessagesFragment
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.QrCodeScannerFragment
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
@@ -29,11 +30,14 @@ import javax.inject.Singleton
         ContextModule::class,
         InvitationModule::class,
         MessagesModule::class,
-        GroupsModule::class
+        GroupsModule::class,
+        AssistedInjectModule::class
     ]
 )
 @Singleton
 interface ApplicationComponent {
+
+    val loginViewModelFactory: LoginViewModel.Factory
 
     fun plus(subModule: ActivityModule): ActivitySubcomponent
 
