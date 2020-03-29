@@ -37,29 +37,28 @@ dependencies {
 
     implementation project(':Model')
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    implementation(Deps.kotlinJdk8)
 
-    api 'com.squareup.retrofit2:retrofit:2.6.2'
-    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
-    implementation 'com.squareup.retrofit2:adapter-rxjava2:2.6.2'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
-    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.15'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxkotlin
-    implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.4.0'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
-    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
-    // https://mvnrepository.com/artifact/com.google.dagger/dagger
-    api 'com.google.dagger:dagger-android:2.25.2'
-    api 'com.google.dagger:dagger-android-support:2.25.2' // if you use the support libraries
-    api 'com.google.dagger:dagger:2.25.2'
-    kapt 'com.google.dagger:dagger-compiler:2.25.2'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.25.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
+    api(Deps.retrofit)
+    implementation(Deps.retrofitConverter)
+    implementation(Deps.retrofitRx)
 
-    implementation 'org.threeten:threetenbp:1.4.0'
+    implementation(Deps.rxjava)
+    implementation(Deps.rxkotlin)
+    implementation(Deps.rxandroid)
 
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation(Deps.threetenbp)
+
+    api(Deps.dagger)
+    api(Deps.daggerAndroid)
+    api(Deps.daggerAndroidSupport)
+    annotationProcessor(Deps.daggerAndroidProcessor)
+    annotationProcessor(Deps.daggerCompiler)
+    kapt(Deps.daggerCompiler)
+
+    implementation(Deps.androidxAppcompat)
+
+    testImplementation(Deps.junit4)
+    androidTestImplementation(Deps.androidxTestRunner)
+    androidTestImplementation(Deps.espresso)
 }

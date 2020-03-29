@@ -38,41 +38,31 @@ dependencies {
 
     implementation project(':Model')
 
+    implementation(Deps.kotlinJdk7)
 
-    def room_version = "2.2.2"
+    implementation(Deps.rxjava)
+    implementation(Deps.rxkotlin)
+    implementation(Deps.rxandroid)
 
-    api "androidx.room:room-runtime:$room_version"
-    kapt "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    implementation(Deps.threetenbp)
 
-    // optional - Kotlin Extensions and Coroutines support for Room
-    implementation "androidx.room:room-ktx:$room_version"
+    api(Deps.dagger)
+    api(Deps.daggerAndroid)
+    api(Deps.daggerAndroidSupport)
+    annotationProcessor(Deps.daggerAndroidProcessor)
+    annotationProcessor(Deps.daggerCompiler)
+    kapt(Deps.daggerCompiler)
 
-    // optional - RxJava support for Room
-    implementation "androidx.room:room-rxjava2:$room_version"
+    api(Deps.roomRuntime)
+    kapt(Deps.roomCompiler)
+    implementation(Deps.roomKtx)
+    implementation(Deps.roomRx)
 
-    // Test helpers
-    testImplementation "androidx.room:room-testing:$room_version"
+    implementation(Deps.androidxAppcompat)
+    implementation(Deps.androidxKtx)
 
-    implementation 'org.threeten:threetenbp:1.4.0'
-
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
-    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.15'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxkotlin
-    implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.4.0'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
-    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
-    // https://mvnrepository.com/artifact/com.google.dagger/dagger
-    api 'com.google.dagger:dagger-android:2.25.2'
-    api 'com.google.dagger:dagger-android-support:2.25.2' // if you use the support libraries
-    api 'com.google.dagger:dagger:2.25.2'
-    kapt 'com.google.dagger:dagger-compiler:2.25.2'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.25.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    testImplementation(Deps.junit4)
+    testImplementation(Deps.androidxJunit)
+    androidTestImplementation(Deps.espresso)
+    testImplementation(Deps.roomTesting)
 }
