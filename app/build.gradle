@@ -1,44 +1,46 @@
-apply plugin: 'com.android.application'
+apply plugin: "com.android.application"
 
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: "kotlin-android"
+apply plugin: "kotlin-android-extensions"
+apply plugin: "kotlin-kapt"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    compileSdkVersion 28
+    compileSdkVersion(AppConfig.compileSdk)
     defaultConfig {
-        applicationId "io.github.slupik.universitywall"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        minSdkVersion(AppConfig.minSdk)
+        targetSdkVersion(AppConfig.targetSdk)
+        versionCode = AppConfig.versionCode
+        versionName = AppConfig.versionName
+
+        applicationId = AppConfig.appId
+
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
         release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            minifyEnabled = false
+            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
         }
     }
     dataBinding {
         enabled = true
     }
     kapt {
-        correctErrorTypes true
+        correctErrorTypes = true
     }
     compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        sourceCompatibility = "1.8"
+        targetCompatibility = "1.8"
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation(fileTree(dir: "libs", include: ["*.jar"]))
 
-    implementation project(':Model')
-    implementation project(':network')
-    implementation project(':repository')
+    implementation(project(":Model"))
+    implementation(project(":network"))
+    implementation(project(":repository"))
 
     implementation(Deps.kotlinJdk7)
     implementation(Deps.kotlinReflect)
