@@ -24,6 +24,7 @@ object Versions {
     PLATFORM AGNOSTIC
      */
     const val gradle = "3.6.1"
+    const val gradlePlugin = "1.3.61"
     const val kotlin = "1.3.61"
     const val rxjava = "2.2.19" // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
     const val rxkotlin = "2.4.0" // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxkotlin
@@ -49,6 +50,7 @@ object Deps {
     PLUGINS, BUILDERS etc.
      */
     const val gradle = "com.android.tools.build:gradle:${Versions.gradle}"
+    const val gradlePlugin = "gradle-plugin:${Versions.gradlePlugin}"
     const val kotlinGradlePlugin = "org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlin}"
     const val allOpenPlugin = "org.jetbrains.kotlin:kotlin-allopen:${Versions.kotlin}"
     const val androidxNavigationPlugin = "androidx.navigation:navigation-safe-args-gradle-plugin:${Versions.androidxNavigation}"
@@ -93,7 +95,6 @@ object Deps {
     PLATFORM AGNOSTIC
      */
     // kotlin
-    const val kotlinJdk7 = "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${Versions.kotlin}"
     const val kotlinJdk8 = "org.jetbrains.kotlin:kotlin-stdlib-jdk8:${Versions.kotlin}"
     const val kotlinReflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlin}"
     // rx

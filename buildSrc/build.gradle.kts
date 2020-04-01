@@ -5,8 +5,28 @@
 
 plugins {
     `kotlin-dsl`
+    `java`
+    `java-gradle-plugin`
+}
+
+gradlePlugin {
+    plugins {
+        register("baseAndroidPlugin") {
+            id = "base-android-plugin"
+            implementationClass = "BaseAndroidPlugin"
+        }
+    }
 }
 
 repositories {
     jcenter()
+    google()
+}
+
+dependencies {
+    compileOnly(gradleApi())
+
+    implementation("com.android.tools.build:gradle:3.6.1")
+    implementation(kotlin("gradle-plugin", "1.3.50"))
+    implementation(kotlin("android-extensions"))
 }

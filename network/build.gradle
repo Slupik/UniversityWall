@@ -4,58 +4,14 @@
  */
 
 apply plugin: "com.android.library"
-apply plugin: "kotlin-android"
-apply plugin: "kotlin-android-extensions"
-apply plugin: "kotlin-kapt"
-
-android {
-    compileSdkVersion(AppConfig.compileSdk)
-    defaultConfig {
-        minSdkVersion(AppConfig.minSdk)
-        targetSdkVersion(AppConfig.targetSdk)
-        versionCode = AppConfig.versionCode
-        versionName = AppConfig.versionName
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-
-    }
-
-    buildTypes {
-        release {
-            minifyEnabled = false
-            proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
-        }
-    }
-
-}
+apply plugin: "base-android-plugin"
 
 dependencies {
-    implementation(fileTree(dir: "libs", include: ["*.jar"]))
-
-    implementation(project(":Model"))
-
-    implementation(Deps.kotlinJdk8)
-
     api(Deps.retrofit)
     implementation(Deps.retrofitConverter)
     implementation(Deps.retrofitRx)
 
-    implementation(Deps.rxjava)
-    implementation(Deps.rxkotlin)
-    implementation(Deps.rxandroid)
-
     implementation(Deps.threetenbp)
 
-    api(Deps.dagger)
-    api(Deps.daggerAndroid)
-    api(Deps.daggerAndroidSupport)
-    annotationProcessor(Deps.daggerAndroidProcessor)
-    annotationProcessor(Deps.daggerCompiler)
-    kapt(Deps.daggerCompiler)
-
-    implementation(Deps.androidxAppcompat)
-
-    testImplementation(Deps.junit4)
     androidTestImplementation(Deps.androidxTestRunner)
-    androidTestImplementation(Deps.espresso)
 }
