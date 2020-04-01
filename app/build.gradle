@@ -1,107 +1,49 @@
-apply plugin: 'com.android.application'
+apply plugin: "com.android.application"
 
-apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-kapt'
-apply plugin: 'kotlin-android-extensions'
-apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: "base-android-plugin"
+apply plugin: "androidx.navigation.safeargs.kotlin"
 
 android {
-    compileSdkVersion 28
     defaultConfig {
-        applicationId "io.github.slupik.universitywall"
-        minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 1
-        versionName "1.0"
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
-        }
+        applicationId = AppConfig.appId
     }
     dataBinding {
         enabled = true
     }
     kapt {
-        correctErrorTypes true
-    }
-    compileOptions {
-        sourceCompatibility = '1.8'
-        targetCompatibility = '1.8'
+        correctErrorTypes = true
     }
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
+    implementation(project(":network"))
+    implementation(project(":repository"))
 
-    implementation project(':Model')
-    implementation project(':network')
-    implementation project(':repository')
+    implementation(Deps.kotlinReflect)
 
-    implementation 'com.android.support:appcompat-v7:28.0.0'
-//    implementation 'com.google.android.gms:play-services:7.8+'
+    implementation(Deps.threetenbp)
 
-    implementation 'com.google.android.gms:play-services-vision:9.4.0+'
-//    compile 'com.android.support:design:24.2.0'
+    implementation(Deps.assistedInjectAnnotations)
+    kapt(Deps.assistedInjectProcessor)
 
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxjava
-    implementation group: 'io.reactivex.rxjava2', name: 'rxjava', version: '2.2.15'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxkotlin
-    implementation group: 'io.reactivex.rxjava2', name: 'rxkotlin', version: '2.4.0'
-    // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
-    implementation group: 'io.reactivex.rxjava2', name: 'rxandroid', version: '2.1.1'
-    // https://mvnrepository.com/artifact/com.google.dagger/dagger
-    api 'com.google.dagger:dagger-android:2.25.2'
-    api 'com.google.dagger:dagger-android-support:2.25.2' // if you use the support libraries
-    api 'com.google.dagger:dagger:2.25.2'
-    kapt 'com.google.dagger:dagger-compiler:2.25.2'
-    annotationProcessor 'com.google.dagger:dagger-android-processor:2.25.2'
-    annotationProcessor 'com.google.dagger:dagger-compiler:2.25.2'
-    implementation 'com.squareup.inject:assisted-inject-annotations-dagger2:0.5.2'
-    kapt 'com.squareup.inject:assisted-inject-processor-dagger2:0.5.2'
+    implementation(Deps.material)
+    implementation(Deps.appcompat7)
+    implementation(Deps.playVision)
 
-    implementation 'org.threeten:threetenbp:1.4.0'
+    implementation(Deps.androidxNavigationFragment)
+    implementation(Deps.androidxNavigationUi)
+    implementation(Deps.androidxFragmentKtx)
+    implementation(Deps.androidxAppcompat)
+    implementation(Deps.androidxKtx)
+    implementation(Deps.androidxConstraintLayout)
+    implementation(Deps.androidxLegacySupport)
+    implementation(Deps.androidxWorkRuntime)
+    implementation(Deps.rxAndroidxWorkRuntime)
 
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+    implementation(Deps.lifecycleExtension)
+    implementation(Deps.lifecycleLiveData)
+    implementation(Deps.lifecycleViewModel)
 
-// https://mvnrepository.com/artifact/com.google.android.material/material
-    compile group: 'com.google.android.material', name: 'material', version: '1.0.0'
-
-
-    implementation 'org.threeten:threetenbp:1.4.0'
-
-
-    def work_version = "2.2.0"
-    // Kotlin + coroutines
-    implementation "androidx.work:work-runtime-ktx:$work_version"
-    // optional - RxJava2 support
-    implementation "androidx.work:work-rxjava2:$work_version"
-//    // optional - GCMNetworkManager support
-//    implementation "androidx.work:work-gcm:$work_version"
-    // optional - Test helpers
-    androidTestImplementation "androidx.work:work-testing:$work_version"
-
-
-
-    def nav_version = "2.1.0"
-    implementation "androidx.navigation:navigation-fragment-ktx:$nav_version"
-    implementation "androidx.navigation:navigation-ui-ktx:$nav_version"
-    implementation "androidx.fragment:fragment-ktx:1.2.0-rc03"
-
-    implementation 'androidx.appcompat:appcompat:1.1.0'
-    implementation 'androidx.core:core-ktx:1.1.0'
-    implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
-
-    implementation "androidx.lifecycle:lifecycle-extensions:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.1.0"
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.1.0"
-
-    testImplementation 'junit:junit:4.12'
-    androidTestImplementation 'androidx.test:runner:1.2.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.android.material:material:1.0.0'
-    implementation "org.jetbrains.kotlin:kotlin-reflect:1.3.61"
+    androidTestImplementation(Deps.androidxTestRunner)
+    androidTestImplementation(Deps.androidxWorkTesting)
 }
