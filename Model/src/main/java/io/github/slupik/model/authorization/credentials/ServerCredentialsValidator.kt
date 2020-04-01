@@ -5,6 +5,9 @@
 
 package io.github.slupik.model.authorization.credentials
 
+import io.github.slupik.model.authorization.DISPLAY_NAME_MIN_LENGTH
+import io.github.slupik.model.authorization.LOGIN_MIN_LENGTH
+import io.github.slupik.model.authorization.PASSWORD_MIN_LENGTH
 import javax.inject.Inject
 
 /**
@@ -15,9 +18,12 @@ import javax.inject.Inject
 class ServerCredentialsValidator @Inject constructor() : CredentialsValidator {
 
     override fun isValidLogin(login: String?): Boolean =
-        login.isNullOrBlank().not()
+        login != null && login.length >= LOGIN_MIN_LENGTH
 
     override fun isValidPassword(password: String?): Boolean =
-        password != null && password.length >= 4
+        password != null && password.length >= PASSWORD_MIN_LENGTH
+
+    override fun isValidDisplayName(displayName: String?): Boolean =
+        displayName != null && displayName.length >= DISPLAY_NAME_MIN_LENGTH
 
 }

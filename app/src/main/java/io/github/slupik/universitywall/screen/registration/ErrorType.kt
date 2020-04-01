@@ -13,9 +13,10 @@ package io.github.slupik.universitywall.screen.registration
 enum class ErrorType {
     CONNECTION_ERROR,
     LOGIN_ALREADY_EXISTS,
-    INVALID_PASSWORD,
+    WRONG_PASSWORD,
     PASSWORD_NOT_MEETS_CRITERIA,
-    INVALID_DISPLAY_NAME,
+    DISPLAY_NAME_TOO_SHORT,
     DIFFERENT_PASSWORDS,
     EMPTY_FIELD,
+    LOGIN_TOO_SHORT
 }

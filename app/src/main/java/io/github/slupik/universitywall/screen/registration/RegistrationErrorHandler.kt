@@ -5,8 +5,6 @@
 
 package io.github.slupik.universitywall.screen.registration
 
-import androidx.fragment.app.FragmentActivity
-
 /**
  * Created by Sebastian Witasik on 11.12.2019.
  * E-mail: SebastianWitasik@gmail.com
@@ -15,11 +13,5 @@ import androidx.fragment.app.FragmentActivity
 interface RegistrationErrorHandler {
 
     fun onError(type: ErrorType)
-
-    fun onConnectionError()
-    fun onLoginAlreadyExists()
-    fun onInappropriatePassword()
-    fun onDifferentPasswords()
-    fun onEmptyFields(activity: FragmentActivity)
 
 }

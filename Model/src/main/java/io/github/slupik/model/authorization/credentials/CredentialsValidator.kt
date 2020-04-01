@@ -16,4 +16,6 @@ interface CredentialsValidator {
 
     fun isValidPassword(password: String?): Boolean
 
+    fun isValidDisplayName(displayName: String?): Boolean
+
 }

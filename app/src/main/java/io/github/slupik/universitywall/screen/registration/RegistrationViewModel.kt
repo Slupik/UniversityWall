@@ -2,6 +2,7 @@ package io.github.slupik.universitywall.screen.registration
 
 import androidx.lifecycle.MutableLiveData
 import com.squareup.inject.assisted.AssistedInject
+import io.github.slupik.model.authorization.credentials.CredentialsValidator
 import io.github.slupik.model.authorization.registration.Registrant
 import io.github.slupik.model.authorization.registration.RegistrationResult
 import io.github.slupik.model.utils.subscribeOnIOThread
@@ -10,7 +11,8 @@ import io.github.slupik.universitywall.viewmodel.ViewModel
 import io.reactivex.rxkotlin.subscribeBy
 
 class RegistrationViewModel @AssistedInject constructor(
-    private val registrant: Registrant
+    private val registrant: Registrant,
+    private val validator: CredentialsValidator
 ) : ViewModel() {
 
     val login: MutableLiveData<String> by lazy {
@@ -44,12 +46,7 @@ class RegistrationViewModel @AssistedInject constructor(
     }
 
     fun onRegister() {
-        if (isAtLeastOneFieldEmpty()) {
-            errorType.postValue(ErrorType.EMPTY_FIELD)
-            return
-        }
-        if (password.value != repeatedPassword.value) {
-            errorType.postValue(ErrorType.DIFFERENT_PASSWORDS)
+        if (parametersNotValid()) {
             return
         }
 
@@ -62,23 +59,39 @@ class RegistrationViewModel @AssistedInject constructor(
         )
             .subscribeOnIOThread()
             .observeOnMainThread()
+            .doFinally { viewState.postValue(StartViewState()) }
             .subscribeBy(
-                onSuccess = {
-                    when (it) {
-                        RegistrationResult.CONNECTION_ERROR ->
-                            errorType.postValue(ErrorType.CONNECTION_ERROR)
-                        RegistrationResult.INVALID_LOGIN ->
-                            errorType.postValue(ErrorType.LOGIN_ALREADY_EXISTS)
-                        RegistrationResult.SUCCESS ->
-                            navigation.postValue(NavigationCommand.MESSAGES_SCREEN)
-                    }
-                    //TODO check is this necessary
-//                    viewState.postValue(StartViewState())
-                },
-                onError = {
-                    errorType.postValue(ErrorType.CONNECTION_ERROR)
-                }
+                onSuccess = { handleRegistrationResult(it) },
+                onError = { errorType.postValue(ErrorType.CONNECTION_ERROR) }
             ).remember()
+    }
+
+    private fun handleRegistrationResult(result: RegistrationResult) {
+        when (result) {
+            RegistrationResult.CONNECTION_ERROR ->
+                errorType.postValue(ErrorType.CONNECTION_ERROR)
+            RegistrationResult.INVALID_LOGIN ->
+                errorType.postValue(ErrorType.LOGIN_ALREADY_EXISTS)
+            RegistrationResult.SUCCESS ->
+                navigation.postValue(NavigationCommand.MESSAGES_SCREEN)
+        }
+    }
+
+    private fun parametersNotValid(): Boolean {
+        when {
+            isAtLeastOneFieldEmpty() ->
+                errorType.postValue(ErrorType.EMPTY_FIELD)
+            validator.isValidLogin(login.value).not() ->
+                errorType.postValue(ErrorType.LOGIN_TOO_SHORT)
+            validator.isValidDisplayName(displayName.value).not() ->
+                errorType.postValue(ErrorType.DISPLAY_NAME_TOO_SHORT)
+            validator.isValidPassword(password.value).not() ->
+                errorType.postValue(ErrorType.PASSWORD_NOT_MEETS_CRITERIA)
+            password.value != repeatedPassword.value ->
+                errorType.postValue(ErrorType.DIFFERENT_PASSWORDS)
+            else -> return false
+        }
+        return true
     }
 
     private fun isAtLeastOneFieldEmpty(): Boolean =
