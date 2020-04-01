@@ -14,6 +14,8 @@ import androidx.fragment.app.FragmentActivity
  */
 interface RegistrationErrorHandler {
 
+    fun onError(type: ErrorType)
+
     fun onConnectionError()
     fun onLoginAlreadyExists()
     fun onInappropriatePassword()

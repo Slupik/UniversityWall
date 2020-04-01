@@ -5,6 +5,9 @@
 
 package io.github.slupik.network.authorization.registrar
 
+import io.github.slupik.model.authorization.INVALID_DISPLAY_NAME
+import io.github.slupik.model.authorization.INVALID_LOGIN
+import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.model.authorization.registration.Registrant
 import io.github.slupik.model.authorization.registration.RegistrationResult
@@ -32,6 +35,17 @@ class ServerAwareRegistrant @Inject constructor(
 ) : Registrant {
 
     override fun register(
+        login: String?,
+        password: String?,
+        displayName: String?
+    ): Single<RegistrationResult> =
+        executeRegister(
+            login ?: INVALID_LOGIN,
+            password ?: INVALID_PASSWORD,
+            displayName ?: INVALID_DISPLAY_NAME
+        )
+
+    private fun executeRegister(
         login: String,
         password: String,
         displayName: String

@@ -20,6 +20,10 @@ class DialogedRegistrationErrorHandler @Inject constructor(
     private val activity: FragmentActivity
 ) : RegistrationErrorHandler {
 
+    override fun onError(type: ErrorType) {
+        TODO("Implement!")
+    }
+
     override fun onConnectionError() {
         showErrorInfo(
             R.string.registration_error_title,

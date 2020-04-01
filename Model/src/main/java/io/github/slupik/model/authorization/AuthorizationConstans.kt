@@ -12,4 +12,5 @@ package io.github.slupik.model.authorization
  */
 const val INVALID_LOGIN: String = ""
 const val INVALID_PASSWORD: String = ""
+const val INVALID_DISPLAY_NAME: String = ""
 const val INVALID_SESSION_TOKEN: String = ""

@@ -7,8 +7,6 @@ package io.github.slupik.universitywall.screen.login
 
 import androidx.lifecycle.MutableLiveData
 import com.squareup.inject.assisted.AssistedInject
-import io.github.slupik.model.authorization.INVALID_LOGIN
-import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
 import io.github.slupik.model.authorization.credentials.CredentialsValidator
@@ -52,8 +50,8 @@ class LoginViewModel @AssistedInject constructor(
         viewState.postValue(LoadingDataViewState())
 
         authorizer.logIn(
-            login.value ?: INVALID_LOGIN,
-            password.value ?: INVALID_PASSWORD
+            login.value,
+            password.value
         )
             .subscribeOnIOThread()
             .observeOnMainThread()
