@@ -12,6 +12,7 @@ package io.github.slupik.model.authorization.registration
  */
 enum class RegistrationResult {
     INVALID_LOGIN,
+    INVALID_PASSWORD,
     SUCCESS,
     CONNECTION_ERROR
 }

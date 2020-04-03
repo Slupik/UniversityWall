@@ -21,6 +21,9 @@ class RegistrationResponseConverter @Inject constructor() :
         if (!response.validLogin) {
             return RegistrationResult.INVALID_LOGIN
         }
+        if (!response.validPassword) {
+            return RegistrationResult.INVALID_PASSWORD
+        }
         if (response.token.isEmpty()) {
             return RegistrationResult.CONNECTION_ERROR
         }
