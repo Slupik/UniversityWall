@@ -21,6 +21,8 @@ import io.github.slupik.network.authorization.retrofit.authorization.Authorizati
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponseConverter
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponse
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponseConverter
+import io.github.slupik.network.authorization.token.AuthorizationResponseHandler
+import io.github.slupik.network.authorization.token.ServerAuthorizationResponseHandler
 import io.github.slupik.network.authorization.token.ServerTokenHolder
 import io.github.slupik.network.authorization.token.TokenHolder
 
@@ -59,5 +61,9 @@ abstract class AuthorizationModule {
     @Binds
     abstract fun tokenHolder(holder: ServerTokenHolder):
             TokenHolder
+
+    @Binds
+    abstract fun authorizationResponseHandler(handler: ServerAuthorizationResponseHandler):
+            AuthorizationResponseHandler
 
 }
