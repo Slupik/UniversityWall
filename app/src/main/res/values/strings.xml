@@ -39,14 +39,16 @@
     <string name="registration_form_button">Register</string>
     <string name="register_back_to_login">Back</string>
 
-    <string name="registration_error_title">Error</string>
-    <string name="registration_error_">Register</string>
-    <string name="connection_error_registration">Connection error. Try again later.</string>
     <string name="registration_error_ok">OK</string>
-    <string name="connection_error_login_exists">Typed login already exists, correct this</string>
-    <string name="connection_error_inappropriate_password">Password should have length between at least of 4 chars</string>
-    <string name="connection_error_different_passwords">Typed passwords are different, correct this</string>
-    <string name="connection_error_empty_fields">At least one field is empty or too short (password).</string>
+    <string name="registration_error_title">Error</string>
+    <string name="registration_connection_error">Connection error. Try again later.</string>
+    <string name="registration_login_already_exists">Typed login already exists, correct this</string>
+    <string name="registration_wrong_password">This account have different password.</string>
+    <string name="registration_different_passwords">Typed passwords are different, please correct this.</string>
+    <string name="registration_empty_fields">At least one field is empty.</string>
+    <string name="registration_password_not_meet_requirements">Password should have at least %1$d characters.</string>
+    <string name="registration_display_name_too_short">Typed display name should have at least %1$d characters.</string>
+    <string name="registration_too_short_login">Login should have at least %1$d characters.</string>
 
 
     <!--    groups fragment    -->
@@ -62,6 +64,5 @@
     <string name="group_joined_successfully">You joined successfully to group %1$s!</string>
     <string name="group_joining_fail_title">Error</string>
     <string name="group_joined_failed">You cannot join now. Try again later.</string>
-
 
 </resources>

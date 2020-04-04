@@ -5,16 +5,16 @@
 
 package io.github.slupik.network.authorization.registrar
 
+import io.github.slupik.model.authorization.INVALID_DISPLAY_NAME
+import io.github.slupik.model.authorization.INVALID_LOGIN
+import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.credentials.CredentialSaver
 import io.github.slupik.model.authorization.registration.Registrant
 import io.github.slupik.model.authorization.registration.RegistrationResult
-import io.github.slupik.model.authorization.state.AuthorizationState
-import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
-import io.github.slupik.network.authorization.authorizer.TOKEN_PREFIX
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationResponse
 import io.github.slupik.network.authorization.retrofit.registration.RegistrationService
-import io.github.slupik.network.authorization.token.TokenHolder
+import io.github.slupik.network.authorization.token.AuthorizationResponseHandler
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -26,12 +26,22 @@ import javax.inject.Inject
 class ServerAwareRegistrant @Inject constructor(
     private val service: RegistrationService,
     private val saver: CredentialSaver,
-    private val tokenHolder: TokenHolder,
-    private val statePublisher: AuthorizationStatePublisher,
+    private val responseHandler: AuthorizationResponseHandler,
     private val converter: ResponseConverter<RegistrationResponse, RegistrationResult>
 ) : Registrant {
 
     override fun register(
+        login: String?,
+        password: String?,
+        displayName: String?
+    ): Single<RegistrationResult> =
+        executeRegister(
+            login ?: INVALID_LOGIN,
+            password ?: INVALID_PASSWORD,
+            displayName ?: INVALID_DISPLAY_NAME
+        )
+
+    private fun executeRegister(
         login: String,
         password: String,
         displayName: String
@@ -39,21 +49,22 @@ class ServerAwareRegistrant @Inject constructor(
         try {
             service.register(login, password, displayName)
                 .doOnSuccess { response ->
-                    if (response.token.isNotEmpty()) {
+                    if (areCredentialsValid(response)) {
+                        responseHandler.handleToken(response.token)
                         saver.save(login, password)
-                        tokenHolder.session = TOKEN_PREFIX + response.token
-                        statePublisher.onNewState(AuthorizationState.LOGGED_IN)
                     }
                 }
                 .map(converter::convert)
                 .onErrorReturn {
-                    it.printStackTrace()
-                    statePublisher.onNewState(AuthorizationState.LOGGED_OUT)
+                    responseHandler.handleError(it)
                     RegistrationResult.CONNECTION_ERROR
                 }
         } catch (e: Exception) {
-            e.printStackTrace()
+            responseHandler.handleError(e)
             Single.just(RegistrationResult.CONNECTION_ERROR)
         }
+
+    private fun areCredentialsValid(response: RegistrationResponse?): Boolean =
+        response != null && response.validLogin && response.validPassword
 
 }

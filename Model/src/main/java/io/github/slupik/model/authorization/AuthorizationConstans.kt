@@ -12,4 +12,10 @@ package io.github.slupik.model.authorization
  */
 const val INVALID_LOGIN: String = ""
 const val INVALID_PASSWORD: String = ""
+const val INVALID_DISPLAY_NAME: String = ""
+
+const val LOGIN_MIN_LENGTH: Int = 6
+const val PASSWORD_MIN_LENGTH: Int = 6
+const val DISPLAY_NAME_MIN_LENGTH: Int = 6
+
 const val INVALID_SESSION_TOKEN: String = ""

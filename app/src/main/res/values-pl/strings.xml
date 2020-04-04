@@ -46,13 +46,15 @@
     <string name="register_back_to_login">Wróć</string>
 
     <string name="registration_error_title">Błąd</string>
-    <string name="registration_error_">Rejestracja</string>
-    <string name="connection_error_registration">Błąd połączenia. Spróbuj ponownie później.</string>
+    <string name="registration_connection_error">Błąd połączenia. Spróbuj ponownie później.</string>
     <string name="registration_error_ok">OK</string>
-    <string name="connection_error_login_exists">Wprowadzony login już istnieje, wprowadź inny</string>
-    <string name="connection_error_inappropriate_password">Hasło powinno być długości co najmniej 4 znaków</string>
-    <string name="connection_error_different_passwords">Wprowadzone hasła są inne, wprowadź je.</string>
-    <string name="connection_error_empty_fields">Co najmniej 1 pole jest puste lub za krótki (hasło).</string>
+    <string name="registration_login_already_exists">Wprowadzony login już istnieje, wprowadź inny</string>
+    <string name="registration_wrong_password">Ten login ma przypisane inne hasło.</string>
+    <string name="registration_different_passwords">Wprowadzone hasła są inne, wprowadź je.</string>
+    <string name="registration_empty_fields">Co najmniej 1 pole jest puste lub za krótki (hasło).</string>
+    <string name="registration_password_not_meet_requirements">Hasło musi mieć co najmniej %1$d znaków</string>
+    <string name="registration_display_name_too_short">Wprowadzona nazwa wyświetlana powinna mieć co najmneij %1$d znaków.</string>
+    <string name="registration_too_short_login">Login powinien mieć co najmniej %1$d znaków.</string>
 
 
     <!--    groups fragment    -->
@@ -68,6 +70,5 @@
     <string name="group_joined_successfully">Pomyślnie dołączyłeś do grupy %1$s!</string>
     <string name="group_joining_fail_title">Błąd</string>
     <string name="group_joined_failed">Nie możesz dołączyć teraz. Spróbuj ponownie później.</string>
-
 
 </resources>

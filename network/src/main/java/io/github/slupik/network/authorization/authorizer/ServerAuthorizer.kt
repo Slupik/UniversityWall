@@ -10,12 +10,10 @@ import io.github.slupik.model.authorization.INVALID_PASSWORD
 import io.github.slupik.model.authorization.authorizer.AuthorizationResult
 import io.github.slupik.model.authorization.authorizer.Authorizer
 import io.github.slupik.model.authorization.credentials.CredentialSaver
-import io.github.slupik.model.authorization.state.AuthorizationState
-import io.github.slupik.model.authorization.state.AuthorizationStatePublisher
 import io.github.slupik.network.ResponseConverter
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationResponse
 import io.github.slupik.network.authorization.retrofit.authorization.AuthorizationService
-import io.github.slupik.network.authorization.token.TokenHolder
+import io.github.slupik.network.authorization.token.AuthorizationResponseHandler
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -25,13 +23,10 @@ import javax.inject.Inject
  * All rights reserved & copyright ©
  */
 
-const val TOKEN_PREFIX = "Bearer "
-
 class ServerAuthorizer @Inject constructor(
     private val service: AuthorizationService,
     private val saver: CredentialSaver,
-    private val tokenHolder: TokenHolder,
-    private val statePublisher: AuthorizationStatePublisher,
+    private val responseHandler: AuthorizationResponseHandler,
     private val converter: ResponseConverter<AuthorizationResponse, AuthorizationResult>
 ) : Authorizer {
 
@@ -45,25 +40,22 @@ class ServerAuthorizer @Inject constructor(
         try {
             service.authorize(login, password)
                 .doOnSuccess { response ->
-                    if (isValidToken(response.token)) {
+                    if(areCredentialsValid(response)) {
                         saver.save(login, password)
-                        tokenHolder.session = TOKEN_PREFIX + response.token
-                        statePublisher.onNewState(AuthorizationState.LOGGED_IN)
+                        responseHandler.handleToken(response.token)
                     }
                 }
                 .map(converter::convert)
                 .onErrorReturn {
-                    it.printStackTrace()
-                    statePublisher.onNewState(AuthorizationState.LOGGED_OUT)
+                    responseHandler.handleError(it)
                     AuthorizationResult.CONNECTION_ERROR
                 }
         } catch (e: Exception) {
-            e.printStackTrace()
-            statePublisher.onNewState(AuthorizationState.LOGGED_OUT)
+            responseHandler.handleError(e)
             Single.just(AuthorizationResult.CONNECTION_ERROR)
         }
 
-    private fun isValidToken(token: String): Boolean =
-        token.isNotEmpty()
+    private fun areCredentialsValid(response: AuthorizationResponse?): Boolean =
+        response != null && response.validLogin && response.validPassword
 
 }

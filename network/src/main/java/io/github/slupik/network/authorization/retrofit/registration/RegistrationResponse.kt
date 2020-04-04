@@ -12,5 +12,6 @@ package io.github.slupik.network.authorization.retrofit.registration
  */
 data class RegistrationResponse(
     val validLogin: Boolean,
+    val validPassword: Boolean,
     val token: String
 )
