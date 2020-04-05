@@ -6,26 +6,74 @@
 package io.github.slupik.universitywall.screen.group
 
 import androidx.lifecycle.MutableLiveData
+import com.squareup.inject.assisted.AssistedInject
+import io.github.slupik.model.group.GroupActions
+import io.github.slupik.model.group.GroupsProvider
+import io.github.slupik.model.invitation.providing.InvitationEmitter
+import io.github.slupik.model.utils.subscribeOnIOThread
+import io.github.slupik.universitywall.utils.observeOnMainThread
 import io.github.slupik.universitywall.viewmodel.ViewModel
+import io.reactivex.rxkotlin.subscribeBy
 
-class GroupsViewModel : ViewModel() {
-
-    private lateinit var logic: GroupsViewLogic
+class GroupsViewModel @AssistedInject constructor(
+    private val groupsProvider: GroupsProvider,
+    private val dialogHandler: InvitationDialogHandler,
+    private val actions: GroupActions,
+    invitationEmitter: InvitationEmitter
+) : ViewModel() {
 
     val viewState: MutableLiveData<GroupsViewState> by lazy {
         MutableLiveData<GroupsViewState>()
     }
+    val navigationCommand: MutableLiveData<NavigationCommand> by lazy {
+        MutableLiveData<NavigationCommand>()
+    }
 
-    fun setLogic(viewLogic: GroupsViewLogic) {
-        this.logic = viewLogic
+    init {
+        invitationEmitter
+            .acceptedInvitations
+            .subscribeBy(
+                onNext = { invitation ->
+                    actions
+                        .join(invitation.link)
+                        .observeOnMainThread()
+                        .subscribeOnIOThread()
+                        .subscribeBy(
+                            onComplete = {
+                                dialogHandler.onGroupJoined(invitation.description)
+                                refresh()
+                            },
+                            onError = { actionError ->
+                                actionError.printStackTrace()
+                                dialogHandler.onGroupJoiningError()
+                            }
+                        )
+                },
+                onError = { dialogHandler.onGroupJoiningError() }
+            )
+            .remember()
     }
 
     fun refresh() {
-        logic.refresh()
+        viewState.postValue(LoadingDataViewState())
+        groupsProvider
+            .refresh()
+            .observeOnMainThread()
+            .subscribeOnIOThread()
+            .doFinally { viewState.postValue(StartViewState()) }
+            .subscribeBy(
+                onError = { it.printStackTrace() }
+            )
+            .remember()
     }
 
     fun joinToGroup() {
-        logic.joinToGroup()
+        navigationCommand.postValue(NavigationCommand.SCANNER_VIEW)
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): GroupsViewModel
     }
 
 }

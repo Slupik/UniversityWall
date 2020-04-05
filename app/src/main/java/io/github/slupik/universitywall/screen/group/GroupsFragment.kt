@@ -15,6 +15,7 @@ import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.GroupsFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
+import io.github.slupik.universitywall.utils.subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -33,9 +34,6 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
     @Inject
     lateinit var groupsConverter: Converter<Group, DisplayableGroup>
 
-    @Inject
-    lateinit var viewLogic: GroupsViewLogic
-
     companion object {
         fun newInstance() = GroupsFragment()
     }
@@ -53,11 +51,10 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
     override fun onViewModelCreated(viewModel: GroupsViewModel) {
         super.onViewModelCreated(viewModel)
         activityDepInComponent.inject(this)
-        viewLogic.inject(internalViewModel)
-        viewLogic.inject(this)
-        internalViewModel.setLogic(viewLogic)
-
         viewModel.viewState.postValue(StartViewState())
+        viewModel.navigationCommand.subscribe(this) {
+            if(it == NavigationCommand.SCANNER_VIEW) moveToScanner()
+        }
 
         adapter = GroupsAdapter(
             actions = groupsActions,
@@ -93,5 +90,8 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
     override fun moveToScanner() {
         findNavController().navigate(R.id.action_groupsFragment_to_qrCodeScannerActivity)
     }
+
+    override fun getViewModel() =
+        activityDepInComponent.groupsViewModelFactory.create()
 
 }
