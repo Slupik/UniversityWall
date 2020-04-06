@@ -65,4 +65,7 @@
     <string name="group_joining_fail_title">Error</string>
     <string name="group_joined_failed">You cannot join now. Try again later.</string>
 
+    <string name="menu_add_group">Add group</string>
+    <string name="menu_refresh_groups">Refresh list</string>
+
 </resources>

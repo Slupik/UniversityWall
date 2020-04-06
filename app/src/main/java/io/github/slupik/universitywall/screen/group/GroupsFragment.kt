@@ -5,6 +5,10 @@
 
 package io.github.slupik.universitywall.screen.group
 
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.Converter
@@ -86,6 +90,28 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
                 }
             ).remember()
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.groups_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when(item.itemId) {
+            R.id.menu_add_group -> {
+                internalViewModel.joinToGroup()
+                true
+            }
+            R.id.menu_refresh_groups -> {
+                internalViewModel.refresh()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     override fun moveToScanner() {
         findNavController().navigate(R.id.action_groupsFragment_to_qrCodeScannerActivity)
