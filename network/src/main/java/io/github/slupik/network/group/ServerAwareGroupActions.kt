@@ -6,9 +6,12 @@
 package io.github.slupik.network.group
 
 import io.github.slupik.model.group.GroupActions
+import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.network.authorization.token.TokenHolder
 import io.github.slupik.network.group.retrofit.GroupActionsService
 import io.reactivex.Completable
+import io.reactivex.rxkotlin.subscribeBy
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 /**
@@ -18,7 +21,8 @@ import javax.inject.Inject
  */
 class ServerAwareGroupActions @Inject constructor(
     private val tokenHolder: TokenHolder,
-    private val service: GroupActionsService
+    private val service: GroupActionsService,
+    private val groupsProvider: GroupsProvider
 ) : GroupActions {
 
     override fun join(id: String): Completable =
@@ -41,6 +45,16 @@ class ServerAwareGroupActions @Inject constructor(
                 } else {
                     Completable.error(GroupLeaveException(it.statusCode))
                 }
+            }
+            .doOnComplete{
+                groupsProvider
+                    .refresh()
+                    .subscribeOn(Schedulers.io())
+                    .subscribeBy(
+                        onError = {
+                            it.printStackTrace()
+                        }
+                    )
             }
 
 }

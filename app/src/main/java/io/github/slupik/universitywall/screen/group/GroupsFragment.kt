@@ -11,8 +11,6 @@ import android.view.MenuInflater
 import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import io.github.slupik.model.Converter
-import io.github.slupik.model.group.Group
 import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.universitywall.R
@@ -20,8 +18,6 @@ import io.github.slupik.universitywall.databinding.GroupsFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
 import io.github.slupik.universitywall.utils.subscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
@@ -34,9 +30,6 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
 
     @Inject
     lateinit var groupsProvider: GroupsProvider
-
-    @Inject
-    lateinit var groupsConverter: Converter<Group, DisplayableGroup>
 
     companion object {
         fun newInstance() = GroupsFragment()
@@ -56,39 +49,24 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
         super.onViewModelCreated(viewModel)
         activityDepInComponent.inject(this)
         viewModel.viewState.postValue(StartViewState())
+        initRecyclerViewWithAdapter()
+
         viewModel.navigationCommand.subscribe(this) {
             if(it == NavigationCommand.SCANNER_VIEW) moveToScanner()
         }
+        viewModel.groups.subscribe(this) {
+            val updatesList = mutableListOf<DisplayableGroup>()
+            updatesList.addAll(it)
+            adapter.submitList(updatesList)
+        }
+    }
 
-        adapter = GroupsAdapter(
-            actions = groupsActions,
-            groupsProvider = groupsProvider
-        )
-
-        binding.rvMessages.adapter = adapter
-        binding.rvMessages.apply {
+    private fun initRecyclerViewWithAdapter() {
+        adapter = GroupsAdapter(actions = groupsActions)
+        binding.rvGroups.adapter = adapter
+        binding.rvGroups.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-
-        groupsProvider.groupsEmitter.subscribe {
-            adapter.submitList(
-                it.map(groupsConverter::convert)
-            )
-        }.remember()
-        groupsProvider
-            .groups
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    adapter.submitList(
-                        it.map(groupsConverter::convert)
-                    )
-                },
-                {
-                    it.printStackTrace()
-                }
-            ).remember()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

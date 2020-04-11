@@ -40,7 +40,7 @@
                 app:refreshing="@{viewmodel.viewState.loading}">
 
             <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rvMessages"
+                    android:id="@+id/rvGroups"
                     android:layout_width="0dp"
                     android:layout_height="0dp"
                     android:layout_weight="1"

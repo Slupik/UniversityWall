@@ -7,10 +7,13 @@ package io.github.slupik.universitywall.screen.group
 
 import androidx.lifecycle.MutableLiveData
 import com.squareup.inject.assisted.AssistedInject
+import io.github.slupik.model.Converter
+import io.github.slupik.model.group.Group
 import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.model.invitation.providing.InvitationEmitter
 import io.github.slupik.model.utils.subscribeOnIOThread
+import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
 import io.github.slupik.universitywall.utils.observeOnMainThread
 import io.github.slupik.universitywall.viewmodel.ViewModel
 import io.reactivex.rxkotlin.subscribeBy
@@ -19,6 +22,7 @@ class GroupsViewModel @AssistedInject constructor(
     private val groupsProvider: GroupsProvider,
     private val dialogHandler: InvitationDialogHandler,
     private val actions: GroupActions,
+    private val groupsConverter: Converter<Group, DisplayableGroup>,
     invitationEmitter: InvitationEmitter
 ) : ViewModel() {
 
@@ -27,6 +31,9 @@ class GroupsViewModel @AssistedInject constructor(
     }
     val navigationCommand: MutableLiveData<NavigationCommand> by lazy {
         MutableLiveData<NavigationCommand>()
+    }
+    val groups: MutableLiveData<List<DisplayableGroup>> by lazy {
+        MutableLiveData<List<DisplayableGroup>>()
     }
 
     init {
@@ -52,6 +59,26 @@ class GroupsViewModel @AssistedInject constructor(
                 onError = { dialogHandler.onGroupJoiningError() }
             )
             .remember()
+        updateGroups()
+    }
+
+    private fun updateGroups() {
+        groupsProvider.groupsEmitter.subscribe {
+            groups.postValue( it.map(groupsConverter::convert) )
+        }.remember()
+        groupsProvider
+            .groups
+            .observeOnMainThread()
+            .subscribeOnIOThread()
+            .subscribeBy(
+                onSuccess = {
+                    groups.postValue( it.map(groupsConverter::convert) )
+                },
+                onError = {
+                    it.printStackTrace()
+                }
+            )
+            .remember()
     }
 
     fun refresh() {
@@ -60,7 +87,7 @@ class GroupsViewModel @AssistedInject constructor(
             .refresh()
             .observeOnMainThread()
             .subscribeOnIOThread()
-            .doFinally { viewState.postValue(StartViewState()) }
+            .doFinally { viewState.postValue(StartViewState())  }
             .subscribeBy(
                 onError = { it.printStackTrace() }
             )
