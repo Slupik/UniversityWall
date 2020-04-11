@@ -30,7 +30,8 @@ import io.reactivex.rxkotlin.subscribeBy
  */
 
 class GroupsAdapter constructor(
-    private val actions: GroupActions
+    private val actions: GroupActions,
+    private val errorHandler: GroupLeavingErrorHandler
 ) : DataBoundListAdapter<DisplayableGroup>(
 
     diffCallback = object : DiffUtil.ItemCallback<DisplayableGroup>() {
@@ -66,12 +67,16 @@ class GroupsAdapter constructor(
                 binding.groupOwner.text = item.owner
 
                 binding.btnLeaveGroup.setOnClickListener {
-                    binding.btnLeaveGroup.visibility = INVISIBLE
-                    binding.pbLeaving.visibility = VISIBLE
+                    showLoadingIndicator(binding)
                     leaveGroup(binding, item)
                 }
             }
         }
+    }
+
+    private fun showLoadingIndicator(binding: GroupViewBinding) {
+        binding.btnLeaveGroup.visibility = INVISIBLE
+        binding.pbLeaving.visibility = VISIBLE
     }
 
     private fun leaveGroup(
@@ -82,18 +87,21 @@ class GroupsAdapter constructor(
             .leave("" + group.id)
             .observeOnMainThread()
             .subscribeOnIOThread()
+            .doFinally { hideLoadingIndicator(binding) }
             .subscribeBy(
-                onComplete = {
-                    hide(binding)
-                },
                 onError = {
                     it.printStackTrace()
+                    errorHandler.onGroupLeavingError()
                 }
             )
 
-    private fun hide(binding: GroupViewBinding) {
+    private fun hideLoadingIndicator(binding: GroupViewBinding) {
         binding.btnLeaveGroup.visibility = VISIBLE
         binding.pbLeaving.visibility = View.GONE
+    }
+
+    interface GroupLeavingErrorHandler {
+        fun onGroupLeavingError()
     }
 
 }

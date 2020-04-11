@@ -12,7 +12,6 @@ import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.model.group.GroupActions
-import io.github.slupik.model.group.GroupsProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.GroupsFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
@@ -29,7 +28,7 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
     lateinit var groupsActions: GroupActions
 
     @Inject
-    lateinit var groupsProvider: GroupsProvider
+    lateinit var dialogHandler: GroupsDialogHandler
 
     companion object {
         fun newInstance() = GroupsFragment()
@@ -54,6 +53,9 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
         viewModel.navigationCommand.subscribe(this) {
             if(it == NavigationCommand.SCANNER_VIEW) moveToScanner()
         }
+        viewModel.dialogCommand.subscribe(this) {
+            dialogHandler.showDialog(it)
+        }
         viewModel.groups.subscribe(this) {
             val updatesList = mutableListOf<DisplayableGroup>()
             updatesList.addAll(it)
@@ -62,7 +64,7 @@ class GroupsFragment : FragmentWithDataBinding<GroupsViewModel, GroupsFragmentBi
     }
 
     private fun initRecyclerViewWithAdapter() {
-        adapter = GroupsAdapter(actions = groupsActions)
+        adapter = GroupsAdapter(groupsActions, internalViewModel)
         binding.rvGroups.adapter = adapter
         binding.rvGroups.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))

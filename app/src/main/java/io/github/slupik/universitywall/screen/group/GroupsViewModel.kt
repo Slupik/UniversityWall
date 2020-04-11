@@ -20,17 +20,19 @@ import io.reactivex.rxkotlin.subscribeBy
 
 class GroupsViewModel @AssistedInject constructor(
     private val groupsProvider: GroupsProvider,
-    private val dialogHandler: InvitationDialogHandler,
     private val actions: GroupActions,
     private val groupsConverter: Converter<Group, DisplayableGroup>,
     invitationEmitter: InvitationEmitter
-) : ViewModel() {
+) : ViewModel(), GroupsAdapter.GroupLeavingErrorHandler {
 
     val viewState: MutableLiveData<GroupsViewState> by lazy {
         MutableLiveData<GroupsViewState>()
     }
     val navigationCommand: MutableLiveData<NavigationCommand> by lazy {
         MutableLiveData<NavigationCommand>()
+    }
+    val dialogCommand: MutableLiveData<DialogCommand> by lazy {
+        MutableLiveData<DialogCommand>()
     }
     val groups: MutableLiveData<List<DisplayableGroup>> by lazy {
         MutableLiveData<List<DisplayableGroup>>()
@@ -41,7 +43,7 @@ class GroupsViewModel @AssistedInject constructor(
             .acceptedInvitations
             .subscribeBy(
                 onNext = { acceptInvitation(it) },
-                onError = { dialogHandler.onGroupJoiningError() }
+                onError = { dialogCommand.postValue(GroupJoiningError) }
             )
             .remember()
         updateGroups()
@@ -53,11 +55,15 @@ class GroupsViewModel @AssistedInject constructor(
             .makeAsIoRequest()
             .subscribeBy(
                 onComplete = {
-                    dialogHandler.onGroupJoined(invitation.description)
+                    dialogCommand.postValue(
+                        GroupJoining(
+                            invitation.description
+                        )
+                    )
                 },
                 onError = { actionError ->
                     actionError.printStackTrace()
-                    dialogHandler.onGroupJoiningError()
+                    dialogCommand.postValue(GroupJoiningError)
                 }
             )
 
@@ -87,7 +93,10 @@ class GroupsViewModel @AssistedInject constructor(
             .makeAsIoRequest()
             .doFinally { viewState.postValue(StartViewState())  }
             .subscribeBy(
-                onError = { it.printStackTrace() }
+                onError = {
+                    it.printStackTrace()
+                    dialogCommand.postValue(GroupsRefreshingError)
+                }
             )
             .remember()
     }
@@ -95,6 +104,9 @@ class GroupsViewModel @AssistedInject constructor(
     fun joinToGroup() {
         navigationCommand.postValue(NavigationCommand.SCANNER_VIEW)
     }
+
+    override fun onGroupLeavingError() =
+        dialogCommand.postValue(GroupLeavingError)
 
     @AssistedInject.Factory
     interface Factory {
