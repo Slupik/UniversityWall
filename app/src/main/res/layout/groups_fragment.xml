@@ -17,6 +17,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:orientation="vertical"
             tools:context=".screen.group.GroupsFragment">
 
@@ -24,10 +27,9 @@
                 android:id="@+id/fabAdd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
-                android:layout_marginBottom="16dp"
-                android:src="@android:drawable/ic_input_add"
+                android:layout_marginBottom="@dimen/activity_vertical_margin"
                 android:onClick="@{()->viewmodel.joinToGroup()}"
+                android:src="@android:drawable/ic_input_add"
                 app:backgroundTint="@color/colorAccent"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -45,6 +47,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:scrollbars="vertical"
+                    android:layout_marginBottom="@dimen/activity_horizontal_margin"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/group_view" />
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
