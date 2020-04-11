@@ -11,10 +11,10 @@ import io.github.slupik.model.Converter
 import io.github.slupik.model.group.Group
 import io.github.slupik.model.group.GroupActions
 import io.github.slupik.model.group.GroupsProvider
+import io.github.slupik.model.invitation.model.Invitation
 import io.github.slupik.model.invitation.providing.InvitationEmitter
-import io.github.slupik.model.utils.subscribeOnIOThread
 import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
-import io.github.slupik.universitywall.utils.observeOnMainThread
+import io.github.slupik.universitywall.utils.makeAsIoRequest
 import io.github.slupik.universitywall.viewmodel.ViewModel
 import io.reactivex.rxkotlin.subscribeBy
 
@@ -40,53 +40,51 @@ class GroupsViewModel @AssistedInject constructor(
         invitationEmitter
             .acceptedInvitations
             .subscribeBy(
-                onNext = { invitation ->
-                    actions
-                        .join(invitation.link)
-                        .observeOnMainThread()
-                        .subscribeOnIOThread()
-                        .subscribeBy(
-                            onComplete = {
-                                dialogHandler.onGroupJoined(invitation.description)
-                                refresh()
-                            },
-                            onError = { actionError ->
-                                actionError.printStackTrace()
-                                dialogHandler.onGroupJoiningError()
-                            }
-                        )
-                },
+                onNext = { acceptInvitation(it) },
                 onError = { dialogHandler.onGroupJoiningError() }
             )
             .remember()
         updateGroups()
     }
 
-    private fun updateGroups() {
-        groupsProvider.groupsEmitter.subscribe {
-            groups.postValue( it.map(groupsConverter::convert) )
-        }.remember()
-        groupsProvider
-            .groups
-            .observeOnMainThread()
-            .subscribeOnIOThread()
+    private fun acceptInvitation(invitation: Invitation) =
+        actions
+            .join(invitation.link)
+            .makeAsIoRequest()
             .subscribeBy(
-                onSuccess = {
-                    groups.postValue( it.map(groupsConverter::convert) )
+                onComplete = {
+                    dialogHandler.onGroupJoined(invitation.description)
                 },
-                onError = {
-                    it.printStackTrace()
+                onError = { actionError ->
+                    actionError.printStackTrace()
+                    dialogHandler.onGroupJoiningError()
                 }
             )
-            .remember()
+
+    private fun updateGroups() {
+        groupsProvider.groupsEmitter.subscribe {
+            groups.postValue(it.makeDisplayable())
+        }.remember()
+
+        groupsProvider
+            .groups
+            .makeAsIoRequest()
+            .subscribeBy(
+                onSuccess = {
+                    groups.postValue(it.makeDisplayable())
+                },
+                onError = { it.printStackTrace() }
+            ).remember()
     }
+
+    private fun List<Group>.makeDisplayable(): List<DisplayableGroup> =
+        map(groupsConverter::convert)
 
     fun refresh() {
         viewState.postValue(LoadingDataViewState())
         groupsProvider
             .refresh()
-            .observeOnMainThread()
-            .subscribeOnIOThread()
+            .makeAsIoRequest()
             .doFinally { viewState.postValue(StartViewState())  }
             .subscribeBy(
                 onError = { it.printStackTrace() }

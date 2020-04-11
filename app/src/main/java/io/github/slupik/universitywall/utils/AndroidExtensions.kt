@@ -8,6 +8,7 @@ package io.github.slupik.universitywall.utils
 import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.Observer
+import io.github.slupik.model.utils.subscribeOnIOThread
 import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
@@ -21,6 +22,18 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 inline fun <T> LiveData<T>.subscribe(lifecycle: LifecycleOwner, crossinline onChanged: (T) -> Unit) {
     observe(lifecycle, Observer { it?.run(onChanged) })
 }
+
+fun <T> Observable<T>.makeAsIoRequest(): Observable<T> =
+    observeOnMainThread()
+        .subscribeOnIOThread()
+
+fun <T> Single<T>.makeAsIoRequest(): Single<T> =
+    observeOnMainThread()
+        .subscribeOnIOThread()
+
+fun Completable.makeAsIoRequest(): Completable =
+    observeOnMainThread()
+        .subscribeOnIOThread()
 
 fun <T> Observable<T>.observeOnMainThread(): Observable<T> =
     observeOn(AndroidSchedulers.mainThread())

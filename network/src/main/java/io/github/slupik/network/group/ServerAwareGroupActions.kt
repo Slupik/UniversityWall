@@ -35,6 +35,7 @@ class ServerAwareGroupActions @Inject constructor(
                     Completable.error(GroupJoinException(it.statusCode))
                 }
             }
+            .refresh()
 
     override fun leave(id: String): Completable =
         service
@@ -46,15 +47,18 @@ class ServerAwareGroupActions @Inject constructor(
                     Completable.error(GroupLeaveException(it.statusCode))
                 }
             }
-            .doOnComplete{
-                groupsProvider
-                    .refresh()
-                    .subscribeOn(Schedulers.io())
-                    .subscribeBy(
-                        onError = {
-                            it.printStackTrace()
-                        }
-                    )
-            }
+            .refresh()
+
+    private fun Completable.refresh(): Completable =
+        doOnComplete{
+            groupsProvider
+                .refresh()
+                .subscribeOn(Schedulers.io())
+                .subscribeBy(
+                    onError = {
+                        it.printStackTrace()
+                    }
+                )
+        }
 
 }
