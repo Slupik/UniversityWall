@@ -5,6 +5,7 @@
 
 package io.github.slupik.network.group.retrofit
 
+import android.util.Log
 import io.github.slupik.network.group.model.GroupListResponse
 import io.github.slupik.network.group.model.GroupResponse
 import io.reactivex.Single
@@ -22,12 +23,19 @@ class MockedGroupsDownloadingService : GroupsDownloadingService {
         Single.just(
             GroupListResponse(
                 errorCode = 0,
-                list = listOf(
-                    getGroup(Random.nextInt(0, 5)),
-                    getGroup(Random.nextInt(0, 5))
-                )
+                list = getRandomList()
             )
         ).delay(3, TimeUnit.SECONDS)
+
+    private fun getRandomList(): List<GroupResponse> {
+        val result: MutableList<GroupResponse> = mutableListOf()
+        val repetitions = Random.nextInt(0, 10)
+        Log.d("Mock_Groups_Service", "Amount of downloaded groups: $repetitions")
+        repeat(repetitions) {
+            result.add(getGroup(Random.nextInt(0, 50)))
+        }
+        return result
+    }
 
     private fun getGroup(id: Int): GroupResponse =
         GroupResponse(
