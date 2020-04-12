@@ -6,22 +6,25 @@
 package io.github.slupik.universitywall.screen.messages
 
 import androidx.lifecycle.MutableLiveData
+import com.squareup.inject.assisted.AssistedInject
 import io.github.slupik.universitywall.viewmodel.ViewModel
 
-class MessagesViewModel : ViewModel() {
-
-    private lateinit var logic: MessagesViewLogic
+class MessagesViewModel @AssistedInject constructor() : ViewModel() {
 
     val viewState: MutableLiveData<MessagesViewState> by lazy {
         MutableLiveData<MessagesViewState>()
     }
-
-    fun inject(logic: MessagesViewLogic) {
-        this.logic = logic
+    val navigationCommand: MutableLiveData<NavigationCommand> by lazy {
+        MutableLiveData<NavigationCommand>()
     }
 
     fun onGotoGroups() {
-        logic.onGotoGroups()
+        navigationCommand.postValue(NavigationCommand.GROUPS_SCREEN)
+    }
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): MessagesViewModel
     }
 
 }

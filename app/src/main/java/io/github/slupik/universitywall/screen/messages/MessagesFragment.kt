@@ -14,13 +14,14 @@ import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
 import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
+import io.github.slupik.universitywall.utils.subscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import kotlin.reflect.KClass
 
-class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFragmentBinding>(), GraphController {
+class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFragmentBinding>() {
 
     private lateinit var adapter: MessagesAdapter
 
@@ -29,9 +30,6 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
 
     @Inject
     lateinit var messagesConverter: Converter<Message, DisplayableMessage>
-
-    @Inject
-    lateinit var viewLogic: MessagesViewLogic
 
     companion object {
         fun newInstance() = MessagesFragment()
@@ -51,8 +49,9 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         super.onViewModelCreated(viewModel)
         appDepInComponent.inject(this)
 
-        internalViewModel.inject(viewLogic)
-        viewLogic.inject(this)
+        viewModel.navigationCommand.subscribe(this) {
+            if(it == NavigationCommand.GROUPS_SCREEN) moveToGroupsScreen()
+        }
 
         adapter = MessagesAdapter(
             viewModel = viewModel,
@@ -103,8 +102,11 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         }
     }
 
-    override fun moveToGroupsScreen() {
+    private fun moveToGroupsScreen() {
         findNavController().navigate(R.id.action_messagesFragment_to_groupsFragment)
     }
+
+    override fun getViewModel() =
+        activityDepInComponent.messagesViewModelFactory.create()
 
 }
