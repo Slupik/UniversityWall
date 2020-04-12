@@ -52,7 +52,7 @@ class MessagesViewModel @AssistedInject constructor(
         }.remember()
     }
 
-    fun onGotoGroups() {
+    fun goToGroups() {
         navigationCommand.postValue(NavigationCommand.GROUPS_SCREEN)
     }
 

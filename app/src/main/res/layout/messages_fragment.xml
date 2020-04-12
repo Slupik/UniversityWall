@@ -21,59 +21,36 @@
             tools:context=".screen.messages.MessagesFragment">
 
         <Button
-                android:id="@+id/btnRefreshMessages"
+                android:id="@+id/button2"
                 android:layout_width="0dp"
-                android:layout_height="64dp"
-                android:layout_weight="1"
-                android:text="@string/messages_list_refresh"
-                android:onClick="@{()->viewmodel.refresh()}"
-                android:visibility="@{viewmodel.viewState.loading? View.INVISIBLE : View.VISIBLE}"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
+                android:layout_height="wrap_content"
+                android:onClick="@{()->viewmodel.goToGroups()}"
+                android:text="@string/message_list_go_to_groups"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMessages"
-                android:layout_width="0dp"
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
+                android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"
-                android:scrollbars="vertical"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnRefreshMessages"
-                tools:listitem="@layout/message_view" />
+                app:layout_constraintTop_toBottomOf="@+id/button2"
+                app:onRefreshListener="@{() -> viewmodel.refresh()}"
+                app:refreshing="@{viewmodel.viewState.loading}">
 
-        <androidx.constraintlayout.widget.Guideline
-                android:id="@+id/guideline3"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:orientation="vertical"
-                app:layout_constraintGuide_percent="0.5" />
+            <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMessages"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:scrollbars="vertical"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/message_view" />
 
-        <Button
-                android:id="@+id/button2"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/message_list_goto_groups"
-                android:onClick="@{()->viewmodel.onGotoGroups()}"
-                app:layout_constraintBottom_toBottomOf="@+id/btnRefreshMessages"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/btnRefreshMessages"
-                app:layout_constraintTop_toTopOf="parent" />
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-        <ProgressBar
-                android:id="@+id/progressBar4"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:elevation="20dp"
-                android:visibility="@{viewmodel.viewState.loading? View.VISIBLE : View.GONE}"
-                app:layout_constraintBottom_toBottomOf="@+id/btnRefreshMessages"
-                app:layout_constraintEnd_toStartOf="@+id/guideline3"
-                app:layout_constraintStart_toStartOf="@+id/btnRefreshMessages"
-                app:layout_constraintTop_toTopOf="parent" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </layout>
