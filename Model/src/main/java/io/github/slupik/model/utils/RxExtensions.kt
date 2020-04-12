@@ -5,6 +5,7 @@
 
 package io.github.slupik.model.utils
 
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
@@ -18,4 +19,7 @@ fun <T> Observable<T>.subscribeOnIOThread(): Observable<T> =
     subscribeOn(Schedulers.io())
 
 fun <T> Single<T>.subscribeOnIOThread(): Single<T> =
+    subscribeOn(Schedulers.io())
+
+fun Completable.subscribeOnIOThread(): Completable =
     subscribeOn(Schedulers.io())

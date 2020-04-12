@@ -63,6 +63,13 @@
     <string name="group_joining_success_title">Welcome!</string>
     <string name="group_joined_successfully">You joined successfully to group %1$s!</string>
     <string name="group_joining_fail_title">Error</string>
-    <string name="group_joined_failed">You cannot join now. Try again later.</string>
+    <string name="group_joined_failed">You cannot join now. Please, check connection and try again later.</string>
+    <string name="group_leaving_fail_title">Error</string>
+    <string name="group_leaving_fail">You cannot leave group now. Please, check connection and try again later.</string>
+    <string name="groups_refreshing_fail_title">Error</string>
+    <string name="groups_refreshing_fail">You cannot refresh list now. Please, check connection and try again later.</string>
+
+    <string name="menu_add_group">Add group</string>
+    <string name="menu_refresh_groups">Refresh list</string>
 
 </resources>

@@ -14,14 +14,13 @@ import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.DiffUtil
 import io.github.slupik.model.group.GroupActions
-import io.github.slupik.model.group.GroupsProvider
+import io.github.slupik.model.utils.subscribeOnIOThread
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.adapter.DataBoundListAdapter
 import io.github.slupik.universitywall.databinding.GroupViewBinding
 import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
-import io.reactivex.android.schedulers.AndroidSchedulers
+import io.github.slupik.universitywall.utils.observeOnMainThread
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
 
 
 /**
@@ -32,7 +31,7 @@ import io.reactivex.schedulers.Schedulers
 
 class GroupsAdapter constructor(
     private val actions: GroupActions,
-    private val groupsProvider: GroupsProvider
+    private val errorHandler: GroupLeavingErrorHandler
 ) : DataBoundListAdapter<DisplayableGroup>(
 
     diffCallback = object : DiffUtil.ItemCallback<DisplayableGroup>() {
@@ -40,7 +39,7 @@ class GroupsAdapter constructor(
             oldItem: DisplayableGroup,
             newItem: DisplayableGroup
         ): Boolean {
-            return oldItem == newItem
+            return oldItem.id == newItem.id
         }
 
         override fun areContentsTheSame(
@@ -68,34 +67,41 @@ class GroupsAdapter constructor(
                 binding.groupOwner.text = item.owner
 
                 binding.btnLeaveGroup.setOnClickListener {
-                    binding.btnLeaveGroup.visibility = INVISIBLE
-                    binding.pbLeaving.visibility = VISIBLE
-                    actions
-                        .leave("" + item.id)
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeOn(Schedulers.io())
-                        .subscribeBy(
-                            onComplete = {
-                                binding.btnLeaveGroup.visibility = VISIBLE
-                                binding.pbLeaving.visibility = View.GONE
-
-                                groupsProvider
-                                    .refresh()
-                                    .observeOn(AndroidSchedulers.mainThread())
-                                    .subscribeOn(Schedulers.io())
-                                    .subscribeBy(
-                                        onError = {
-                                            it.printStackTrace()
-                                        }
-                                    )
-                            },
-                            onError = {
-                                it.printStackTrace()
-                            }
-                        )
+                    showLoadingIndicator(binding)
+                    leaveGroup(binding, item)
                 }
             }
         }
+    }
+
+    private fun showLoadingIndicator(binding: GroupViewBinding) {
+        binding.btnLeaveGroup.visibility = INVISIBLE
+        binding.pbLeaving.visibility = VISIBLE
+    }
+
+    private fun leaveGroup(
+        binding: GroupViewBinding,
+        group: DisplayableGroup
+    ) =
+        actions
+            .leave("" + group.id)
+            .observeOnMainThread()
+            .subscribeOnIOThread()
+            .doFinally { hideLoadingIndicator(binding) }
+            .subscribeBy(
+                onError = {
+                    it.printStackTrace()
+                    errorHandler.onGroupLeavingError()
+                }
+            )
+
+    private fun hideLoadingIndicator(binding: GroupViewBinding) {
+        binding.btnLeaveGroup.visibility = VISIBLE
+        binding.pbLeaving.visibility = View.GONE
+    }
+
+    interface GroupLeavingErrorHandler {
+        fun onGroupLeavingError()
     }
 
 }

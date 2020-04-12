@@ -8,6 +8,7 @@ package io.github.slupik.universitywall.dagger
 import dagger.Subcomponent
 import io.github.slupik.model.dagger.ActivityScope
 import io.github.slupik.universitywall.screen.group.GroupsFragment
+import io.github.slupik.universitywall.screen.group.GroupsViewModel
 import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 import io.github.slupik.universitywall.screen.registration.RegistrationFragment
 import io.github.slupik.universitywall.screen.registration.RegistrationViewModel
@@ -28,6 +29,7 @@ import io.github.slupik.universitywall.screen.registration.RegistrationViewModel
 interface ActivitySubcomponent {
 
     val registrationViewModelFactory: RegistrationViewModel.Factory
+    val groupsViewModelFactory: GroupsViewModel.Factory
 
     fun inject(clazz: RegistrationFragment)
     fun inject(clazz: QrCodeScannerActivity)

@@ -6,26 +6,111 @@
 package io.github.slupik.universitywall.screen.group
 
 import androidx.lifecycle.MutableLiveData
+import com.squareup.inject.assisted.AssistedInject
+import io.github.slupik.model.Converter
+import io.github.slupik.model.group.Group
+import io.github.slupik.model.group.GroupActions
+import io.github.slupik.model.group.GroupsProvider
+import io.github.slupik.model.invitation.model.Invitation
+import io.github.slupik.model.invitation.providing.InvitationEmitter
+import io.github.slupik.universitywall.screen.group.model.DisplayableGroup
+import io.github.slupik.universitywall.utils.makeAsIoRequest
 import io.github.slupik.universitywall.viewmodel.ViewModel
+import io.reactivex.rxkotlin.subscribeBy
 
-class GroupsViewModel : ViewModel() {
-
-    private lateinit var logic: GroupsViewLogic
+class GroupsViewModel @AssistedInject constructor(
+    private val groupsProvider: GroupsProvider,
+    private val actions: GroupActions,
+    private val groupsConverter: Converter<Group, DisplayableGroup>,
+    invitationEmitter: InvitationEmitter
+) : ViewModel(), GroupsAdapter.GroupLeavingErrorHandler {
 
     val viewState: MutableLiveData<GroupsViewState> by lazy {
         MutableLiveData<GroupsViewState>()
     }
-
-    fun setLogic(viewLogic: GroupsViewLogic) {
-        this.logic = viewLogic
+    val navigationCommand: MutableLiveData<NavigationCommand> by lazy {
+        MutableLiveData<NavigationCommand>()
+    }
+    val dialogCommand: MutableLiveData<DialogCommand> by lazy {
+        MutableLiveData<DialogCommand>()
+    }
+    val groups: MutableLiveData<List<DisplayableGroup>> by lazy {
+        MutableLiveData<List<DisplayableGroup>>()
     }
 
+    init {
+        invitationEmitter
+            .acceptedInvitations
+            .subscribeBy(
+                onNext = { acceptInvitation(it) },
+                onError = { dialogCommand.postValue(GroupJoiningError) }
+            )
+            .remember()
+        updateGroups()
+    }
+
+    private fun acceptInvitation(invitation: Invitation) =
+        actions
+            .join(invitation.link)
+            .makeAsIoRequest()
+            .subscribeBy(
+                onComplete = {
+                    dialogCommand.postValue(
+                        GroupJoining(
+                            invitation.description
+                        )
+                    )
+                },
+                onError = { actionError ->
+                    actionError.printStackTrace()
+                    dialogCommand.postValue(GroupJoiningError)
+                }
+            )
+
+    private fun updateGroups() {
+        groupsProvider.groupsEmitter.subscribe {
+            groups.postValue(it.makeDisplayable())
+        }.remember()
+
+        groupsProvider
+            .groups
+            .makeAsIoRequest()
+            .subscribeBy(
+                onSuccess = {
+                    groups.postValue(it.makeDisplayable())
+                },
+                onError = { it.printStackTrace() }
+            ).remember()
+    }
+
+    private fun List<Group>.makeDisplayable(): List<DisplayableGroup> =
+        map(groupsConverter::convert)
+
     fun refresh() {
-        logic.refresh()
+        viewState.postValue(LoadingDataViewState())
+        groupsProvider
+            .refresh()
+            .makeAsIoRequest()
+            .doFinally { viewState.postValue(StartViewState())  }
+            .subscribeBy(
+                onError = {
+                    it.printStackTrace()
+                    dialogCommand.postValue(GroupsRefreshingError)
+                }
+            )
+            .remember()
     }
 
     fun joinToGroup() {
-        logic.joinToGroup()
+        navigationCommand.postValue(NavigationCommand.SCANNER_VIEW)
+    }
+
+    override fun onGroupLeavingError() =
+        dialogCommand.postValue(GroupLeavingError)
+
+    @AssistedInject.Factory
+    interface Factory {
+        fun create(): GroupsViewModel
     }
 
 }
