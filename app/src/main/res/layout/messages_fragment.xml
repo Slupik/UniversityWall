@@ -26,6 +26,7 @@
                 android:layout_height="64dp"
                 android:layout_weight="1"
                 android:text="@string/messages_list_refresh"
+                android:onClick="@{()->viewmodel.refresh()}"
                 android:visibility="@{viewmodel.viewState.loading? View.INVISIBLE : View.VISIBLE}"
                 app:layout_constraintEnd_toStartOf="@+id/guideline3"
                 app:layout_constraintStart_toStartOf="parent"

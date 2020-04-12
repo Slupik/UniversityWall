@@ -7,29 +7,15 @@ package io.github.slupik.universitywall.screen.messages
 
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import io.github.slupik.model.Converter
-import io.github.slupik.model.message.Message
-import io.github.slupik.model.message.MessagesProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
-import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
 import io.github.slupik.universitywall.utils.subscribe
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
 import kotlin.reflect.KClass
 
 class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFragmentBinding>() {
 
     private lateinit var adapter: MessagesAdapter
-
-    @Inject
-    lateinit var messagesProvider: MessagesProvider
-
-    @Inject
-    lateinit var messagesConverter: Converter<Message, DisplayableMessage>
 
     companion object {
         fun newInstance() = MessagesFragment()
@@ -62,43 +48,8 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         binding.rvMessages.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-
-        messagesProvider.messagesEmitter.subscribe {
-            adapter.submitList(
-                it.map(messagesConverter::convert)
-            )
-        }.remember()
-        messagesProvider
-            .messages
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    adapter.submitList(
-                        it.map(messagesConverter::convert)
-                    )
-                },
-                {
-                    it.printStackTrace()
-                }
-            ).remember()
-
-        binding.btnRefreshMessages.setOnClickListener {
-            viewModel.viewState.postValue(LoadingDataViewState())
-            messagesProvider
-                .refresh()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onComplete = {
-                        viewModel.viewState.postValue(StartViewState())
-                    },
-                    onError = {
-                        it.printStackTrace()
-                        viewModel.viewState.postValue(StartViewState())
-                    }
-                )
-                .remember()
+        viewModel.messages.subscribe(this) {
+            adapter.submitList(it)
         }
     }
 
