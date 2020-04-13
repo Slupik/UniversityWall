@@ -4,7 +4,6 @@
   -->
 
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools">
 
 
@@ -12,55 +11,61 @@
 
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
         <TextView
                 android:id="@+id/messageTitle"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/cardview_dark_background"
+                android:textAlignment="center"
+                android:textColor="@color/textPrimary"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
                 tools:text="Maecenas quis dui felis. Fusce purus urna" />
 
         <TextView
-                android:id="@+id/messageCreatorName"
+                android:id="@+id/messageGroupName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
-                android:textColor="@color/cardview_dark_background"
-                app:layout_constraintStart_toStartOf="@+id/messageGroupName"
-                app:layout_constraintTop_toBottomOf="@+id/messageGroupName"
-                tools:text="Name Surname" />
+                android:textColor="@color/textPrimary"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                tools:text="Informatyka 3 Inżynieria Oprogramowania" />
 
-        <TextView
-                android:id="@+id/messageCreationTime"
-                android:layout_width="wrap_content"
+        <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:textColor="@color/cardview_dark_background"
-                app:layout_constraintStart_toEndOf="@+id/messageCreatorName"
-                app:layout_constraintTop_toTopOf="@+id/messageCreatorName"
-                tools:text="2019.12.09 23:49:01" />
+                android:orientation="horizontal"
+                android:layout_marginTop="8dp">
+
+            <TextView
+                    android:id="@+id/messageCreatorName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/textPrimary"
+                    tools:text="Name Surname" />
+
+            <TextView
+                    android:id="@+id/messageCreationTime"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="textEnd"
+                    android:textColor="@color/textPrimary"
+                    tools:text="2019.12.09 23:49:01" />
+        </LinearLayout>
 
         <TextView
                 android:id="@+id/messageContent"
-                android:layout_width="0dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:paddingBottom="4dp"
-                android:textColor="@color/cardview_dark_background"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/messageCreatorName"
+                android:textColor="@color/textPrimary"
                 tools:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed commodo justo ut cursus dignissim. Donec sagittis aliquet mauris, sollicitudin dignissim urna dictum nec. Duis non vehicula quam. Sed quis lacus in tellus iaculis blandit. Vestibulum vel ullamcorper enim. Nulla facilisi. Aenean vehicula pellentesque mi sit amet pharetra." />
 
         <TextView
@@ -69,25 +74,16 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:paddingBottom="8dp"
-                android:textColor="@color/cardview_dark_background"
+                android:textColor="@color/textLink"
                 android:textStyle="italic"
-                app:layout_constraintStart_toStartOf="@+id/messageCreatorName"
-                app:layout_constraintTop_toBottomOf="@+id/messageContent"
                 tools:text="Download file (file name)" />
+    </LinearLayout>
 
-        <TextView
-                android:id="@+id/messageGroupName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
-                android:textColor="@color/cardview_dark_background"
-                android:textSize="16sp"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/messageTitle"
-                tools:text="Informatyka 3 Inżynieria Oprogramowania" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    <!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+    <!--            android:layout_width="match_parent"-->
+    <!--            android:layout_height="wrap_content">-->
+
+    <!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
 
 </layout>

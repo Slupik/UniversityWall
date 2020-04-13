@@ -5,33 +5,22 @@
 
 package io.github.slupik.universitywall.screen.messages
 
+import android.app.AlertDialog
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
-import io.github.slupik.model.Converter
-import io.github.slupik.model.message.Message
-import io.github.slupik.model.message.MessagesProvider
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.databinding.MessagesFragmentBinding
 import io.github.slupik.universitywall.fragment.FragmentWithDataBinding
-import io.github.slupik.universitywall.screen.messages.model.DisplayableMessage
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import javax.inject.Inject
+import io.github.slupik.universitywall.utils.subscribe
 import kotlin.reflect.KClass
 
-class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFragmentBinding>(), GraphController {
+class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFragmentBinding>() {
 
     private lateinit var adapter: MessagesAdapter
-
-    @Inject
-    lateinit var messagesProvider: MessagesProvider
-
-    @Inject
-    lateinit var messagesConverter: Converter<Message, DisplayableMessage>
-
-    @Inject
-    lateinit var viewLogic: MessagesViewLogic
 
     companion object {
         fun newInstance() = MessagesFragment()
@@ -51,8 +40,12 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         super.onViewModelCreated(viewModel)
         appDepInComponent.inject(this)
 
-        internalViewModel.inject(viewLogic)
-        viewLogic.inject(this)
+        viewModel.navigationCommand.subscribe(this) {
+            if(it == NavigationCommand.GROUPS_SCREEN) moveToGroupsScreen()
+        }
+        viewModel.dialogCommand.subscribe(this) {
+            showConnectionErrorDialog()
+        }
 
         adapter = MessagesAdapter(
             viewModel = viewModel,
@@ -63,48 +56,46 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         binding.rvMessages.apply {
             addItemDecoration(DividerItemDecoration(context, DividerItemDecoration.VERTICAL))
         }
-
-        messagesProvider.messagesEmitter.subscribe {
-            adapter.submitList(
-                it.map(messagesConverter::convert)
-            )
-        }.remember()
-        messagesProvider
-            .messages
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribeOn(Schedulers.io())
-            .subscribe(
-                {
-                    adapter.submitList(
-                        it.map(messagesConverter::convert)
-                    )
-                },
-                {
-                    it.printStackTrace()
-                }
-            ).remember()
-
-        binding.btnRefreshMessages.setOnClickListener {
-            viewModel.viewState.postValue(LoadingDataViewState())
-            messagesProvider
-                .refresh()
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribeOn(Schedulers.io())
-                .subscribeBy(
-                    onComplete = {
-                        viewModel.viewState.postValue(StartViewState())
-                    },
-                    onError = {
-                        it.printStackTrace()
-                        viewModel.viewState.postValue(StartViewState())
-                    }
-                )
-                .remember()
+        viewModel.messages.subscribe(this) {
+            adapter.submitList(it)
         }
     }
 
-    override fun moveToGroupsScreen() {
+    private fun showConnectionErrorDialog() {
+        AlertDialog.Builder(activity)
+            .setTitle(R.string.messages_refreshing_fail_title)
+            .setMessage(getString(R.string.messages_refreshing_fail))
+            .setPositiveButton(R.string.ok, null)
+            .show()
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.messages_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when(item.itemId) {
+            R.id.menu_show_groups -> {
+                moveToGroupsScreen()
+                true
+            }
+            R.id.menu_refresh_messages -> {
+                internalViewModel.refresh()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+
+    private fun moveToGroupsScreen() {
         findNavController().navigate(R.id.action_messagesFragment_to_groupsFragment)
     }
+
+    override fun getViewModel() =
+        activityDepInComponent.messagesViewModelFactory.create()
 
 }

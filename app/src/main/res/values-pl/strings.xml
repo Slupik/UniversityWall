@@ -61,7 +61,7 @@
     <string name="groups_list_refresh">Odśwież</string>
     <string name="group_add">Dodaj</string>
     <string name="group_leave">Opuść</string>
-    <string name="message_list_goto_groups">Grupy</string>
+    <string name="message_list_go_to_groups">Grupy</string>
     <string name="no">NIE</string>
     <string name="group_invitation_confirmation">Czy na pewno chcesz dołączyć do grupy %1$s?</string>
     <string name="group_invitation_confirmation_title">Potwierdzenie</string>

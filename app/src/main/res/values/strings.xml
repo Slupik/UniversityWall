@@ -29,7 +29,10 @@
 
     <!--    messages list fragment    -->
     <string name="messages_list_refresh">Refresh</string>
-
+    <string name="menu_show_groups">Show groups</string>
+    <string name="menu_refresh_messages">Refresh list</string>
+    <string name="messages_refreshing_fail_title">Error</string>
+    <string name="messages_refreshing_fail">You cannot refresh list now. Please, check connection and try again later.</string>
 
     <!--    registration fragment    -->
     <string name="registration_form_login">Login</string>
@@ -55,7 +58,7 @@
     <string name="groups_list_refresh">Refresh</string>
     <string name="group_add">Add</string>
     <string name="group_leave">Leave</string>
-    <string name="message_list_goto_groups">Groups</string>
+    <string name="message_list_go_to_groups">Groups</string>
     <string name="no">NO</string>
     <string name="group_invitation_confirmation">Do you really want join to group %1$s?</string>
     <string name="group_invitation_confirmation_title">Confirmation</string>
