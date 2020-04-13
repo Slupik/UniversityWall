@@ -37,24 +37,23 @@ class MessagesViewModel @AssistedInject constructor(
         messagesProvider
             .messages
             .makeAsIoRequest()
-            .subscribe(
-                {
-                    messages.postValue(
-                        it.map(messagesConverter::convert)
-                    )
+            .subscribeBy(
+                onSuccess = {
+                    messages.postValue(it.makeDisplayable())
                 },
-                {
+                onError = {
                     it.printStackTrace()
                     dialogCommand.postValue(MessagesRefreshingError)
                 }
             ).remember()
 
         messagesProvider.messagesEmitter.subscribe {
-            messages.postValue(
-                it.map(messagesConverter::convert)
-            )
+            messages.postValue(it.makeDisplayable())
         }.remember()
     }
+
+    private fun List<Message>.makeDisplayable(): List<DisplayableMessage> =
+        map(messagesConverter::convert)
 
     fun goToGroups() {
         navigationCommand.postValue(NavigationCommand.GROUPS_SCREEN)
