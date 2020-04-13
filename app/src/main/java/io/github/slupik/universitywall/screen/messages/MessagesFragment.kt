@@ -5,6 +5,7 @@
 
 package io.github.slupik.universitywall.screen.messages
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuInflater
@@ -42,6 +43,9 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         viewModel.navigationCommand.subscribe(this) {
             if(it == NavigationCommand.GROUPS_SCREEN) moveToGroupsScreen()
         }
+        viewModel.dialogCommand.subscribe(this) {
+            showConnectionErrorDialog()
+        }
 
         adapter = MessagesAdapter(
             viewModel = viewModel,
@@ -55,6 +59,14 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
         viewModel.messages.subscribe(this) {
             adapter.submitList(it)
         }
+    }
+
+    private fun showConnectionErrorDialog() {
+        AlertDialog.Builder(activity)
+            .setTitle(R.string.messages_refreshing_fail_title)
+            .setMessage(getString(R.string.messages_refreshing_fail))
+            .setPositiveButton(R.string.ok, null)
+            .show()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

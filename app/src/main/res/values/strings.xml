@@ -31,6 +31,8 @@
     <string name="messages_list_refresh">Refresh</string>
     <string name="menu_show_groups">Show groups</string>
     <string name="menu_refresh_messages">Refresh list</string>
+    <string name="messages_refreshing_fail_title">Error</string>
+    <string name="messages_refreshing_fail">You cannot refresh list now. Please, check connection and try again later.</string>
 
     <!--    registration fragment    -->
     <string name="registration_form_login">Login</string>

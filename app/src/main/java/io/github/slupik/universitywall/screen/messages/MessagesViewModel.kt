@@ -26,6 +26,9 @@ class MessagesViewModel @AssistedInject constructor(
     val navigationCommand: MutableLiveData<NavigationCommand> by lazy {
         MutableLiveData<NavigationCommand>()
     }
+    val dialogCommand: MutableLiveData<DialogCommand> by lazy {
+        MutableLiveData<DialogCommand>()
+    }
     val messages: MutableLiveData<List<DisplayableMessage>> by lazy {
         MutableLiveData<List<DisplayableMessage>>()
     }
@@ -42,6 +45,7 @@ class MessagesViewModel @AssistedInject constructor(
                 },
                 {
                     it.printStackTrace()
+                    dialogCommand.postValue(MessagesRefreshingError)
                 }
             ).remember()
 
@@ -68,6 +72,7 @@ class MessagesViewModel @AssistedInject constructor(
                 onError = {
                     it.printStackTrace()
                     viewState.postValue(StartViewState())
+                    dialogCommand.postValue(MessagesRefreshingError)
                 }
             )
             .remember()
