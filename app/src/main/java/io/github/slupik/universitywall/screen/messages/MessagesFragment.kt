@@ -5,6 +5,10 @@
 
 package io.github.slupik.universitywall.screen.messages
 
+import android.os.Bundle
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import io.github.slupik.universitywall.R
@@ -52,6 +56,28 @@ class MessagesFragment : FragmentWithDataBinding<MessagesViewModel, MessagesFrag
             adapter.submitList(it)
         }
     }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.messages_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean =
+        when(item.itemId) {
+            R.id.menu_show_groups -> {
+                moveToGroupsScreen()
+                true
+            }
+            R.id.menu_refresh_messages -> {
+                internalViewModel.refresh()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
 
     private fun moveToGroupsScreen() {
         findNavController().navigate(R.id.action_messagesFragment_to_groupsFragment)
