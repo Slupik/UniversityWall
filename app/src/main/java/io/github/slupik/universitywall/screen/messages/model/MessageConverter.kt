@@ -19,7 +19,7 @@ import javax.inject.Inject
 class MessageConverter @Inject constructor() : Converter<Message, DisplayableMessage>() {
 
     private val dateFormatter = DateTimeFormatter.ISO_LOCAL_DATE
-    private val timeFormatter = DateTimeFormatter.ISO_TIME
+    private val timeFormatter = TIME_FORMAT
 
     override fun convert(input: Message): DisplayableMessage =
         DisplayableMessage(
