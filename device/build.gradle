@@ -7,5 +7,6 @@ apply plugin: "com.android.library"
 apply plugin: "base-android-plugin"
 
 dependencies {
-
+    implementation(Deps.firebaseVision)
+    implementation(Deps.firebaseVisionBarcodeModel)
 }

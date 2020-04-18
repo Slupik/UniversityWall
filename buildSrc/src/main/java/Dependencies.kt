@@ -19,6 +19,8 @@ object Versions {
     const val appcompat7 = "1.1.0"
     const val googleServices = "4.3.3"
     const val firebaseAnalytics = "17.2.2"
+    const val firebaseVision = "24.0.2"
+    const val firebaseVisionBarcodeModel = "16.0.1"
     const val playVision = "9.4.0+"
     const val room = "2.2.5"
 
@@ -88,6 +90,9 @@ object Deps {
     // play services
     const val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics:${Versions.firebaseAnalytics}"
+    const val firebaseVision = "com.google.firebase:firebase-ml-vision:${Versions.firebaseVision}"
+    const val firebaseVisionBarcodeModel =
+        "com.google.firebase:firebase-ml-vision-barcode-model:${Versions.firebaseVisionBarcodeModel}"
     const val playVision = "com.google.android.gms:play-services-vision:${Versions.playVision}"
     // room
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
