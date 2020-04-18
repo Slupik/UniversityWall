@@ -17,6 +17,8 @@ object Versions {
     const val rxandroid = "2.1.1" // https://mvnrepository.com/artifact/io.reactivex.rxjava2/rxandroid
     const val material = "1.1.0"
     const val appcompat7 = "1.1.0"
+    const val googleServices = "4.3.3"
+    const val firebaseAnalytics = "17.2.2"
     const val playVision = "9.4.0+"
     const val room = "2.2.5"
 
@@ -84,6 +86,8 @@ object Deps {
     // appcompat
     const val appcompat7 = "com.android.support:appcompat-v7:${Versions.appcompat7}"
     // play services
+    const val googleServices = "com.google.gms:google-services:${Versions.googleServices}"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics:${Versions.firebaseAnalytics}"
     const val playVision = "com.google.android.gms:play-services-vision:${Versions.playVision}"
     // room
     const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"

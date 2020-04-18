@@ -10,6 +10,7 @@ buildscript {
         classpath(Deps.gradle)
         classpath(Deps.kotlinGradlePlugin)
         classpath(Deps.androidxNavigationPlugin)
+        classpath(Deps.googleServices)
     }
 }
 plugins {
@@ -36,6 +37,5 @@ allprojects {
     repositories {
         google()
         jcenter()
-
     }
 }

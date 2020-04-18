@@ -2,6 +2,7 @@ apply plugin: "com.android.application"
 
 apply plugin: "base-android-plugin"
 apply plugin: "androidx.navigation.safeargs.kotlin"
+apply plugin: "com.google.gms.google-services"
 
 android {
     defaultConfig {
@@ -29,6 +30,7 @@ dependencies {
     implementation(Deps.material)
     implementation(Deps.appcompat7)
     implementation(Deps.playVision)
+    implementation(Deps.firebaseAnalytics)
 
     implementation(Deps.androidxNavigationFragment)
     implementation(Deps.androidxNavigationUi)
