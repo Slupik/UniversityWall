@@ -1,1 +1,2 @@
 include ':app', ':Model', ':network', ':repository'
+include ':device'

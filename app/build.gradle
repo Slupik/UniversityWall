@@ -19,6 +19,7 @@ android {
 dependencies {
     implementation(project(":network"))
     implementation(project(":repository"))
+    implementation(project(":device"))
 
     implementation(Deps.kotlinReflect)
 
