@@ -12,8 +12,14 @@ import android.graphics.RectF
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import io.github.slupik.universitywall.device.camera.scanner.GraphicOverlay
 
-class QrGraphic(overlay: GraphicOverlay, private val barcode: FirebaseVisionBarcode) :
-    GraphicOverlay.Graphic(overlay) {
+private const val TEXT_COLOR = Color.WHITE
+private const val TEXT_SIZE = 54.0f
+private const val STROKE_WIDTH = 4.0f
+
+class QrGraphic(
+    overlay: GraphicOverlay,
+    private val barcode: FirebaseVisionBarcode
+) : GraphicOverlay.Graphic(overlay) {
 
     private var rectPaint = Paint().apply {
         color = TEXT_COLOR
@@ -44,9 +50,4 @@ class QrGraphic(overlay: GraphicOverlay, private val barcode: FirebaseVisionBarc
         }
     }
 
-    companion object {
-        private const val TEXT_COLOR = Color.WHITE
-        private const val TEXT_SIZE = 54.0f
-        private const val STROKE_WIDTH = 4.0f
-    }
 }

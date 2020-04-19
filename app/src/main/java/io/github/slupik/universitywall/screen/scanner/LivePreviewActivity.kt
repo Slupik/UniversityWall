@@ -6,16 +6,8 @@ package io.github.slupik.universitywall.screen.scanner
 
 import android.content.Context
 import android.content.pm.PackageManager
-import android.hardware.Camera
 import android.os.Bundle
 import android.util.Log
-import android.view.Menu
-import android.view.MenuItem
-import android.view.View
-import android.widget.AdapterView
-import android.widget.AdapterView.OnItemSelectedListener
-import android.widget.ArrayAdapter
-import android.widget.CompoundButton
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
@@ -31,11 +23,9 @@ import io.github.slupik.universitywall.screen.scanner.qrscanning.QrScanningProce
 /** Demo app showing the various features of ML Kit for Firebase. This class is used to
  * set up continuous frame processing on frames from a camera source.  */
 @KeepName
-class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallback,
-    OnItemSelectedListener, CompoundButton.OnCheckedChangeListener {
+class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallback {
 
     private var cameraSource: CameraSource? = null
-    private var selectedModel = FACE_CONTOUR
 
     private val requiredPermissions: Array<String?>
         get() {
@@ -55,8 +45,6 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate")
-
         setContentView(R.layout.activity_live_preview)
 
         if (firePreview == null) {
@@ -67,97 +55,24 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
             Log.d(TAG, "graphicOverlay is null")
         }
 
-        val options = arrayListOf(
-            QR_CODE_DETECTION
-        )
-        // Creating adapter for spinner
-        val dataAdapter = ArrayAdapter(this, R.layout.spinner_style, options)
-        // Drop down layout style - list view with radio button
-        dataAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        // attaching data adapter to spinner
-        spinner.adapter = dataAdapter
-        spinner.onItemSelectedListener = this
-
-        val facingSwitch = facingSwitch
-        facingSwitch.setOnCheckedChangeListener(this)
-        // Hide the toggle button if there is only 1 camera
-        if (Camera.getNumberOfCameras() == 1) {
-            facingSwitch.visibility = View.GONE
-        }
-
         if (allPermissionsGranted()) {
-            createCameraSource(selectedModel)
+            createCameraSource()
         } else {
             getRuntimePermissions()
         }
     }
 
-    @Synchronized
-    override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-        // An item was selected. You can retrieve the selected item using
-        // parent.getItemAtPosition(pos)
-        selectedModel = parent.getItemAtPosition(pos).toString()
-        Log.d(TAG, "Selected model: $selectedModel")
-        firePreview?.stop()
-        if (allPermissionsGranted()) {
-            createCameraSource(selectedModel)
-            startCameraSource()
-        } else {
-            getRuntimePermissions()
-        }
-    }
-
-    override fun onNothingSelected(parent: AdapterView<*>) {
-        // Do nothing.
-    }
-
-    override fun onCheckedChanged(buttonView: CompoundButton, isChecked: Boolean) {
-        Log.d(TAG, "Set facing")
-
-        cameraSource?.let {
-            if (isChecked) {
-                it.setFacing(CameraSource.CAMERA_FACING_FRONT)
-            } else {
-                it.setFacing(CameraSource.CAMERA_FACING_BACK)
-            }
-        }
-        firePreview?.stop()
-        startCameraSource()
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-//        menuInflater.inflate(R.menu.live_preview_menu, menu)
-        return true
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-//        if (item.itemId == R.id.settings) {
-//            val intent = Intent(this, SettingsActivity::class.java)
-//            intent.putExtra(SettingsActivity.EXTRA_LAUNCH_SOURCE, LaunchSource.LIVE_PREVIEW)
-//            startActivity(intent)
-//            return true
-//        }
-
-        return super.onOptionsItemSelected(item)
-    }
-
-    private fun createCameraSource(model: String) {
+    private fun createCameraSource() {
         // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = CameraSource(this, fireFaceOverlay)
         }
 
-        cameraSource?.setMachineLearningFrameProcessor(QrScanningProcessor1())
         try {
-            when (model) {
-                QR_CODE_DETECTION -> {
-                    Log.i(TAG, "Using QR coded Detector Processor")
-                    cameraSource?.setMachineLearningFrameProcessor(QrScanningProcessor1())
-                }
-                else -> Log.e(TAG, "Unknown model: $model")
-            }
+            Log.i(TAG, "Using QR coded Detector Processor")
+            cameraSource?.setMachineLearningFrameProcessor(QrScanningProcessor1())
         } catch (e: FirebaseMLException) {
-            Log.e(TAG, "can not create camera source: $model")
+            Log.e(TAG, "can not create camera source: QR code")
         }
     }
 
@@ -214,7 +129,6 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
         val allNeededPermissions = arrayListOf<String>()
         for (permission in requiredPermissions) {
             if (!isPermissionGranted(this, permission!!)) {
-                Log.d("DEBUG_APP_TEST", "perm: "+permission)
                 allNeededPermissions.add(permission)
             }
         }
@@ -233,14 +147,12 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
     ) {
         Log.i(TAG, "Permission granted!")
         if (allPermissionsGranted()) {
-            createCameraSource(selectedModel)
+            createCameraSource()
         }
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
     }
 
     companion object {
-        private const val QR_CODE_DETECTION = "QrCode Detection"
-        private const val FACE_CONTOUR = "Face Contour"
         private const val TAG = "LivePreviewActivity"
         private const val PERMISSION_REQUESTS = 1
 

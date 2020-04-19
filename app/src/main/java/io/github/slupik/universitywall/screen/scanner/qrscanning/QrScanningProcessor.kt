@@ -22,11 +22,6 @@ import java.io.IOException
 /** Barcode Detector Demo.  */
 class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
 
-    // Note that if you know which format of barcode your app is dealing with, detection will be
-    // faster to specify the supported barcode formats one by one, e.g.
-    // FirebaseVisionBarcodeDetectorOptions.Builder()
-    //     .setBarcodeFormats(FirebaseVisionBarcode.FORMAT_QR_CODE)
-    //     .build()
     private val detector: FirebaseVisionBarcodeDetector by lazy {
         FirebaseVision.getInstance().getVisionBarcodeDetector(
                 FirebaseVisionBarcodeDetectorOptions.Builder()
@@ -39,7 +34,7 @@ class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
         try {
             detector.close()
         } catch (e: IOException) {
-            Log.e(TAG, "Exception thrown while trying to close Barcode Detector: $e")
+            Log.e(TAG, "Exception thrown while trying to close QR code Detector: $e")
         }
     }
 
@@ -49,7 +44,7 @@ class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
 
     override fun onSuccess(
         originalCameraImage: Bitmap?,
-        barcodes: List<FirebaseVisionBarcode>,
+        qrcodes: List<FirebaseVisionBarcode>,
         frameMetadata: FrameMetadata,
         graphicOverlay: GraphicOverlay
     ) {
@@ -60,7 +55,7 @@ class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
             graphicOverlay.add(imageGraphic)
         }
 
-        barcodes.forEach {
+        qrcodes.forEach {
             val barcodeGraphic = QrGraphic(graphicOverlay, it)
             graphicOverlay.add(barcodeGraphic)
         }
@@ -72,7 +67,6 @@ class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
     }
 
     companion object {
-
         private const val TAG = "BarcodeScanProc"
     }
 }
