@@ -19,7 +19,8 @@ import io.github.slupik.universitywall.device.camera.scanner.GraphicOverlay
 import io.github.slupik.universitywall.screen.scanner.VisionProcessorBase
 import java.io.IOException
 
-/** Barcode Detector Demo.  */
+private const val TAG = "QrCodeScanProc"
+
 class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
 
     private val detector: FirebaseVisionBarcodeDetector by lazy {
@@ -66,7 +67,4 @@ class QrScanningProcessor : VisionProcessorBase<List<FirebaseVisionBarcode>>() {
         Log.e(TAG, "Barcode detection failed $e")
     }
 
-    companion object {
-        private const val TAG = "BarcodeScanProc"
-    }
 }

@@ -14,11 +14,11 @@ import com.google.android.gms.common.annotation.KeepName
 import com.google.firebase.ml.common.FirebaseMLException
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.device.camera.scanner.CameraSource
+import io.github.slupik.universitywall.screen.scanner.qrscanning.QrScanningProcessor
 import io.github.slupik.universitywall.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_live_preview.*
 import java.io.IOException
 import java.util.*
-import io.github.slupik.universitywall.screen.scanner.qrscanning.QrScanningProcessor as QrScanningProcessor1
 
 
 /** Demo app showing the various features of ML Kit for Firebase. This class is used to
@@ -35,13 +35,7 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_preview)
-
-        if (firePreview == null) {
-            Log.d(TAG, "Preview is null")
-        }
-        if (fireFaceOverlay == null) {
-            Log.d(TAG, "graphicOverlay is null")
-        }
+        checkViewElements("onCreate")
 
         if (allPermissionsGranted()) {
             createCameraSource()
@@ -51,17 +45,21 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
     }
 
     private fun createCameraSource() {
-        // If there's no existing cameraSource, create one.
         if (cameraSource == null) {
             cameraSource = CameraSource(this, fireFaceOverlay)
         }
 
         try {
             Log.i(TAG, "Using QR coded Detector Processor")
-            cameraSource?.setMachineLearningFrameProcessor(QrScanningProcessor1())
+            cameraSource?.setMachineLearningFrameProcessor(QrScanningProcessor())
         } catch (e: FirebaseMLException) {
             Log.e(TAG, "can not create camera source: QR code")
         }
+    }
+
+    public override fun onResume() {
+        super.onResume()
+        startCameraSource()
     }
 
     /**
@@ -72,12 +70,7 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
     private fun startCameraSource() {
         cameraSource?.let {
             try {
-                if (firePreview == null) {
-                    Log.d(TAG, "resume: Preview is null")
-                }
-                if (fireFaceOverlay == null) {
-                    Log.d(TAG, "resume: graphOverlay is null")
-                }
+                checkViewElements("onResume")
                 firePreview?.start(cameraSource, fireFaceOverlay)
             } catch (e: IOException) {
                 Log.e(TAG, "Unable to start camera source.", e)
@@ -87,9 +80,13 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
         }
     }
 
-    public override fun onResume() {
-        super.onResume()
-        startCameraSource()
+    private fun checkViewElements(step: String) {
+        if (firePreview == null) {
+            Log.d(TAG, "$step: Preview is null")
+        }
+        if (fireFaceOverlay == null) {
+            Log.d(TAG, "$step: graphicOverlay is null")
+        }
     }
 
     override fun onPause() {
