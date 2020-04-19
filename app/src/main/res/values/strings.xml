@@ -74,5 +74,7 @@
 
     <string name="menu_add_group">Add group</string>
     <string name="menu_refresh_groups">Refresh list</string>
+    <string name="required_permissions_dialog_title">Required permissions</string>
+    <string name="required_permissions_dialog_message">Application needs those permissions to proper running.</string>
 
 </resources>
