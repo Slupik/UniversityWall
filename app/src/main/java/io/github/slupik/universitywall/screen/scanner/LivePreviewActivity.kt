@@ -14,7 +14,7 @@ import com.google.android.gms.common.annotation.KeepName
 import com.google.firebase.ml.common.FirebaseMLException
 import io.github.slupik.universitywall.R
 import io.github.slupik.universitywall.device.camera.scanner.CameraSource
-import io.github.slupik.universitywall.screen.scanner.qrscanning.QrScanningProcessor
+import io.github.slupik.universitywall.screen.scanner.model.qrscanning.QrScanningProcessor
 import io.github.slupik.universitywall.utils.PermissionUtils
 import kotlinx.android.synthetic.main.activity_live_preview.*
 import java.io.IOException
