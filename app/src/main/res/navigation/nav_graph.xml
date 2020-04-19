@@ -64,9 +64,10 @@
                 app:destination="@id/qrCodeScannerActivity" />
     </fragment>
 
+    <!--            android:name="io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity"-->
     <activity
             android:id="@+id/qrCodeScannerActivity"
-            android:name="io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity"
+            android:name="io.github.slupik.universitywall.screen.scanner.LivePreviewActivity"
             android:label="qr_code_scanner_activity"
             tools:layout="@layout/qr_code_scanner_activity" />
 

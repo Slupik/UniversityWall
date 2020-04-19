@@ -20,7 +20,7 @@ object Versions {
     const val googleServices = "4.3.3"
     const val firebaseAnalytics = "17.2.2"
     const val firebaseVision = "24.0.2"
-    const val firebaseVisionBarcodeModel = "16.0.1"
+    const val firebaseVisionBarcodeModel = "16.1.0"
     const val playVision = "9.4.0+"
     const val room = "2.2.5"
 

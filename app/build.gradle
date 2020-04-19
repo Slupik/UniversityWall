@@ -21,6 +21,12 @@ dependencies {
     implementation(project(":repository"))
     implementation(project(":device"))
 
+    implementation 'androidx.camera:camera-camera2:1.0.0-alpha04'
+    implementation 'androidx.camera:camera-core:1.0.0-alpha04'
+    implementation 'androidx.preference:preference:1.1.1'
+    implementation 'androidx.media:media:1.1.0'
+    implementation 'com.google.android.material:material:1.1.0'
+
     implementation(Deps.kotlinReflect)
 
     implementation(Deps.threetenbp)
@@ -32,6 +38,8 @@ dependencies {
     implementation(Deps.appcompat7)
     implementation(Deps.playVision)
     implementation(Deps.firebaseAnalytics)
+    implementation(Deps.firebaseVision)
+    implementation(Deps.firebaseVisionBarcodeModel)
 
     implementation(Deps.androidxNavigationFragment)
     implementation(Deps.androidxNavigationUi)
