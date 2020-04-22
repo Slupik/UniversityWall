@@ -1,28 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<RelativeLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fireTopLayout"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#000"
-    android:keepScreenOn="true">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
 
-  <io.github.slupik.universitywall.device.camera.scanner.CameraSourcePreview
-      android:id="@+id/firePreview"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
-      android:layout_alignParentStart="true"
-      android:layout_alignParentTop="true">
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-      <io.github.slupik.universitywall.device.camera.scanner.GraphicOverlay
-          android:id="@+id/fireFaceOverlay"
-          android:layout_width="match_parent"
-          android:layout_height="match_parent"
-          android:layout_alignParentStart="true"
-          android:layout_alignParentTop="true"
-          android:layout_alignParentBottom="true"/>
-  </io.github.slupik.universitywall.device.camera.scanner.CameraSourcePreview>
+        <fragment
+                android:id="@+id/nav_host_fragment"
+                android:name="io.github.slupik.universitywall.screen.scanner.CodeScannerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                app:defaultNavHost="true"/>
 
-</RelativeLayout>
+    </FrameLayout>
+
+</layout>

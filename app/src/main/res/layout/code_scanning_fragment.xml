@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ Copyright (c) 2020. by Sebastian Witasik
+  ~ All rights reserved. No part of this application may be reproduced or be part of other software, without the prior written permission of the publisher. For permission requests, write to the author(WitasikSebastian@gmail.com).
+  -->
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+                name="viewmodel"
+                type="io.github.slupik.universitywall.screen.scanner.CodeScannerViewModel" />
+
+        <import type="android.view.View" />
+    </data>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#000"
+            android:keepScreenOn="true">
+
+        <io.github.slupik.universitywall.device.camera.scanner.CameraSourcePreview
+                android:id="@+id/firePreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+            <io.github.slupik.universitywall.device.camera.scanner.GraphicOverlay
+                    android:id="@+id/fireFaceOverlay"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentBottom="true"/>
+
+        </io.github.slupik.universitywall.device.camera.scanner.CameraSourcePreview>
+
+    </FrameLayout>
+
+</layout>

@@ -15,6 +15,7 @@ import io.github.slupik.universitywall.screen.login.LoginViewModel
 import io.github.slupik.universitywall.screen.messages.MessagesFragment
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.QrCodeScannerFragment
 import io.github.slupik.universitywall.screen.qrcode.ui.scanner.element.BarcodeGraphic
+import io.github.slupik.universitywall.screen.scanner.CodeScannerFragment
 import javax.inject.Singleton
 
 /**
@@ -41,6 +42,7 @@ interface ApplicationComponent {
 
     fun plus(subModule: ActivityModule): ActivitySubcomponent
 
+    fun inject(clazz: CodeScannerFragment)
     fun inject(clazz: BarcodeGraphic)
     fun inject(clazz: QrCodeScannerFragment)
     fun inject(clazz: LoginFragment)

@@ -14,6 +14,7 @@ import io.github.slupik.universitywall.screen.messages.MessagesViewModel
 import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 import io.github.slupik.universitywall.screen.registration.RegistrationFragment
 import io.github.slupik.universitywall.screen.registration.RegistrationViewModel
+import io.github.slupik.universitywall.screen.scanner.CodeScannerViewModel
 
 /**
  * Created by Sebastian Witasik on 11.12.2019.
@@ -33,6 +34,7 @@ interface ActivitySubcomponent {
     val registrationViewModelFactory: RegistrationViewModel.Factory
     val messagesViewModelFactory: MessagesViewModel.Factory
     val groupsViewModelFactory: GroupsViewModel.Factory
+    val codeScannerViewModelFactory: CodeScannerViewModel.Factory
 
     fun inject(clazz: RegistrationFragment)
     fun inject(clazz: QrCodeScannerActivity)

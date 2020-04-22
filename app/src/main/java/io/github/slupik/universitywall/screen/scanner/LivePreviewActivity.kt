@@ -5,19 +5,13 @@
 package io.github.slupik.universitywall.screen.scanner
 
 import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AlertDialog
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
 import androidx.core.app.ActivityCompat.OnRequestPermissionsResultCallback
 import com.google.android.gms.common.annotation.KeepName
-import com.google.firebase.ml.common.FirebaseMLException
 import io.github.slupik.universitywall.R
-import io.github.slupik.universitywall.device.camera.scanner.CameraSource
-import io.github.slupik.universitywall.screen.scanner.model.qrscanning.QrScanningProcessor
+import io.github.slupik.universitywall.activity.Activity
 import io.github.slupik.universitywall.utils.PermissionUtils
-import kotlinx.android.synthetic.main.activity_live_preview.*
-import java.io.IOException
 import java.util.*
 
 
@@ -28,79 +22,19 @@ private const val TAG = "LivePreviewActivity"
 private const val PERMISSION_REQUESTS = 594
 
 @KeepName
-class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallback {
-
-    private var cameraSource: CameraSource? = null
+//TODO move permissions to another place
+class LivePreviewActivity : Activity(), OnRequestPermissionsResultCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_live_preview)
-        checkViewElements("onCreate")
 
         if (allPermissionsGranted()) {
-            createCameraSource()
+            //TODO repair
+//            createCameraSource()
         } else {
             getRuntimePermissions()
         }
-    }
-
-    private fun createCameraSource() {
-        if (cameraSource == null) {
-            cameraSource = CameraSource(this, fireFaceOverlay)
-        }
-
-        try {
-            Log.i(TAG, "Using QR coded Detector Processor")
-            cameraSource?.setMachineLearningFrameProcessor(QrScanningProcessor())
-        } catch (e: FirebaseMLException) {
-            Log.e(TAG, "can not create camera source: QR code")
-        }
-    }
-
-    public override fun onResume() {
-        super.onResume()
-        startCameraSource()
-    }
-
-    /**
-     * Starts or restarts the camera source, if it exists. If the camera source doesn't exist yet
-     * (e.g., because onResume was called before the camera source was created), this will be called
-     * again when the camera source is created.
-     */
-    private fun startCameraSource() {
-        cameraSource?.let {
-            try {
-                checkViewElements("onResume")
-                firePreview?.start(cameraSource, fireFaceOverlay)
-            } catch (e: IOException) {
-                Log.e(TAG, "Unable to start camera source.", e)
-                cameraSource?.release()
-                cameraSource = null
-            }
-        }
-    }
-
-    private fun checkViewElements(step: String) {
-        if (firePreview == null) {
-            Log.d(TAG, "$step: Preview is null")
-        }
-        if (fireFaceOverlay == null) {
-            Log.d(TAG, "$step: graphicOverlay is null")
-        }
-    }
-
-    override fun onPause() {
-        super.onPause()
-        stopCamera()
-    }
-
-    private fun stopCamera() {
-        firePreview?.stop()
-    }
-
-    public override fun onDestroy() {
-        super.onDestroy()
-        cameraSource?.release()
     }
 
     private fun getRuntimePermissions() {
@@ -123,7 +57,7 @@ class LivePreviewActivity : AppCompatActivity(), OnRequestPermissionsResultCallb
         grantResults: IntArray
     ) {
         if (allPermissionsGranted()) {
-            createCameraSource()
+//            createCameraSource()
         } else if (requestCode == PERMISSION_REQUESTS) {
             askUserForPermissions()
         }
