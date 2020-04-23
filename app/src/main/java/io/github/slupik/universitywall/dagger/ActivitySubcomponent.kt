@@ -14,7 +14,9 @@ import io.github.slupik.universitywall.screen.messages.MessagesViewModel
 import io.github.slupik.universitywall.screen.qrcode.activity.QrCodeScannerActivity
 import io.github.slupik.universitywall.screen.registration.RegistrationFragment
 import io.github.slupik.universitywall.screen.registration.RegistrationViewModel
+import io.github.slupik.universitywall.screen.scanner.CodeScannerFragment
 import io.github.slupik.universitywall.screen.scanner.CodeScannerViewModel
+import io.github.slupik.universitywall.screen.scanner.LivePreviewActivity
 
 /**
  * Created by Sebastian Witasik on 11.12.2019.
@@ -40,5 +42,7 @@ interface ActivitySubcomponent {
     fun inject(clazz: QrCodeScannerActivity)
     fun inject(clazz: GroupsFragment)
     fun inject(clazz: MessagesFragment)
+    fun inject(clazz: CodeScannerFragment)
+    fun inject(clazz: LivePreviewActivity)
 
 }
